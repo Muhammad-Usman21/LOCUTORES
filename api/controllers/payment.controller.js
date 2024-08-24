@@ -23,25 +23,25 @@ export const createCheckoutSession = async (req, res, next) => {
       },
     ],
     mode: "payment",
-    success_url: "http://localhost:3000/success",
-    cancel_url: "http://localhost:3000/cancel",
+    success_url: `${process.env.CLIENT_URL}/success`,
+    cancel_url: `${process.env.CLIENT_URL}/cancel`,
   });
 
   // Create a new order with "Pending Delivery" status
-  const order = new Order({
-    productId,
-    userId,
-    amount,
-    status: "Pending Delivery",
-    paymentIntentId: session.payment_intent,
-  });
-  await order.save();
+  // const order = new Order({
+  //   productId,
+  //   userId,
+  //   amount,
+  //   status: "Pending Delivery",
+  //   paymentIntentId: session.payment_intent,
+  // });
+  // await order.save();
 
   res.status(200).json(session);
 };
 
 export const orderDelivered = async (req, res) => {
-  const { orderId, sellerStripeAccountId } = req.body;
+  const { orderId, speakerStripeAccountId } = req.body;
 
   try {
     // Find the order by ID
@@ -58,13 +58,13 @@ export const orderDelivered = async (req, res) => {
     order.status = "Delivered";
     await order.save();
 
-    // Transfer funds to the seller's Stripe-connected account
+    // Transfer funds to the speaker's Stripe-connected account
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
     const transfer = await stripe.transfers.create({
       amount: order.amount * 100, // amount in cents
       currency: "usd",
-      destination: sellerStripeAccountId, // Seller's Stripe Account ID
+      destination: speakerStripeAccountId, // Speaker's Stripe Account ID
       transfer_group: `ORDER_${order._id}`, // Optional: Grouping for related transfers
     });
 

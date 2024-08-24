@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import { useSelector } from "react-redux";
-import DashSeller from "../components/DashSeller";
+import DashSpeaker from "../components/DashSpeaker";
 import DashUser from "../components/DashUser";
 
 const Dashboard = () => {
@@ -25,7 +25,7 @@ const Dashboard = () => {
 				<DashSidebar />
 			</div>
 			{tab === "user" && <DashUser />}
-			{tab === "seller" && <DashSeller />}
+			{tab === "speaker" && <DashSpeaker />}
 		</div>
 	);
 };

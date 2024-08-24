@@ -49,12 +49,12 @@ const DashSidebar = () => {
 							User
 						</Sidebar.Item>
 					</Link>
-					<Link to="/dashboard?tab=seller">
+					<Link to="/dashboard?tab=speaker">
 						<Sidebar.Item
-							active={tab === "seller"}
+							active={tab === "speaker"}
 							icon={RiUserVoiceFill}
 							as="div">
-							Seller
+							Speaker
 						</Sidebar.Item>
 					</Link>
 					<Sidebar.Item

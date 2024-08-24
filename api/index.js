@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import paymentRoutes from "./routes/payment.route.js";
+import speakerRoutes from "./routes/speaker.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -31,60 +32,61 @@ app.listen(3000, () => {
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/speaker", speakerRoutes);
 
-import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// import Stripe from "stripe";
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-app.post('/become-a-seller', async (req, res) => {
-    const { name, email, address } = req.body;
+// app.post('/become-a-speaker', async (req, res) => {
+//     const { name, email, address } = req.body;
 
-    try {
-        // Create a new seller document (but don't save the Stripe account ID yet)
-        const seller = new Seller({ name, email, address });
-        await seller.save();
+//     try {
+//         // Create a new speaker document (but don't save the Stripe account ID yet)
+//         const speaker = new Speaker({ name, email, address });
+//         await speaker.save();
 
-        // Generate the Stripe OAuth link
-        const state = seller._id.toString(); // Use the seller's MongoDB ID as state to retrieve it later
-        const clientId = process.env.STRIPE_CLIENT_ID;
+//         // Generate the Stripe OAuth link
+//         const state = speaker._id.toString(); // Use the speaker's MongoDB ID as state to retrieve it later
+//         const clientId = process.env.STRIPE_CLIENT_ID;
 
-        const redirectUri = stripe.oauth.authorizeUrl({
-            response_type: 'code',
-            client_id: clientId,
-            scope: 'read_write',
-            redirect_uri: 'http://localhost:5000/stripe/callback',
-            state: state,
-        });
+//         const redirectUri = stripe.oauth.authorizeUrl({
+//             response_type: 'code',
+//             client_id: clientId,
+//             scope: 'read_write',
+//             redirect_uri: `${process.env.CLIENT_URL}/stripe/callback`,
+//             state: state,
+//         });
 
-        res.status(200).send({ url: redirectUri });
-    } catch (error) {
-        res.status(500).send({ error: error.message });
-    }
-});
+//         res.status(200).send({ url: redirectUri });
+//     } catch (error) {
+//         res.status(500).send({ error: error.message });
+//     }
+// });
 
-// Handle the OAuth callback from Stripe
-app.get('/stripe/callback', async (req, res) => {
-    const { code, state } = req.query;
+// // Handle the OAuth callback from Stripe
+// app.get('/stripe/callback', async (req, res) => {
+//     const { code, state } = req.query;
 
-    try {
-        const response = await stripe.oauth.token({
-            grant_type: 'authorization_code',
-            code: code,
-        });
+//     try {
+//         const response = await stripe.oauth.token({
+//             grant_type: 'authorization_code',
+//             code: code,
+//         });
 
-        const stripeAccountId = response.stripe_user_id;
+//         const stripeAccountId = response.stripe_user_id;
 
-        // Find the seller using the state (which is the seller's ID)
-        const seller = await Seller.findByIdAndUpdate(state, { stripeAccountId: stripeAccountId }, { new: true });
+//         // Find the speaker using the state (which is the speaker's ID)
+//         const speaker = await Speaker.findByIdAndUpdate(state, { stripeAccountId: stripeAccountId }, { new: true });
 
-        if (!seller) {
-            return res.status(404).send({ error: 'Seller not found' });
-        }
+//         if (!speaker) {
+//             return res.status(404).send({ error: 'Speaker not found' });
+//         }
 
-        res.redirect('http://localhost:3000/success'); // Redirect to a success page on your frontend
-    } catch (error) {
-        res.status(500).send({ error: error.message });
-    }
-});
+//         res.redirect('http://localhost:3000/success'); // Redirect to a success page on your frontend
+//     } catch (error) {
+//         res.status(500).send({ error: error.message });
+//     }
+// });
 
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500;

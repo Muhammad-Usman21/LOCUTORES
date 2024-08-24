@@ -22,7 +22,7 @@ import { app } from "../firebase";
 import { countries } from "countries-list";
 import ReactPlayer from "react-player";
 
-const DashSeller = () => {
+const DashSpeaker = () => {
 	const [file, setFile] = useState(null);
 	const [imageUploadProgress, setImageUploadProgress] = useState(null);
 	const [imageUploadErrorMsg, setImageUploadErrorMsg] = useState(null);
@@ -197,7 +197,7 @@ const DashSeller = () => {
 				className="max-w-3xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
-					Create a Seller Account
+					Create a Speaker Account
 				</h1>
 				<form
 					className={`flex py-5 flex-col gap-4 ${theme}`}
@@ -404,4 +404,4 @@ const DashSeller = () => {
 		</div>
 	);
 };
-export default DashSeller;
+export default DashSpeaker;

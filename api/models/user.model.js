@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
 		about: {
 			type: String,
 		},
-		isSeller: {
+		isSpeaker: {
 			type: Boolean,
 			default: false,
 		},

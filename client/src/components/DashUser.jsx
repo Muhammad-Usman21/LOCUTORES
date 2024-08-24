@@ -496,13 +496,13 @@ const DashUser = () => {
 					</Button>
 				</form>
 
-				{!currentUser.isSeller && (
-					<Link to={"/dashboard?tab=seller"}>
+				{!currentUser.isSpeaker && (
+					<Link to={"/dashboard?tab=speaker"}>
 						<Button
 							type="button"
 							gradientDuoTone="purpleToPink"
 							className="uppercase focus:ring-1 mt-4 w-full">
-							Become a seller
+							Become a speaker
 						</Button>
 					</Link>
 				)}

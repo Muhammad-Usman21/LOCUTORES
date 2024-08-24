@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
-const sellerSchema = new mongoose.Schema(
+const speakerSchema = new mongoose.Schema(
 	{
 		userId: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
 			requred: true,
 			unique: true,
 		},
@@ -31,6 +30,6 @@ const sellerSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Seller = mongoose.model("Seller", sellerSchema);
+const Speaker = mongoose.model("Speaker", speakerSchema);
 
-export default Seller;
+export default Speaker;
