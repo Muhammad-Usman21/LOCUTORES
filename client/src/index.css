@@ -12,6 +12,18 @@
 	height: 100%;
 }
 
+.video-wrapper-form {
+	width: 100%;
+	height: auto;
+	display: block;
+	text-align: center;
+}
+.react-player-form {
+	display: inline-block;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
 body {
 	height: 100vh;
 }
