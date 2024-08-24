@@ -25,7 +25,7 @@ const Dashboard = () => {
 				<DashSidebar />
 			</div>
 			{tab === "user" && <DashUser />}
-			{currentUser.isSeller && tab === "seller" && <DashSeller />}
+			{tab === "seller" && <DashSeller />}
 		</div>
 	);
 };

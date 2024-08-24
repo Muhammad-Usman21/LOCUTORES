@@ -27,7 +27,7 @@ const SignUp = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (
-			!formData.username ||
+			!formData.name ||
 			!formData.email ||
 			!formData.password ||
 			!formData.confirmPassword
@@ -71,11 +71,11 @@ const SignUp = () => {
 						className={`flex flex-col gap-4 ${theme}`}
 						onSubmit={handleSubmit}>
 						<div className="flex flex-col gap-1">
-							<Label value="Your username" />
+							<Label value="Your name" />
 							<TextInput
 								type="text"
-								placeholder="Username"
-								id="username"
+								placeholder="Name"
+								id="name"
 								onChange={handleChange}
 								required
 							/>
@@ -100,6 +100,7 @@ const SignUp = () => {
 									onChange={handleChange}
 									className="flex-auto"
 									required
+									minLength="8"
 								/>
 								<Button
 									className="w-10 h-10 focus:ring-1 items-center rounded-lg"

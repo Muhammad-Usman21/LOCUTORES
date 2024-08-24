@@ -28,7 +28,7 @@ const SignIn = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (!formData.userInfo || !formData.password) {
+		if (!formData.email || !formData.password) {
 			return setErrorMessage("All fields are required!");
 		}
 		try {
@@ -66,11 +66,11 @@ const SignIn = () => {
 						className={`flex flex-col gap-4 ${theme}`}
 						onSubmit={handleSubmit}>
 						<div className="flex flex-col gap-1">
-							<Label value="Sign in with username or email" />
+							<Label value="Sign in with email" />
 							<TextInput
 								type="text"
-								placeholder="Username or Email"
-								id="userInfo"
+								placeholder="Email"
+								id="email"
 								onChange={handleChange}
 								required
 							/>

@@ -14,7 +14,7 @@ export const updateUser = async (req, res, next) => {
 
 	let hashedPassword;
 	const {
-		username,
+		name,
 		email,
 		currentPassword,
 		password,
@@ -54,47 +54,13 @@ export const updateUser = async (req, res, next) => {
 		if (password.length < 8) {
 			return next(errorHandler(400, "Password must be atleast 8 characters!"));
 		}
-		if (
-			!(
-				/[a-z]/.test(password) &&
-				/[A-Z]/.test(password) &&
-				/[0-9]/.test(password)
-			)
-		) {
-			return next(
-				errorHandler(
-					400,
-					"The password must contain numbers, and also both uppercase and lowercase letters.\nAnd some special characters are recommended too!"
-				)
-			);
-		}
 
 		hashedPassword = bcryptjs.hashSync(password, 10);
 	}
 
-	if (username || username === "") {
-		if (username.includes(" ")) {
-			return next(errorHandler(400, "Username cannot contains spaces!"));
-		}
-		if (username !== username.toLowerCase()) {
-			return next(errorHandler(400, "Username must be lowercase!"));
-		}
-		if (username.length < 5 || username.length > 30) {
-			return next(
-				errorHandler(400, "Username must be between 5 to 30 characters!")
-			);
-		}
-		if (!username.match(/^[a-z0-9]+$/)) {
-			return next(
-				errorHandler(400, "Username can only contains letters and numbers!")
-			);
-		}
-
-		const checkUsername = await User.findOne({ username });
-		if (checkUsername) {
-			return next(
-				errorHandler(400, "Username already taken. Try another one!")
-			);
+	if (name || name === "") {
+		if (name === "") {
+			return next(errorHandler(400, "Name required!"));
 		}
 	}
 
@@ -117,7 +83,7 @@ export const updateUser = async (req, res, next) => {
 			req.params.userId,
 			{
 				$set: {
-					username,
+					name,
 					email,
 					password: hashedPassword,
 					profilePicture,

@@ -193,8 +193,8 @@ const DashUser = () => {
 		if (formData.confirmPassword === "") {
 			delete formData.confirmPassword;
 		}
-		if (formData.username === currentUser.username) {
-			delete formData.username;
+		if (formData.name === currentUser.name) {
+			delete formData.name;
 		}
 		if (formData.email === currentUser.email) {
 			delete formData.email;
@@ -430,10 +430,10 @@ const DashUser = () => {
 
 					<TextInput
 						type="text"
-						id="username"
-						placeholder="Username"
+						id="name"
+						placeholder="Name"
 						onChange={handleChange}
-						defaultValue={currentUser.username}
+						defaultValue={currentUser.name}
 						disabled={forgetPassword}
 					/>
 					<TextInput
@@ -461,6 +461,7 @@ const DashUser = () => {
 							onChange={handleChange}
 							className="flex-auto"
 							value={formData.password || ""}
+							minLength="8"
 						/>
 						<Button
 							className="w-10 h-10 focus:ring-1 items-center rounded-lg"

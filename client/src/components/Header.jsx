@@ -58,7 +58,7 @@ const Header = () => {
 							<Avatar img={currentUser.profilePicture} alt="user" rounded />
 						}>
 						<Dropdown.Header>
-							<span className="block text-sm">@{currentUser.username}</span>
+							<span className="block text-sm">{currentUser.name}</span>
 							<span className="block text-sm font-medium">
 								{currentUser.email}
 							</span>
