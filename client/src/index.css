@@ -11,3 +11,21 @@
 	width: 100%;
 	height: 100%;
 }
+
+body {
+	height: 100vh;
+}
+
+@media (min-width: 768px) {
+	nav[aria-label="Sidebar"] > div {
+		overflow: unset;
+	}
+	[data-testid="flowbite-sidebar-items"] {
+		position: sticky;
+		top: 90px;
+	}
+}
+
+[data-testid="flowbite-alert-wrapper"] > div {
+	width: 100%;
+}

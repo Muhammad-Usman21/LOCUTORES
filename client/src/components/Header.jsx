@@ -9,6 +9,7 @@ import { Link, useLocation } from "react-router-dom";
 import { HiMoon, HiSun } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
+import { signOutSuccess } from "../redux/user/userSlice";
 
 const Header = () => {
 	const path = useLocation().pathname;
@@ -16,10 +17,25 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const { theme } = useSelector((state) => state.theme);
 
+	const handleSignOut = async () => {
+		try {
+			const res = await fetch("/api/auth/signout", {
+				method: "POST",
+			});
+			const data = await res.json();
+
+			if (!res.ok) {
+				return console.log(data.message);
+			} else {
+				dispatch(signOutSuccess(data));
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
+
 	return (
-		<Navbar
-			className="border-b-2 border-teal-600 lg:px-14 bg-cover bg-center sticky top-0 z-30
-			bg-[url('../../h&f-light.jpg')] dark:bg-[url('../../header-dark.jpg')]">
+		<Navbar className="border-b-2 border-teal-600 lg:px-14 bg-cover bg-center sticky top-0 z-30">
 			<Link
 				to="/"
 				className="font-semibold dark:text-white text-md sm:text-xl flex items-center">
@@ -47,12 +63,11 @@ const Header = () => {
 								{currentUser.email}
 							</span>
 						</Dropdown.Header>
-						<DropdownDivider />
-						<Link to={"/profile"}>
-							<Dropdown.Item>Profile</Dropdown.Item>
+						<Link to={"/dashboard?tab=user"}>
+							<Dropdown.Item>Dashboard</Dropdown.Item>
 						</Link>
 						<DropdownDivider />
-						<Dropdown.Item>Sign out</Dropdown.Item>
+						<Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
 					</Dropdown>
 				) : (
 					<Link to="/sign-in">
