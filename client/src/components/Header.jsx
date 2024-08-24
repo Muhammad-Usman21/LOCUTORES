@@ -1,0 +1,106 @@
+import {
+	Avatar,
+	Button,
+	Dropdown,
+	DropdownDivider,
+	Navbar,
+} from "flowbite-react";
+import { Link, useLocation } from "react-router-dom";
+import { HiMoon, HiSun } from "react-icons/hi";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
+
+const Header = () => {
+	const path = useLocation().pathname;
+	const { currentUser } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+	const { theme } = useSelector((state) => state.theme);
+
+	return (
+		<Navbar
+			className="border-b-2 border-teal-600 lg:px-14 bg-cover bg-center sticky top-0 z-30
+			bg-[url('../../h&f-light.jpg')] dark:bg-[url('../../header-dark.jpg')]">
+			<Link
+				to="/"
+				className="font-semibold dark:text-white text-md sm:text-xl flex items-center">
+				<span className="ml-1 text-xl sm:ml-2 sm:3xl">LOCUTORES</span>
+			</Link>
+			<div className=" flex gap-2 md:order-2 items-center">
+				<Button
+					className="w-8 h-8 sm:w-10 sm:h-10 focus:ring-1 items-center bg-transparent border-teal-400"
+					color="gray"
+					pill
+					onClick={() => dispatch(toggleTheme())}>
+					{theme === "light" ? <HiMoon /> : <HiSun />}
+				</Button>
+				{currentUser ? (
+					<Dropdown
+						className={`z-40 ${theme}`}
+						arrowIcon={false}
+						inline
+						label={
+							<Avatar img={currentUser.profilePicture} alt="user" rounded />
+						}>
+						<Dropdown.Header>
+							<span className="block text-sm">@{currentUser.username}</span>
+							<span className="block text-sm font-medium">
+								{currentUser.email}
+							</span>
+						</Dropdown.Header>
+						<DropdownDivider />
+						<Link to={"/profile"}>
+							<Dropdown.Item>Profile</Dropdown.Item>
+						</Link>
+						<DropdownDivider />
+						<Dropdown.Item>Sign out</Dropdown.Item>
+					</Dropdown>
+				) : (
+					<Link to="/sign-in">
+						<Button
+							gradientDuoTone="purpleToBlue"
+							outline
+							className="focus:ring-1">
+							Sign In
+						</Button>
+					</Link>
+				)}
+				<Navbar.Toggle />
+			</div>
+			<Navbar.Collapse className={`${theme}`}>
+				<Navbar.Link className="h-0 p-0 m-0"></Navbar.Link>
+				<Link to="/">
+					<Navbar.Link active={path === "/"} as={"div"}>
+						Home
+					</Navbar.Link>
+				</Link>
+				<Link to="/services">
+					<Navbar.Link active={path === "/services"} as={"div"}>
+						Services
+					</Navbar.Link>
+				</Link>
+				<Link to="/customers">
+					<Navbar.Link active={path === "/customers"} as={"div"}>
+						Customers
+					</Navbar.Link>
+				</Link>
+				<Link to="/speaker">
+					<Navbar.Link active={path === "/speaker"} as={"div"}>
+						Are you a speaker?
+					</Navbar.Link>
+				</Link>
+				<Link to="/podcast">
+					<Navbar.Link active={path === "/podcast"} as={"div"}>
+						Podcast
+					</Navbar.Link>
+				</Link>
+				<Link to="/courses">
+					<Navbar.Link active={path === "/courses"} as={"div"}>
+						Courses
+					</Navbar.Link>
+				</Link>
+			</Navbar.Collapse>
+		</Navbar>
+	);
+};
+
+export default Header;
