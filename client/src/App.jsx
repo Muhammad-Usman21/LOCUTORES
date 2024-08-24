@@ -7,6 +7,8 @@ import Courses from "./pages/Courses";
 import Podcast from "./pages/Podcast";
 import Services from "./pages/Services";
 import Speaker from "./pages/Speaker";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
 	return (
@@ -15,6 +17,9 @@ const App = () => {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/customers" element={<Customers />} />
+				<Route path="/sign-in" element={<SignIn />} />
+				<Route path="/sign-up" element={<SignUp />} />
 				<Route path="/customers" element={<Customers />} />
 				<Route path="/courses" element={<Courses />} />
 				<Route path="/podcast" element={<Podcast />} />
