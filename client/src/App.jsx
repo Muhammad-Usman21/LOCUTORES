@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import Payment from "./pages/Payment";
 
 const App = () => {
 	return (
@@ -29,6 +30,7 @@ const App = () => {
 				<Route path="/podcast" element={<Podcast />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/speaker" element={<Speaker />} />
+				<Route path="payment" element={<Payment/>} />
 			</Routes>
 		</BrowserRouter>
 	);
