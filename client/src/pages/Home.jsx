@@ -7,6 +7,7 @@ const Home = () => {
 	const [speaker, setSpeaker] = useState([]);
 	const [voiceType, setVoiceType] = useState("");
 	const [country, setCountry] = useState("");
+	const [showMore, setShowMore] = useState(true);
 
 	const countryOptions = Object.values(countries).map(
 		(country) => country.name
@@ -17,14 +18,17 @@ const Home = () => {
 	}, []);
 
 	const fetchSpeaker = async (voiceType = "", country = "") => {
-		console.log(voiceType, country);
+		// console.log(voiceType, country);
 		try {
 			const response = await fetch(
 				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}`
 			);
 			const data = await response.json();
-			console.log(data);
+			// console.log(data);
 			setSpeaker(data);
+			if (speaker.length < 9) {
+				setShowMore(false);
+			}
 		} catch (error) {
 			console.error("Failed to fetch speaker", error);
 		}
@@ -32,6 +36,23 @@ const Home = () => {
 
 	const handleSearch = () => {
 		fetchSpeaker(voiceType, country);
+	};
+
+	const handleShowMore = async () => {
+		try {
+			const startIndex = speaker.length;
+			const response = await fetch(
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}`
+			);
+			const data = await response.json();
+			// console.log(data);
+			if (data.length < 9) {
+				setShowMore(false);
+			}
+			setSpeaker([...speaker, ...data]);
+		} catch (error) {
+			console.error("Failed to fetch speaker", error);
+		}
 	};
 
 	return (
@@ -52,8 +73,7 @@ const Home = () => {
 						<Select
 							className="w-48"
 							value={voiceType}
-							onChange={(e) => setVoiceType(e.target.value)}
-						>
+							onChange={(e) => setVoiceType(e.target.value)}>
 							<option value="" disabled>
 								Type of Voice
 							</option>
@@ -64,8 +84,7 @@ const Home = () => {
 						<Select
 							className="w-48"
 							value={country}
-							onChange={(e) => setCountry(e.target.value)}
-						>
+							onChange={(e) => setCountry(e.target.value)}>
 							<option value="" disabled>
 								Select a Country
 							</option>
@@ -85,10 +104,19 @@ const Home = () => {
 					</div>
 				</div>
 
-				<div className="flex flex-wrap gap-5 items-center justify-center py-10">
-					{speaker.map((speaker) => (
-						<CardComponent key={speaker._id} speaker={speaker} />
-					))}
+				<div className="flex flex-col items-center justify-center gap-10 py-10">
+					<div className="flex flex-wrap gap-5 items-center justify-center">
+						{speaker.map((speaker) => (
+							<CardComponent key={speaker._id} speaker={speaker} />
+						))}
+					</div>
+					{showMore && (
+						<button
+							onClick={handleShowMore}
+							className="text-center self-center">
+							Show More
+						</button>
+					)}
 				</div>
 			</div>
 		</div>
