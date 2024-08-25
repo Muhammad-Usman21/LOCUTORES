@@ -57,15 +57,19 @@ const Home = () => {
 
 	return (
 		<div className="min-w-screen w-full">
-			<div className="max-w-6xl mx-auto items-center justify-center flex flex-col gap-24 my-24">
-				<div className="flex flex-col items-center justify-center gap-8">
+			<div className="max-w-7xl mx-auto items-center justify-center flex flex-col gap-24 my-24">
+				<div
+					className="flex flex-col items-center justify-center gap-8 p-10
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-4xl">PROFESSIONALS VOICEOVERS</span>
 					<span className="text-2xl text-center">
 						Professional Voice-Over, Commercial Voice-Over, Institutional
 						Voice-Over
 					</span>
 				</div>
-				<div className="flex flex-col items-center justify-center gap-8">
+				<div
+					className="flex flex-col items-center justify-center gap-8 p-10
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl">
 						What kind of voice are you looking for?
 					</span>
@@ -104,7 +108,8 @@ const Home = () => {
 					</div>
 				</div>
 
-				<div className="flex flex-col items-center justify-center gap-10 py-10">
+				<div className="flex flex-col items-center justify-center gap-10 p-10 mb-20
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<div className="flex flex-wrap gap-5 items-center justify-center">
 						{speaker.map((speaker) => (
 							<CardComponent key={speaker._id} speaker={speaker} />
