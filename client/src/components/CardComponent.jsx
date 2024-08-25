@@ -8,15 +8,11 @@ import { IoMdClose } from "react-icons/io";
 import { countries } from "countries-list";
 import { Link } from "react-router-dom";
 
-
-
-
 const CardComponent = ({ speaker }) => {
-
 	const [isMenuVisible, setIsMenuVisible] = useState(false);
 
 	const handleMenuToggle = () => {
-		setIsMenuVisible(prevState => !prevState);
+		setIsMenuVisible((prevState) => !prevState);
 	};
 
 	const getCountryCodeFromName = (countryName) => {
@@ -28,8 +24,6 @@ const CardComponent = ({ speaker }) => {
 		return null;
 	};
 
-
-
 	return (
 		<div
 			className="bg-gray-300 dark:bg-gray-700 shadow-xl hover:shadow-2xl transition-shadow 
@@ -40,6 +34,17 @@ const CardComponent = ({ speaker }) => {
 					<ReactPlayer
 						url={speaker.video}
 						controls
+						loop
+						config={{
+							youtube: {
+								playerVars: {
+									modestbranding: 1, // Hide the YouTube logo
+									rel: 0, // Minimizes related videos
+									showinfo: 0, // Hides video title and info (deprecated but still useful in some cases)
+									disablekb: 1, // Disables keyboard shortcuts
+								},
+							},
+						}}
 						className="react-player"
 					/>
 				) : (
@@ -52,21 +57,27 @@ const CardComponent = ({ speaker }) => {
 				)}
 			</div>
 			<div className="p-3 flex flex-col gap-2 w-full">
-				<ReactAudioPlayer
-					src={speaker.demos[0]}
-					controls
-					className="w-full"
-				/>
+				<ReactAudioPlayer src={speaker.demos[0]} controls className="w-full" />
 			</div>
 			<div className="flex flex-row content-evenly justify-evenly">
 				<div className=" flex w-[100px] items-center content-center justify-center self-center">
-					{isMenuVisible ?
-						<IoMdClose size={30} className="cursor-pointer hover:shadow-xl z-20" onClick={handleMenuToggle} />
-						: <TiThMenuOutline size={30} className="cursor-pointer hover:shadow-xl z-20" onClick={handleMenuToggle} />}
-
+					{isMenuVisible ? (
+						<IoMdClose
+							size={30}
+							className="cursor-pointer hover:shadow-xl z-20"
+							onClick={handleMenuToggle}
+						/>
+					) : (
+						<TiThMenuOutline
+							size={30}
+							className="cursor-pointer hover:shadow-xl z-20"
+							onClick={handleMenuToggle}
+						/>
+					)}
 				</div>
-				<Link to={`/speaker/${speaker._id}`} className="w-[300px] self-center m-5"
-				>
+				<Link
+					to={`/speaker/${speaker._id}`}
+					className="w-[300px] self-center m-5">
 					<Button
 						className="w-full"
 						pill
@@ -76,13 +87,17 @@ const CardComponent = ({ speaker }) => {
 					</Button>
 				</Link>
 				<div className="w-[100px] flex flex-col gap-1 content-center justify-center items-center mr-2">
-					<Flag code={getCountryCodeFromName(speaker.country)} className="w-8" />
+					<Flag
+						code={getCountryCodeFromName(speaker.country)}
+						className="w-8"
+					/>
 					<span className="text-xxs text-center">{speaker.country}</span>
 				</div>
 			</div>
 			<div
-				className={`absolute right-0 bottom-0 w-full h-4/5 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform duration-300 ease-in-out transform ${isMenuVisible ? 'translate-y-0' : 'translate-y-full'}`}
-			>
+				className={`absolute right-0 bottom-0 w-full h-4/5 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform duration-300 ease-in-out transform ${
+					isMenuVisible ? "translate-y-0" : "translate-y-full"
+				}`}>
 				{isMenuVisible && (
 					<>
 						{speaker.demos.slice(1).map((demo, index) => (
