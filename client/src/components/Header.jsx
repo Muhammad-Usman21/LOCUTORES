@@ -10,12 +10,18 @@ import { HiMoon, HiSun } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutSuccess } from "../redux/user/userSlice";
+import { useEffect } from "react";
 
 const Header = () => {
 	const path = useLocation().pathname;
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const { theme } = useSelector((state) => state.theme);
+
+	useEffect(() => {
+		const reload = async () => { await fetch("/api/reload"); }
+		reload();
+	}, []);
 
 	const handleSignOut = async () => {
 		try {

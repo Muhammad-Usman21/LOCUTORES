@@ -6,6 +6,7 @@ const speakerSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			requred: true,
 			unique: true,
+			ref: "User",
 		},
 		video: {
 			type: String,

@@ -77,13 +77,16 @@ const Speaker = () => {
       setLoading(true);
       setErrorMessage(null);
       const stripe = await loadStripe("pk_test_51PrLnjISagHb5Xr13f8PuJs7EFOwxi5jIXxS4l0DTdT4vGtW6N8m09YOCckaR6vglbqEZitXvNFyoUOhSgR1EpUF00d7wABlaO");
-      const response = await fetch("/api/payment/create-checkout-session", {
+      const response = await fetch("/api/order/create-new-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: 100,
+          user: currentUser,
+          speaker: speaker,
+          data: formData,
+          amount: speaker.prices[formData.duration],
         }),
       });
       const session = await response.json();
@@ -142,6 +145,35 @@ const Speaker = () => {
               {showMore ? 'Show Less' : 'Show More'}
             </button>
           </div>
+          <div className=" flex justify-center align-middle flex-col items-center w-full">
+            <h3 className="text-2xl mb-4 font-semibold">Prices</h3>
+            <div className="overflow-x-auto w-3/4">
+              <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md text-center">
+                <thead>
+                  <tr>
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 border-r">Duration</th>
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-r">10 ~ 20 seconds</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">$ {speaker.prices.small}</td>
+                  </tr>
+                  <tr className="bg-gray-50 dark:bg-gray-700">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-r">30 ~ 40 seconds</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">$ {speaker.prices.medium}</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-r">1 minute</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">$ {speaker.prices.large}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
           {speaker.video && (
             <div className="self-center mt-3 mb-3">
               <ReactPlayer
@@ -190,7 +222,7 @@ const Speaker = () => {
         className="flex w-1/2 h-min self-center m-4 p-10 max-w-2xl flex-col md:flex-row md:items-center gap-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
         <div className="flex-1 px-5">
-          <h1 className="flex self-center justify-center text-3xl font-semibold mb-6">Fill out the Form</h1>
+          <h1 className="flex self-center justify-center text-3xl font-semibold mb-6">Place an Order</h1>
           <form
             className={`flex flex-col gap-4 ${theme}`}
             onSubmit={handleSubmit}>
@@ -299,9 +331,9 @@ const Speaker = () => {
                   <option value="" disabled>
                     Select a Duration
                   </option>
-                  <option value="10_20_sec">Voice for 10~20 sec </option>
-                  <option value="30_40_sec">Voice for 30~40 sec</option>
-                  <option value="1_min">Voice for 1 min</option>
+                  <option value="small">Voice for 10~20 sec </option>
+                  <option value="medium">Voice for 30~40 sec</option>
+                  <option value="large">Voice for 1 min</option>
                 </Select>
               </div>
             </div>
