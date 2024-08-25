@@ -105,13 +105,12 @@ const dummySpeakers = [
 export const getSpeakers = async (req, res) => {
   try {
     var { voiceType, country } = req.query;
-    if(voiceType === 'all') {
+    if (voiceType === "all") {
       voiceType = null;
     }
-    if(country === 'all') {
+    if (country === "all") {
       country = null;
     }
-
 
     const query = {};
 
@@ -128,5 +127,21 @@ export const getSpeakers = async (req, res) => {
   } catch (error) {
     console.error("Failed to fetch speakers", error);
     res.status(500).json({ error: "Failed to fetch speakers" });
+  }
+};
+
+export const getSpeaker = async (req, res) => {
+  try {
+    // const { id } = req.params; 
+    // const speaker = await Speaker.findById(id).populate("userId", "name email"); 
+
+    // if (!speaker) {
+    //   return res.status(404).json({ message: "Speaker not found" });
+    // }
+
+    console.log(dummySpeakers[0]);
+    res.json(dummySpeakers[0]);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
 };

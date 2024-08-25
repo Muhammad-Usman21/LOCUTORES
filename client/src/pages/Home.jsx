@@ -12,8 +12,6 @@ const Home = () => {
 		(country) => country.name
 	);
 
-	console.log(countries);
-
 	useEffect(() => {
 		fetchSpeaker();
 	}, []);
