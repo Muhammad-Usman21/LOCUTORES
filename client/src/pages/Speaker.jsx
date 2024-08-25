@@ -47,7 +47,7 @@ const Speaker = () => {
   useEffect(() => {
     const fetchSpeaker = async () => {
       try {
-        const response = await fetch(`/api/speaker/getspeaker/${id}`);
+        const response = await fetch(`/api/speaker/getspeakerrr/${id}`);
         const data = await response.json();
         setSpeaker(data);
       } catch (error) {

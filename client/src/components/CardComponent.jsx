@@ -75,9 +75,9 @@ const CardComponent = ({ speaker }) => {
 						CHOOSE
 					</Button>
 				</Link>
-				<div className="w-[100px] flex flex-col gap-1 content-center justify-center items-center">
+				<div className="w-[100px] flex flex-col gap-1 content-center justify-center items-center mr-2">
 					<Flag code={getCountryCodeFromName(speaker.country)} className="w-8" />
-					<span className="text-xxs">{speaker.country}</span>
+					<span className="text-xxs text-center">{speaker.country}</span>
 				</div>
 			</div>
 			<div

@@ -123,9 +123,9 @@ export const getSpeakers = async (req, res) => {
 			query.country = country;
 		}
 
-		const speakers = await Speaker.find(query).limit(9);
+		const speakers = await Speaker.find(query).limit(9).sort({ createdAt: -1 });
 
-		res.json(dummySpeakers);
+		res.json(speakers);
 	} catch (error) {
 		console.error("Failed to fetch speakers", error);
 		res.status(500).json({ error: "Failed to fetch speakers" });
@@ -293,4 +293,15 @@ export const getSpeaker = async (req, res, next) => {
 	} catch (error) {
 		next(error);
 	}
+};
+
+export const getSpeakerrr = async (req, res) => {
+	const { id } = req.params;
+	const speaker = await Speaker.findById(id).populate("userId", "name email");
+
+	if (!speaker) {
+		return res.status(404).json({ message: "Speaker not found" });
+	}
+
+	res.json(speaker);
 };
