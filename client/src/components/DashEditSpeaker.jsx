@@ -14,7 +14,7 @@ import {
 	Textarea,
 	TextInput,
 } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { MdCancelPresentation } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -26,7 +26,7 @@ import ReactAudioPlayer from "react-audio-player";
 import { updateUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
-const DashSpeaker = () => {
+const DashEditSpeaker = () => {
 	const [file, setFile] = useState(null);
 	const [imageUploadProgress, setImageUploadProgress] = useState(null);
 	const [imageUploadErrorMsg, setImageUploadErrorMsg] = useState(null);
@@ -45,6 +45,26 @@ const DashSpeaker = () => {
 	const countryOptions = Object.values(countries).map(
 		(country) => country.name
 	);
+
+	useEffect(() => {
+		try {
+			const fetchSpeaker = async () => {
+				const res = await fetch(`/api/speaker/getspeaker/${currentUser._id}`);
+				const data = await res.json();
+				if (!res.ok) {
+					console.log(data.message);
+					return;
+				}
+				if (res.ok) {
+					setFormData(data);
+				}
+			};
+
+			fetchSpeaker();
+		} catch (error) {
+			console.log(error.message);
+		}
+	}, [currentUser._id]);
 
 	const handleUploadImage = async () => {
 		setImageUploadErrorMsg(null);
@@ -167,7 +187,7 @@ const DashSpeaker = () => {
 		});
 	};
 
-	console.log(formData);
+	// console.log(formData);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -192,9 +212,9 @@ const DashSpeaker = () => {
 
 		try {
 			const res = await fetch(
-				`/api/speaker/create-speaker/${currentUser._id}`,
+				`/api/speaker/update-speaker/${currentUser._id}/${formData._id}`,
 				{
-					method: "POST",
+					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
 					},
@@ -209,7 +229,6 @@ const DashSpeaker = () => {
 			} else {
 				setLoading(false);
 				setSpeakerErrorMsg(null);
-				dispatch(updateUserSuccess(data.user));
 				navigate(`/`);
 			}
 		} catch (error) {
@@ -217,6 +236,8 @@ const DashSpeaker = () => {
 			setLoading(false);
 		}
 	};
+
+	// console.log(formData);
 
 	return (
 		<div
@@ -226,7 +247,7 @@ const DashSpeaker = () => {
 				className="max-w-3xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
-					Create a Speaker Account
+					Edit your Speaker Account
 				</h1>
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
@@ -238,6 +259,7 @@ const DashSpeaker = () => {
 								disabled={loading || imageUploading || audioUploading}
 								className="w-56"
 								required
+								value={formData?.gender || ""}
 								onChange={(e) =>
 									setFormData({ ...formData, gender: e.target.value })
 								}>
@@ -253,6 +275,7 @@ const DashSpeaker = () => {
 								disabled={loading || imageUploading || audioUploading}
 								className="w-56"
 								required
+								value={formData.country || ""}
 								onChange={(e) =>
 									setFormData({ ...formData, country: e.target.value })
 								}>
@@ -272,12 +295,13 @@ const DashSpeaker = () => {
 							className="mb-4"
 							type="text"
 							placeholder="Youtube Link"
+							value={formData.video || ""}
 							onChange={(e) =>
 								setFormData({ ...formData, video: e.target.value })
 							}
 							disabled={loading || imageUploading || audioUploading}
 						/>
-						{formData.video && (
+						{formData?.video && (
 							<div className="video-wrapper-form">
 								<ReactPlayer
 									url={formData.video}
@@ -423,6 +447,7 @@ const DashSpeaker = () => {
 									className="w-40"
 									type="number"
 									placeholder="$"
+									value={formData.prices.small}
 									onChange={(e) =>
 										setFormData({
 											...formData,
@@ -443,6 +468,7 @@ const DashSpeaker = () => {
 									className="w-40"
 									type="number"
 									placeholder="$"
+									value={formData.prices.medium}
 									onChange={(e) =>
 										setFormData({
 											...formData,
@@ -463,6 +489,7 @@ const DashSpeaker = () => {
 									className="w-40"
 									type="number"
 									placeholder="$"
+									value={formData.prices.large}
 									onChange={(e) =>
 										setFormData({
 											...formData,
@@ -489,6 +516,7 @@ const DashSpeaker = () => {
 							className="mb-2 mt-1"
 							rows="4"
 							placeholder="Write something about you...."
+							value={formData.about || ""}
 							onChange={(e) =>
 								setFormData({ ...formData, about: e.target.value })
 							}
@@ -508,7 +536,7 @@ const DashSpeaker = () => {
 								<span className="pl-3">Loading.... Please Wait!</span>
 							</>
 						) : (
-							"Become Speaker"
+							"Update account"
 						)}
 					</Button>
 				</form>
@@ -529,4 +557,4 @@ const DashSpeaker = () => {
 		</div>
 	);
 };
-export default DashSpeaker;
+export default DashEditSpeaker;

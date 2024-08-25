@@ -26,6 +26,14 @@ const speakerSchema = new mongoose.Schema(
 			type: Array,
 			default: [],
 		},
+		prices: {
+			small: { type: Number, required: true },
+			medium: { type: Number, required: true },
+			large: { type: Number, required: true },
+		},
+		about: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );

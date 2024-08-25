@@ -24,6 +24,10 @@
 	overflow: hidden;
 }
 
+[data-testid="flowbite-avatar-img"] {
+	object-fit: cover;
+}
+
 body {
 	height: 100vh;
 }

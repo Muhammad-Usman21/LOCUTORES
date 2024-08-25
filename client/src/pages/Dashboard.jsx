@@ -4,6 +4,7 @@ import DashSidebar from "../components/DashSidebar";
 import { useSelector } from "react-redux";
 import DashSpeaker from "../components/DashSpeaker";
 import DashUser from "../components/DashUser";
+import DashEditSpeaker from "../components/DashEditSpeaker";
 
 const Dashboard = () => {
 	const location = useLocation();
@@ -26,6 +27,7 @@ const Dashboard = () => {
 			</div>
 			{tab === "user" && <DashUser />}
 			{tab === "speaker" && <DashSpeaker />}
+			{tab === "edit-speaker" && <DashEditSpeaker />}
 		</div>
 	);
 };

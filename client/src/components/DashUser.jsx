@@ -68,6 +68,7 @@ const DashUser = () => {
 	};
 
 	// console.log(imageFile, imageFileUrl);
+	// console.log(currentUser);
 
 	useEffect(() => {
 		if (imageFile) {
@@ -502,7 +503,7 @@ const DashUser = () => {
 							type="button"
 							gradientDuoTone="purpleToPink"
 							className="uppercase focus:ring-1 mt-4 w-full">
-							Become a speaker
+							Become a Speaker
 						</Button>
 					</Link>
 				)}

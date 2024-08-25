@@ -1,8 +1,17 @@
 import express from "express";
-import { getSpeakers } from "../controllers/speaker.controller.js";
+import {
+	createSpeaker,
+	getSpeaker,
+	getSpeakers,
+    updateSpeaker,
+} from "../controllers/speaker.controller.js";
+import { verifyToken } from "../utils/verifyUser.js";
 
 const router = express.Router();
 
 router.get("/getspeakers", getSpeakers);
+router.post("/create-speaker/:userId", verifyToken, createSpeaker);
+router.put("/update-speaker/:userId/:speakerId", verifyToken, updateSpeaker);
+router.get("/getspeaker/:userId", getSpeaker);
 
 export default router;

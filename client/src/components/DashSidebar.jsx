@@ -49,14 +49,25 @@ const DashSidebar = () => {
 							User
 						</Sidebar.Item>
 					</Link>
-					<Link to="/dashboard?tab=speaker">
-						<Sidebar.Item
-							active={tab === "speaker"}
-							icon={RiUserVoiceFill}
-							as="div">
-							Speaker
-						</Sidebar.Item>
-					</Link>
+					{currentUser.isSpeaker ? (
+						<Link to="/dashboard?tab=edit-speaker">
+							<Sidebar.Item
+								active={tab === "edit-speaker"}
+								icon={RiUserVoiceFill}
+								as="div">
+								Speaker
+							</Sidebar.Item>
+						</Link>
+					) : (
+						<Link to="/dashboard?tab=speaker">
+							<Sidebar.Item
+								active={tab === "speaker"}
+								icon={RiUserVoiceFill}
+								as="div">
+								Speaker
+							</Sidebar.Item>
+						</Link>
+					)}
 					<Sidebar.Item
 						icon={HiArrowSmRight}
 						className="cursor-pointer"
