@@ -105,7 +105,6 @@ const dummySpeakers = [
 ];
 
 export const getSpeakers = async (req, res) => {
-<<<<<<< HEAD
 	try {
 		var { voiceType, country } = req.query;
 		if (voiceType === "all") {
@@ -123,18 +122,6 @@ export const getSpeakers = async (req, res) => {
 		if (country) {
 			query.country = country;
 		}
-=======
-  try {
-    var { voiceType, country } = req.query;
-    if (voiceType === "all") {
-      voiceType = null;
-    }
-    if (country === "all") {
-      country = null;
-    }
-
-    const query = {};
->>>>>>> 5d02e428926cbdf28b5e93dc2b22ca8b614fd956
 
 		const speakers = await Speaker.find(query).limit(9);
 
