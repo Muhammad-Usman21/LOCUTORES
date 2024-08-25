@@ -16,6 +16,23 @@ export const getOrders = async (req, res) => {
   }
 };
 
+export const getOrderNotification = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const orderInfo = await Order.find(
+      {
+        $or: [{ userId }, { speakerId: userId }],
+      },
+      "_id status updatedAt"
+    );
+
+    res.status(200).json(orderInfo);
+  } catch (error) {
+    console.error("Error retrieving order status info:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
 export const createNewOrder = async (req, res, next) => {
   const data = req.body;
   if (req.user.id !== data.user._id) {
@@ -107,8 +124,7 @@ export const orderDelivered = async (req, res) => {
       return res.status(400).send({ error: "Order is not pending delivery" });
     }
 
-    // Mark the order as delivered
-    order.status = "Delivered";
+    order.status = "Completed";
     await order.save();
 
     // Transfer funds to the speaker's Stripe-connected account
@@ -117,8 +133,8 @@ export const orderDelivered = async (req, res) => {
     const transfer = await stripe.transfers.create({
       amount: order.amount * 100, // amount in cents
       currency: "usd",
-      destination: speakerStripeAccountId, // Speaker's Stripe Account ID
-      transfer_group: `ORDER_${order._id}`, // Optional: Grouping for related transfers
+      destination: speakerStripeAccountId,
+      transfer_group: `ORDER_${order._id}`,
     });
 
     res

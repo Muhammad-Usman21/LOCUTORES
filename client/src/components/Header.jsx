@@ -10,7 +10,9 @@ import { HiMoon, HiSun } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutSuccess } from "../redux/user/userSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { IoIosNotifications } from "react-icons/io";
+
 
 const Header = () => {
 	const path = useLocation().pathname;
@@ -18,9 +20,33 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const { theme } = useSelector((state) => state.theme);
 
+	const [hasNewUpdates, setHasNewUpdates] = useState(false);
+
+
 	useEffect(() => {
-		const reload = async () => { await fetch("/api/reload"); }
-		reload();
+		if(!currentUser) return;
+		const checkForOrderUpdates = async () => {
+			const storedOrderInfo = JSON.parse(localStorage.getItem('orderInfo'));
+			if (!storedOrderInfo) return;
+
+			const response = await fetch('/api/order/orders-notifications');
+			const data = await response.json();
+			console.log(data);
+
+			const hasUpdates = data.some(order => {
+				const storedOrder = storedOrderInfo.find(stored => stored.id === order._id);
+				if (!storedOrder) return true;
+				return storedOrder && (storedOrder.status !== order.status || new Date(storedOrder.updatedAt) < new Date(order.updatedAt));
+			});
+			console.log(hasUpdates);
+			setHasNewUpdates(hasUpdates);
+		};
+
+		checkForOrderUpdates();
+
+		const interval = setInterval(checkForOrderUpdates, 120000);
+
+		return () => clearInterval(interval);
 	}, []);
 
 	const handleSignOut = async () => {
@@ -94,9 +120,9 @@ const Header = () => {
 						Home
 					</Navbar.Link>
 				</Link>
-				<Link to="/services">
-					<Navbar.Link active={path === "/services"} as={"div"}>
-						Services
+				<Link to="/orders" onClick={() => setHasNewUpdates(false)} >
+					<Navbar.Link active={path === "/orders"} as={"div"}>
+						Orders {hasNewUpdates && <IoIosNotifications className="text-red-500 inline-block" />}
 					</Navbar.Link>
 				</Link>
 				<Link to="/customers">
