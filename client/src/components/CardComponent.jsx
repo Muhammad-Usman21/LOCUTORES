@@ -20,13 +20,12 @@ const CardComponent = ({ speaker }) => {
 	};
 
 	const getCountryCodeFromName = (countryName) => {
-		// Iterate over the entries in the countries object
 		for (const [code, { name }] of Object.entries(countries)) {
 			if (name.toLowerCase() === countryName.toLowerCase()) {
 				return code; // Return the country code if a match is found
 			}
 		}
-		return null; // Return null if the country name is not found
+		return null;
 	};
 
 
@@ -66,7 +65,7 @@ const CardComponent = ({ speaker }) => {
 						: <TiThMenuOutline size={30} className="cursor-pointer hover:shadow-xl z-20" onClick={handleMenuToggle} />}
 
 				</div>
-				<Link to={`/speaker/${speaker.userId}`} className="w-[300px] self-center m-5"
+				<Link to={`/speaker/${speaker._id}`} className="w-[300px] self-center m-5"
 				>
 					<Button
 						className="w-full"

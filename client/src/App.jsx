@@ -24,13 +24,9 @@ const App = () => {
 				<Route path="/sign-up" element={<SignUp />} />
 				<Route element={<PrivateRoute />}>
 					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/speaker/:id" element={<Speaker />} />
 				</Route>
-				<Route path="/customers" element={<Customers />} />
-				<Route path="/courses" element={<Courses />} />
-				<Route path="/podcast" element={<Podcast />} />
-				<Route path="/services" element={<Services />} />
-				<Route path="/speaker" element={<Speaker />} />
-				<Route path="payment" element={<Payment/>} />
+				<Route path="/payment" element={<Payment/>} />
 			</Routes>
 		</BrowserRouter>
 	);
