@@ -8,8 +8,15 @@ export const getOrders = async (req, res) => {
     const userId = req.user.id;
     const orders = await Order.find({
       $or: [{ userId }, { speakerId: userId }],
-    }).populate("userId speakerId");
-
+    })
+      .populate({
+        path: 'speakerId',
+        populate: {
+          path: 'userId',
+          model: 'User',
+        },
+      })
+      .populate('userId');
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch orders", error });
