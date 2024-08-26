@@ -85,6 +85,7 @@ const Speaker = () => {
 			!formData.city ||
 			!formData.country ||
 			!formData.service ||
+			!formData.quote ||
 			!formData.duration
 		) {
 			return setErrorMessage("All fields are required!");
@@ -138,13 +139,13 @@ const Speaker = () => {
 			{speaker ? (
 				<div className="container mx-auto p-4 lg:w-2/5 w-full">
 					<div className="flex flex-col items-center gap-4">
-						<div className=" w-full h-72 flex flex-row gap-5 justify-between content-between place-content-between">
+						<div className=" w-full mt-10 flex flex-row gap-5 justify-between content-between place-content-between">
 							<img
 								src={speaker.image}
 								alt={speaker.userId.name}
-								className="rounded-3xl shadow-2xl w-80 h-64 self-center dark:shadow-whiteLg flex-1 object-cover"
+								className="rounded-3xl shadow-2xl w-64 h-44 self-center dark:shadow-whiteLg flex-1 object-cover"
 							/>
-							<div className="w-3/5 h-full flex flex-col justify-center gap-3 flex-1">
+							<div className="w-3/5 flex flex-col justify-center gap-3 flex-1">
 								<p className="text-xl">
 									<FaRegUser className="inline-block mr-2" />
 									{speaker.userId.name}
@@ -338,6 +339,7 @@ const Speaker = () => {
 										className="w-full"
 										value={formData.country}
 										id="country"
+										required
 										onChange={handleChange}>
 										<option value="" disabled>
 											Select a Country
@@ -357,6 +359,7 @@ const Speaker = () => {
 									<Select
 										className="w-full"
 										id="service"
+										required
 										value={formData.service}
 										onChange={handleChange}>
 										<option value="" disabled>
@@ -374,6 +377,7 @@ const Speaker = () => {
 									<Label value="Audio Duration" />
 									<Select
 										className="w-full"
+										required
 										id="duration"
 										value={formData.duration}
 										onChange={handleChange}>
@@ -387,10 +391,21 @@ const Speaker = () => {
 								</div>
 							</div>
 							<div className="flex flex-col gap-1">
+								<Label value="Quote" />
+								<Textarea
+									rows={5}
+									placeholder="Write your quote for voice-over"
+									id="quote"
+									value={formData.quote}
+									onChange={handleChange}
+									required
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
 								<Label value="Specs" />
 								<Textarea
 									rows={3}
-									placeholder="Optional additional information (length, voice type, broadcast medium, etc.)."
+									placeholder="Optional additional information (length, voice type, broadcast medium, etc.)"
 									id="specs"
 									value={formData.specs}
 									onChange={handleChange}

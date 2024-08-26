@@ -508,14 +508,14 @@ const DashUser = () => {
 					</Link>
 				)}
 
-				<div className="text-red-500 flex justify-between my-3 mx-1">
+				{/* <div className="text-red-500 flex justify-between my-3 mx-1">
 					<span onClick={() => setShowModal(true)} className="cursor-pointer ">
 						Delete Account
 					</span>
 					<span onClick={handleSignOut} className="cursor-pointer ">
 						Sign Out
 					</span>
-				</div>
+				</div> */}
 
 				{Object.entries(myMessages).map(
 					([msg, value]) =>

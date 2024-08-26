@@ -9,7 +9,6 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import Payment from "./pages/Payment";
 import Orders from "./pages/Orders";
-import Customers from "./pages/Customers";
 
 const App = () => {
 	return (
@@ -25,8 +24,7 @@ const App = () => {
 					<Route path="/orders" element={<Orders />} />
 					<Route path="/speaker/:id" element={<Speaker />} />
 				</Route>
-				<Route path="/payment" element={<Payment/>} />
-				<Route path="/customers" element={<Customers />} />
+				<Route path="/payment" element={<Payment />} />
 			</Routes>
 		</BrowserRouter>
 	);

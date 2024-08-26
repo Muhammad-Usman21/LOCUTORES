@@ -3,15 +3,21 @@ import OrderCard from "../components/OrderCard";
 
 const Orders = () => {
 	const [orders, setOrders] = useState([]);
-	console.log(orders);
+	const [showMore, setShowMore] = useState(true);
+	// console.log(orders);
 
 	useEffect(() => {
 		const fetchOrders = async () => {
-			const response = await fetch("/api/order/orders");
+			const response = await fetch("/api/order/orders?limit=10");
 			const data = await response.json();
 			setOrders(data);
+			if (data.length < 10) {
+				setShowMore(false);
+			}
 
-			const orderInfo = data.map((order) => ({
+			const res = await fetch("/api/order/orders-notifications");
+			const dataNoti = await res.json();
+			const orderInfo = dataNoti.map((order) => ({
 				id: order._id,
 				status: order.status,
 				updatedAt: order.updatedAt,
@@ -21,6 +27,25 @@ const Orders = () => {
 
 		fetchOrders();
 	}, []);
+
+	const handleShowMore = async () => {
+		const startIndex = orders.length;
+		const response = await fetch(
+			`/api/order/orders?limit=10&startIndex${startIndex}`
+		);
+		const data = await response.json();
+		setOrders([...orders, ...data]);
+		if (data.length < 10) {
+			setShowMore(false);
+		}
+
+		const orderInfo = data.map((order) => ({
+			id: order._id,
+			status: order.status,
+			updatedAt: order.updatedAt,
+		}));
+		localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
+	};
 
 	const orderUpdated = ({
 		orderId,
@@ -49,6 +74,11 @@ const Orders = () => {
 						<OrderCard order={order} orderUpdated={orderUpdated} />
 					</div>
 				))}
+				{showMore && (
+					<button onClick={handleShowMore} className="text-center self-center">
+						Show More
+					</button>
+				)}
 			</div>
 		</div>
 	);

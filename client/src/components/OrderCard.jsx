@@ -12,6 +12,7 @@ import { MdEmail } from "react-icons/md";
 import { useSelector } from "react-redux";
 import Flag from "react-world-flags";
 import { app } from "../firebase";
+import { Link } from "react-router-dom";
 
 const OrderCard = ({ order, orderUpdated }) => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -164,13 +165,17 @@ const OrderCard = ({ order, orderUpdated }) => {
 								order.status === "Rejected"
 									? "text-red-500 font-semibold"
 									: order.status === "Completed"
-										? "text-green-500 font-semibold"
-										: order.status === "Pending Delivery"
-											? "text-yellow-500 font-semibold"
-											: "font-semibold"
+									? "text-green-500 font-semibold"
+									: order.status === "Pending Delivery"
+									? "text-yellow-500 font-semibold"
+									: "font-semibold"
 							}>
 							{order.status}
 						</span>
+					</div>
+					<div>
+						<span className="font-semibold mr-[98px]">Quote:</span>
+						<span className="font-semibold">{order.quote}</span>
 					</div>
 					<div>
 						<span className="font-semibold mr-[102px]">Specs:</span>
@@ -181,122 +186,123 @@ const OrderCard = ({ order, orderUpdated }) => {
 				{(order.status === "Completed" ||
 					order.status === "Rejected" ||
 					order.status === "Delivered") && (
-						<div className="p-2 rounded-xl mt-2 border dark:border-gray-700">
-							{(order.status === "Delivered" || order.status === "Rejected") &&
-								order.speakerId.userId._id === currentUser._id && (
-									<p className="text-center py-2">
-										Customer recieved this audio <br />
-										But you can update this if there is any issue with this file
-									</p>
-								)}
-							{order.status === "Delivered" &&
-								order.userId._id === currentUser._id && (
-									<p className="text-center py-2">
-										Order {order.status} and Speaker send this audio <br />
-										If there are any issues in the file then you can contact with
-										your Speaker.
-									</p>
-								)}
-							<ReactAudioPlayer
-								src={order.audioFile}
-								controls
-								controlsList={order.status === "Completed" ? "" : "nodownload"}
-								className="w-full"
-							/>
-							{(order.status === "Delivered" || order.status === "Rejected") &&
-								order.userId._id === currentUser._id && (
-									<div className="flex flex-col gap-2">
-										{order.speakerMessage && (
-											<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
-												<p className="text-xxs">Message from Speaker</p>
-												<p>{order.speakerMessage}</p>
-											</div>
-										)}
+					<div className="p-2 rounded-xl mt-2 border dark:border-gray-700">
+						{(order.status === "Delivered" || order.status === "Rejected") &&
+							order.speakerId.userId._id === currentUser._id && (
+								<p className="text-center py-2">
+									Customer recieved this audio <br />
+									But you can update this if there is any issue with this file
+								</p>
+							)}
+						{order.status === "Delivered" &&
+							order.userId._id === currentUser._id && (
+								<p className="text-center py-2">
+									Order {order.status} and Speaker send this audio <br />
+									If there are any issues in the file then you can contact with
+									your Speaker.
+								</p>
+							)}
+						<ReactAudioPlayer
+							src={order.audioFile}
+							controls
+							controlsList={order.status === "Completed" ? "" : "nodownload"}
+							className="w-full"
+						/>
+						{order.status === "Delivered" &&
+							order.speakerId.userId._id === currentUser._id && (
+								<p className="text-center py-2">
+									Order {order.status}. Waiting for Customer to ACCEPT
+								</p>
+							)}
+						{(order.status === "Delivered" || order.status === "Rejected") &&
+							order.userId._id === currentUser._id && (
+								<div className="flex flex-col gap-2">
+									{order.speakerMessage && (
+										<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
+											<p className="text-xxs">Message from Speaker</p>
+											<p>{order.speakerMessage}</p>
+										</div>
+									)}
 
-										{status === "Delivered" && (
-											<>
-												<p className="text-center">
-													You can download above audio after ACCEPT
-												</p>
-												<div className="flex w-full gap-4">
+									{status === "Delivered" && (
+										<>
+											<p className="text-center">
+												You can download above audio after ACCEPT
+											</p>
+											<div className="flex w-full gap-4">
+												<Button
+													type="button"
+													gradientDuoTone="purpleToBlue"
+													size="sm"
+													outline
+													className="focus:ring-1 flex-1"
+													onClick={() => {
+														handleFileUpload(order._id, "Completed");
+													}}>
+													Accept
+												</Button>
+												<Button
+													type="button"
+													gradientDuoTone="purpleToPink"
+													size="sm"
+													outline
+													className="focus:ring-1 flex-1"
+													onClick={() => setStatus("Reject")}>
+													Reject
+												</Button>
+											</div>
+										</>
+									)}
+
+									{status === "Reject" && (
+										<div className="w-full">
+											<span className="text-sm">
+												Write an message for Speaker
+											</span>
+											<form
+												onSubmit={() => handleFileUpload(order._id, "Rejected")}
+												className="mt-1 w-full">
+												<Textarea
+													className="mb-2"
+													rows="2"
+													placeholder="Write reason for rejection...."
+													onChange={(e) => setRejectMessage(e.target.value)}
+													disabled={audioUploading}
+												/>
+												<div className="flex gap-2">
 													<Button
-														type="button"
-														gradientDuoTone="purpleToBlue"
+														type="submit"
+														gradientDuoTone="purpleToPink"
 														size="sm"
 														outline
-														className="focus:ring-1 flex-1"
-														onClick={() => {
-															handleFileUpload(order._id, "Completed");
-														}}>
-														Accept
+														className="focus:ring-1 w-full">
+														SEND
 													</Button>
 													<Button
 														type="button"
 														gradientDuoTone="purpleToPink"
 														size="sm"
 														outline
-														className="focus:ring-1 flex-1"
-														onClick={() => setStatus("Reject")}>
-														Reject
+														className="focus:ring-1 w-full"
+														onClick={() => setStatus(order.status)}>
+														CANCEL
 													</Button>
 												</div>
-											</>
-										)}
-
-										{status === "Reject" && (
-											<div className="w-full">
-												<span className="text-sm">Write an message for Speaker</span>
-												<form
-													onSubmit={() =>
-														handleFileUpload(order._id, "Rejected")
-													}
-													className="mt-1 w-full">
-													<Textarea
-														className="mb-2"
-														rows="2"
-														placeholder="Write reason for rejection...."
-														onChange={(e) =>
-															setRejectMessage(e.target.value)
-														}
-														disabled={audioUploading}
-													/>
-													<div className="flex gap-2">
-														<Button
-															type="submit"
-															gradientDuoTone="purpleToPink"
-															size="sm"
-															outline
-															className="focus:ring-1 w-full"
-
-														>
-															SEND
-														</Button>
-														<Button
-															type="button"
-															gradientDuoTone="purpleToPink"
-															size="sm"
-															outline
-															className="focus:ring-1 w-full"
-															onClick={() => setStatus(order.status)}
-														>
-															CANCEL
-														</Button>
-													</div>
-												</form>
-											</div>
-										)}
-									</div>
-								)}
-							{order.status === "Rejected" &&
-								order.speakerId.userId._id === currentUser._id &&
-								order.rejectMessage && (
-									<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
-										<p className="text-xxs">Message from Customer</p>
-										<p>{order.rejectMessage}</p>
-									</div>
-								)}
-						</div>
-					)}
+											</form>
+										</div>
+									)}
+								</div>
+							)}
+						{order.status === "Rejected" &&
+							order.speakerId.userId._id === currentUser._id &&
+							order.rejectMessage && (
+								<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
+									<p className="text-xxs">Message from Customer</p>
+									<p>{order.rejectMessage}</p>
+								</div>
+							)}
+					</div>
+				)}
 
 				{order.speakerId.userId._id === currentUser._id &&
 					(order.status === "Rejected" ||
@@ -325,7 +331,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 								(order.status === "Pending Delivery" ||
 									order.status === "Rejected") && (
 									<div className="flex flex-col gap-2">
-										<div className="flex justify-between px-3 py-1 border items-center">
+										<div className="flex justify-between px-3 py-1 items-center">
 											<ReactAudioPlayer
 												src={audioUrl}
 												controls
@@ -367,20 +373,35 @@ const OrderCard = ({ order, orderUpdated }) => {
 							</Button>
 						</div>
 					)}
+				{order.status === "Completed" && (
+					<div className="w-full flex items-center justify-center bg-green-600 my-2 rounded-full">
+						<span className="text-3xl text-center text-green-200 self-center">
+							ORDER COMPLETED
+						</span>
+					</div>
+				)}
 			</div>
 
 			{currentUser._id === order.userId._id && (
 				<div className="w-96 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl text-center mb-3">
-						Speaker&apos;s Information
+						<Link to={`/speaker/${order.speakerId._id}`}>
+							Speaker&apos;s Information
+						</Link>
 					</span>
 					<div className="flex items-center gap-3">
-						<img
-							src={order.speakerId.userId.profilePicture}
-							alt="profile pic"
-							className="w-10 h-10 object-cover rounded-full"
-						/>
-						<span className="text-lg">{order.speakerId.userId.name}</span>
+						<Link to={`/speaker/${order.speakerId._id}`}>
+							<img
+								src={order.speakerId.userId.profilePicture}
+								alt="profile pic"
+								className="w-10 h-10 object-cover rounded-full"
+							/>
+						</Link>
+						<span className="text-lg">
+							<Link to={`/speaker/${order.speakerId._id}`}>
+								{order.speakerId.userId.name}
+							</Link>
+						</span>
 					</div>
 					<div className="flex items-center gap-3">
 						<MdEmail className="w-10 h-10" />

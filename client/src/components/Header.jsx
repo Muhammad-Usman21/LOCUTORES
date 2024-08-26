@@ -128,11 +128,6 @@ const Header = () => {
 						)}
 					</Navbar.Link>
 				</Link>
-				<Link to="/customers">
-					<Navbar.Link active={path === "/customers"} as={"div"}>
-						Customers
-					</Navbar.Link>
-				</Link>
 				<Link
 					to={
 						currentUser?.isSpeaker
@@ -146,16 +141,6 @@ const Header = () => {
 						}
 						as={"div"}>
 						Are you a speaker?
-					</Navbar.Link>
-				</Link>
-				<Link to="/podcast">
-					<Navbar.Link active={path === "/podcast"} as={"div"}>
-						Podcast
-					</Navbar.Link>
-				</Link>
-				<Link to="/courses">
-					<Navbar.Link active={path === "/courses"} as={"div"}>
-						Courses
 					</Navbar.Link>
 				</Link>
 			</Navbar.Collapse>
