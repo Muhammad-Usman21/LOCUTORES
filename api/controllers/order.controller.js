@@ -99,15 +99,19 @@ export const createNewOrder = async (req, res, next) => {
         quantity: 1,
       },
     ],
-    // payment_intent_data: {
-    //   transfer_data: {
-    //     destination: data.speaker.stripeAccountId,
-    //   },
-    // },
+    payment_intent_data: {
+      capture_method: "manual",
+      transfer_data: {
+        destination: data.speaker.stripeAccountId,
+      },
+    },
     mode: "payment",
     success_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Pending Delivery`,
     cancel_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Cancelled`,
   });
+
+  order.paymentIntentId = session.id;
+  await order.save();
 
   res.status(200).json(session);
 };
@@ -128,17 +132,18 @@ export const updateOrderStatus = async (req, res) => {
     order.speakerMessage = speakerMessage;
     await order.save();
 
-    // if (status === "Completed") {
-    //   const speaker = await Speaker.findById(order.speakerId);
 
-    //   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    if (status === "Completed") {
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-    //   const transfer = await stripe.transfers.create({
-    //     amount: order.amount * 100,
-    //     currency: "usd",
-    //     destination: speaker.stripeAccountId,
-    //   });
-    // }
+      const sessionDetails = await stripe.checkout.sessions.retrieve(
+        order.paymentIntentId
+      );
+
+      const paymentIntent = await stripe.paymentIntents.capture(
+        sessionDetails.payment_intent
+      );
+    }
 
     res.status(200).send({ message: "Order status updated" });
   } catch (error) {

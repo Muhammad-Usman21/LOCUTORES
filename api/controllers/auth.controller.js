@@ -140,7 +140,7 @@ export const stripeCallback = async (req, res) => {
     const stripeAccountId = response.stripe_user_id;
 
     const speaker = await Speaker.findByIdAndUpdate(
-      "66cabb5968ca8375d2d05281",
+      state,
       { stripeAccountId: stripeAccountId },
       { new: true }
     );
