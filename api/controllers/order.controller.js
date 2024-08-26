@@ -21,6 +21,7 @@ export const getOrders = async (req, res) => {
       })
       .populate("userId")
       .sort({ updatedAt: -1 });
+	  console.log(orders);
 
     res.status(200).json(orders);
   } catch (error) {
