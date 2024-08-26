@@ -374,7 +374,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 								onClick={() => {
 									handleFileUpload(order._id, "Delivered");
 								}}
-								disabled={audioUploading}>
+								disabled={audioUploading && !audioUrl}>
 								{order.status === "Delivered" ? "Update" : "Confirm"}
 							</Button>
 						</div>
