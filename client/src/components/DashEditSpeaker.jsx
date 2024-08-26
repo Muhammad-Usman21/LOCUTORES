@@ -507,7 +507,7 @@ const DashEditSpeaker = () => {
 						</div>
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2 items-center">
 							About
 							<span className="text-sm ml-2">(optional)</span>
