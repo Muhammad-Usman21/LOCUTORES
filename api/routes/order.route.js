@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/orders", verifyToken, getOrders);
 router.post("/create-new-order", verifyToken, createNewOrder);
-router.get("/status", verifyToken, updateOrderStatus);
+router.post("/status", verifyToken, updateOrderStatus);
 router.get("/orders-notifications", verifyToken, getOrderNotification);
 
 export default router;

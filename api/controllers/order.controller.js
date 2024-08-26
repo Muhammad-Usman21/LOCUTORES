@@ -108,6 +108,7 @@ export const createNewOrder = async (req, res, next) => {
 
 export const updateOrderStatus = async (req, res) => {
 	const { orderId, status } = req.query;
+	const { audioFile, rejectMessage, speakerMessage } = req.body;
 
 	try {
 		const order = await Order.findById(orderId);
@@ -116,6 +117,9 @@ export const updateOrderStatus = async (req, res) => {
 		}
 
 		order.status = status;
+		order.audioFile = audioFile;
+		order.rejectMessage = rejectMessage;
+		order.speakerMessage = speakerMessage;
 		await order.save();
 
 		res.redirect("http://localhost:5173/orders");
