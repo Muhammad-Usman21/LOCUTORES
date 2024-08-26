@@ -169,7 +169,8 @@ export const updateOrderPaymentStatus = async (req, res) => {
 		order.status = status;
 		await order.save();
 
-		res.redirect("http://localhost:5173/orders");
+		// res.redirect("http://localhost:5173/orders");
+		res.redirect("https://locutores-project.onrender.com/orders");
 	} catch (error) {
 		res.status(500).send({ error: error.message });
 	}
