@@ -164,7 +164,9 @@ const OrderCard = ({ order, orderUpdated }) => {
 									? "text-red-500 font-semibold"
 									: order.status === "Completed"
 										? "text-green-500 font-semibold"
-										: "font-semibold"
+										: order.status === "Pending Delivery"
+											? "text-yellow-500 font-semibold"
+											: "font-semibold"
 							}>
 							{order.status}
 						</span>
@@ -233,52 +235,55 @@ const OrderCard = ({ order, orderUpdated }) => {
 														size="sm"
 														outline
 														className="focus:ring-1 flex-1"
-														onClick={() => setStatus("Rejected")}>
+														onClick={() => setStatus("Reject")}>
 														Reject
 													</Button>
 
-													{status === "Rejected" && (
-														<div className="w-full">
-															<span className="text-sm">Write an message for Speaker</span>
-															<form
-																onSubmit={() =>
-																	handleFileUpload(order._id, "Rejected")
-																}
-																className="mt-1 w-full">
-																<Textarea
-																	className="mb-2"
-																	rows="2"
-																	placeholder="Write reason for rejection...."
-																	onChange={(e) =>
-																		setRejectMessage(e.target.value)
-																	}
-																	disabled={audioUploading}
-																/>
-																<div>
-																	<Button
-																		type="submit"
-																		gradientDuoTone="purpleToPink"
-																		size="sm"
-																		outline
-																		className="focus:ring-1 w-full">
-																		SEND
-																	</Button>
-																	<Button
-																		type="button"
-																		gradientDuoTone="purpleToPink"
-																		size="sm"
-																		outline
-																		className="focus:ring-1 w-full"
-																		onClick={() => setStatus(order.status)}
-																	>
-																		CANCEL
-																	</Button>
-																</div>
-															</form>
-														</div>
-													)}
+
 												</div>
 											</>
+										)}
+										{status === "Reject" && (
+											<div className="w-full">
+												<span className="text-sm">Write an message for Speaker</span>
+												<form
+													onSubmit={() =>
+														handleFileUpload(order._id, "Rejected")
+													}
+													className="mt-1 w-full">
+													<Textarea
+														className="mb-2"
+														rows="2"
+														placeholder="Write reason for rejection...."
+														onChange={(e) =>
+															setRejectMessage(e.target.value)
+														}
+														disabled={audioUploading}
+													/>
+													<div className="flex gap-2">
+														<Button
+															type="submit"
+															gradientDuoTone="purpleToPink"
+															size="sm"
+															outline
+															className="focus:ring-1 w-full"
+
+														>
+															SEND
+														</Button>
+														<Button
+															type="button"
+															gradientDuoTone="purpleToPink"
+															size="sm"
+															outline
+															className="focus:ring-1 w-full"
+															onClick={() => setStatus(order.status)}
+														>
+															CANCEL
+														</Button>
+													</div>
+												</form>
+											</div>
 										)}
 									</div>
 								)}

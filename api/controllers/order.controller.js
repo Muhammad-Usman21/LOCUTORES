@@ -21,7 +21,7 @@ export const getOrders = async (req, res) => {
       })
       .populate("userId")
       .sort({ updatedAt: -1 });
-	  console.log(orders);
+    console.log(orders);
 
     res.status(200).json(orders);
   } catch (error) {
@@ -123,7 +123,19 @@ export const updateOrderStatus = async (req, res) => {
     order.speakerMessage = speakerMessage;
     await order.save();
 
-	res.status(200).send({ message: "Order status updated" });
+    // if (status === "Completed") {
+    //   const speaker = await Speaker.findById(order.speakerId);
+
+    //   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+    //   const transfer = await stripe.transfers.create({
+    //     amount: order.amount * 100,
+    //     currency: "usd",
+    //     destination: speaker.stripeAccountId,
+    //   });
+    // }
+
+    res.status(200).send({ message: "Order status updated" });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
@@ -142,41 +154,6 @@ export const updateOrderPaymentStatus = async (req, res) => {
     await order.save();
 
     res.redirect("http://localhost:5173/orders");
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-};
-
-export const orderDelivered = async (req, res) => {
-  const { orderId, speakerStripeAccountId } = req.body;
-
-  try {
-    // Find the order by ID
-    const order = await Order.findById(orderId);
-    if (!order) {
-      return res.status(404).send({ error: "Order not found" });
-    }
-
-    if (order.status !== "Pending Delivery") {
-      return res.status(400).send({ error: "Order is not pending delivery" });
-    }
-
-    order.status = "Completed";
-    await order.save();
-
-    // Transfer funds to the speaker's Stripe-connected account
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-    const transfer = await stripe.transfers.create({
-      amount: order.amount * 100, // amount in cents
-      currency: "usd",
-      destination: speakerStripeAccountId,
-      transfer_group: `ORDER_${order._id}`,
-    });
-
-    res
-      .status(200)
-      .send({ message: "Order delivered and funds transferred", transfer });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
