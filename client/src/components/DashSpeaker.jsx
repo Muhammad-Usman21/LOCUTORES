@@ -266,7 +266,7 @@ const DashSpeaker = () => {
 						</div>
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
 						<Label value="Your youtube video link (optional)" />
 						<TextInput
 							className="mb-4"
@@ -299,9 +299,9 @@ const DashSpeaker = () => {
 						)}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
 						<Label value="Upload an image (max size 5 MBs) (required)" />
-						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between dark:shadow-whiteLg">
+						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
 							<FileInput
 								type="file"
 								accept="image/*"
@@ -358,9 +358,9 @@ const DashSpeaker = () => {
 						)}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label value="Upload demos maximum 5 (required minimum 1) " />
-						<div className="flex flex-col mb-4 sm:flex-row gap-4 items-center justify-between dark:shadow-whiteLg">
+						<div className="flex flex-col mb-4 sm:flex-row gap-4 items-center justify-between">
 							<FileInput
 								type="file"
 								accept="audio/*" // Accepts only audio files
@@ -410,7 +410,7 @@ const DashSpeaker = () => {
 							))}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
 							{"Your Prices ("}
 							<span className="font-bold">$</span>
@@ -480,7 +480,7 @@ const DashSpeaker = () => {
 						</div>
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2 items-center">
 							About
 							<span className="text-sm ml-2">(optional)</span>

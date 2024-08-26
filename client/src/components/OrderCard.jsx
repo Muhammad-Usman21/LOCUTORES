@@ -137,7 +137,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			)}
 
 			<div className="flex-auto p-5">
-				<div className="border rounded-xl p-2">
+				<div className="border rounded-xl p-2 dark:border-gray-700">
 					<div>
 						<span className="font-semibold mr-12">Created Date:</span>
 						<span>
@@ -184,7 +184,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 				{(order.status === "Completed" ||
 					order.status === "Rejected" ||
 					order.status === "Delivered") && (
-					<div className="p-2 rounded-xl mt-2 border">
+					<div className="p-2 rounded-xl mt-2 border dark:border-gray-700">
 						{(order.status === "Delivered" || order.status === "Rejected") &&
 							order.speakerId.userId._id === currentUser._id && (
 								<p className="text-center py-2">
@@ -210,7 +210,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 							order.userId._id === currentUser._id && (
 								<div className="flex flex-col gap-2">
 									{order.speakerMessage && (
-										<div className="my-2 p-2 border rounded-xl">
+										<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
 											<p>Message from Speaker</p>
 											<p>{order.speakerMessage}</p>
 										</div>
@@ -279,7 +279,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 						{order.status === "Rejected" &&
 							order.speaker.userId._id === currentUser._id &&
 							order.rejectMessage && (
-								<div className="my-2 p-2 border rounded-xl">
+								<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
 									<p>Message from Customer</p>
 									<p>{order.rejectMessage}</p>
 								</div>
@@ -291,7 +291,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 					(order.status === "Rejected" ||
 						order.status === "Delivered" ||
 						order.status === "Pending Delivery") && (
-						<div className="flex flex-col w-full gap-3 mt-4 border rounded-xl p-2">
+						<div className="flex flex-col w-full gap-3 mt-4 border rounded-xl p-2 dark:border-gray-700">
 							<div className="flex justify-between gap-10">
 								<FileInput
 									type="file"
