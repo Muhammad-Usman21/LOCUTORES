@@ -106,10 +106,9 @@ export const signout = (req, res, next) => {
 
 export const signinWithStripe = async (req, res) => {
   try {
-    const speakerId = req.query.speakerId;
-    console.log(speakerId);
+    console.log(req.user.id);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-    const state = speakerId.toString();
+    const state = req.query.tab;
     const clientId = process.env.STRIPE_CLIENT_ID;
 
     const redirectUri = stripe.oauth.authorizeUrl({
@@ -139,17 +138,7 @@ export const stripeCallback = async (req, res) => {
 
     const stripeAccountId = response.stripe_user_id;
 
-    const speaker = await Speaker.findByIdAndUpdate(
-      state,
-      { stripeAccountId: stripeAccountId },
-      { new: true }
-    );
-
-    if (!speaker) {
-      return res.status(404).send({ error: "Speaker not found" });
-    }
-
-    res.redirect("http://localhost:5173/");
+    res.redirect(`http://localhost:5173/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`);
   } catch (error) {
     res.status(500).send({ error: error.message });
   }

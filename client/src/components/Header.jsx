@@ -47,10 +47,6 @@ const Header = () => {
 		};
 
 		checkForOrderUpdates();
-
-		const interval = setInterval(checkForOrderUpdates, 120000);
-
-		return () => clearInterval(interval);
 	}, []);
 
 	const handleSignOut = async () => {

@@ -9,14 +9,19 @@ import DashEditSpeaker from "../components/DashEditSpeaker";
 const Dashboard = () => {
 	const location = useLocation();
 	const [tab, setTab] = useState("");
+	const [stripeAccountId, setStripeAccountId] = useState("");
 	const { currentUser } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(location.search);
 		const tabFromUrl = urlParams.get("tab");
+		const stripeAccountIdFromUrl = urlParams.get("stripeAccountId");
 		// console.log(tabFromUrl);
 		if (tabFromUrl) {
 			setTab(tabFromUrl);
+		}
+		if (stripeAccountIdFromUrl) {
+			setStripeAccountId(stripeAccountIdFromUrl);
 		}
 	}, [location.search]);
 
@@ -26,8 +31,8 @@ const Dashboard = () => {
 				<DashSidebar />
 			</div>
 			{tab === "user" && <DashUser />}
-			{tab === "speaker" && <DashSpeaker />}
-			{tab === "edit-speaker" && <DashEditSpeaker />}
+			{tab === "speaker" && <DashSpeaker stripeAccountId={stripeAccountId} />}
+			{tab === "edit-speaker" && <DashEditSpeaker stripeAccountId={stripeAccountId} />}
 		</div>
 	);
 };

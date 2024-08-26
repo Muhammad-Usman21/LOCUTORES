@@ -26,14 +26,14 @@ import ReactAudioPlayer from "react-audio-player";
 import { updateUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
-const DashEditSpeaker = () => {
+const DashEditSpeaker = ({ stripeAccountId }) => {
 	const [file, setFile] = useState(null);
 	const [imageUploadProgress, setImageUploadProgress] = useState(null);
 	const [imageUploadErrorMsg, setImageUploadErrorMsg] = useState(null);
 	const [speakerErrorMsg, setSpeakerErrorMsg] = useState(null);
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [formData, setFormData] = useState({ demos: [], prices: {} });
+	const [formData, setFormData] = useState({ demos: [], prices: {}, stripeAccountId });
 	const navigate = useNavigate();
 	const { theme } = useSelector((state) => state.theme);
 	const [audioFile, setAudioFile] = useState(null);
@@ -56,7 +56,11 @@ const DashEditSpeaker = () => {
 					return;
 				}
 				if (res.ok) {
-					setFormData(data);
+					if (stripeAccountId == "" || stripeAccountId == null) {
+						setFormData(data);
+					} else {
+						setFormData({ ...data, stripeAccountId });
+					}
 				}
 			};
 
@@ -201,7 +205,8 @@ const DashEditSpeaker = () => {
 			formData.demos.length === 0 ||
 			!formData.prices.small ||
 			!formData.prices.medium ||
-			!formData.prices.large
+			!formData.prices.large ||
+			!formData.stripeAccountId
 		) {
 			setLoading(false);
 			setSpeakerErrorMsg(
@@ -237,8 +242,16 @@ const DashEditSpeaker = () => {
 		}
 	};
 
-	// console.log(formData);
-
+	const handleStripeLogin = async () => {
+		try {
+			const response = await fetch(`/api/auth/signin-stripe?tab=edit-speaker`);
+			const result = await response.json();
+			window.location.href = result.url;
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
 	return (
 		<div
 			className="w-full bg-cover bg-center
@@ -252,6 +265,16 @@ const DashEditSpeaker = () => {
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
 					onSubmit={handleSubmit}>
+					<Button
+						type="button"
+						gradientDuoTone=""
+						outline
+						className="focus:ring-1"
+						disabled={loading || imageUploading || audioUploading}
+						onClick={handleStripeLogin}
+					>
+						Login with Stripe {formData.stripeAccountId == "" || formData.stripeAccountId == null ? "" : "✅"}
+					</Button>
 					<div className="flex flex-col gap-4 sm:flex-row justify-around">
 						<div className="flex flex-col gap-1">
 							<Label value="Select your gender" />

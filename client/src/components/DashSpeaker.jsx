@@ -24,21 +24,23 @@ import ReactPlayer from "react-player";
 import ReactAudioPlayer from "react-audio-player";
 import { updateUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const DashSpeaker = () => {
+const DashSpeaker = ({ stripeAccountId }) => {
 	const [file, setFile] = useState(null);
 	const [imageUploadProgress, setImageUploadProgress] = useState(null);
 	const [imageUploadErrorMsg, setImageUploadErrorMsg] = useState(null);
 	const [speakerErrorMsg, setSpeakerErrorMsg] = useState(null);
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [formData, setFormData] = useState({ demos: [], prices: {} });
+	const [formData, setFormData] = useState({ demos: [], prices: {}, stripeAccountId });
 	const { theme } = useSelector((state) => state.theme);
 	const [audioFile, setAudioFile] = useState(null);
 	const [audioUploadErrorMsg, setAudioUploadErrorMsg] = useState(null);
 	const [audioUploading, setAudioUploading] = useState(false);
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	const natigate = useNavigate();
 
 	const countryOptions = Object.values(countries).map(
 		(country) => country.name
@@ -179,7 +181,8 @@ const DashSpeaker = () => {
 			formData.demos.length === 0 ||
 			!formData.prices.small ||
 			!formData.prices.medium ||
-			!formData.prices.large
+			!formData.prices.large ||
+			!formData.stripeAccountId
 		) {
 			setLoading(false);
 			setSpeakerErrorMsg(
@@ -208,15 +211,24 @@ const DashSpeaker = () => {
 				setLoading(false);
 				setSpeakerErrorMsg(null);
 				dispatch(updateUserSuccess(data.user));
-				const res = await fetch(`/api/auth/signin-stripe?speakerId=${data.speaker._id}`);
-				const result = await res.json();
-				window.location.href = result.url;
+				natigate("/");
 			}
 		} catch (error) {
 			setSpeakerErrorMsg(error.message);
 			setLoading(false);
 		}
 	};
+
+	const handleStripeLogin = async () => {
+		try {
+			const response = await fetch(`/api/auth/signin-stripe?tab=speaker`);
+			const result = await response.json();
+			window.location.href = result.url;
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
 
 	return (
 		<div
@@ -231,6 +243,16 @@ const DashSpeaker = () => {
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
 					onSubmit={handleSubmit}>
+					<Button
+						type="button"
+						gradientDuoTone=""
+						outline
+						className="focus:ring-1"
+						disabled={loading || imageUploading || audioUploading}
+						onClick={handleStripeLogin}
+						>
+						Login with Stripe {formData.stripeAccountId == "" || formData.stripeAccountId == null ? "" : "✅"}
+					</Button>
 					<div className="flex flex-col gap-4 sm:flex-row justify-around">
 						<div className="flex flex-col gap-1">
 							<Label value="Select your gender" />
