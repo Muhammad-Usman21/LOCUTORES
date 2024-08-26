@@ -99,6 +99,11 @@ export const createNewOrder = async (req, res, next) => {
         quantity: 1,
       },
     ],
+    // payment_intent_data: {
+    //   transfer_data: {
+    //     destination: data.speaker.stripeAccountId,
+    //   },
+    // },
     mode: "payment",
     success_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Pending Delivery`,
     cancel_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Cancelled`,

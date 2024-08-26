@@ -18,7 +18,6 @@ import { useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { MdCancelPresentation } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import { countries } from "countries-list";
 import ReactPlayer from "react-player";
@@ -34,7 +33,6 @@ const DashSpeaker = () => {
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({ demos: [], prices: {} });
-	const navigate = useNavigate();
 	const { theme } = useSelector((state) => state.theme);
 	const [audioFile, setAudioFile] = useState(null);
 	const [audioUploadErrorMsg, setAudioUploadErrorMsg] = useState(null);
@@ -210,7 +208,9 @@ const DashSpeaker = () => {
 				setLoading(false);
 				setSpeakerErrorMsg(null);
 				dispatch(updateUserSuccess(data.user));
-				navigate(`/`);
+				const res = await fetch(`/api/auth/signin-stripe?speakerId=${data.speaker._id}`);
+				const result = await res.json();
+				window.location.href = result.url;
 			}
 		} catch (error) {
 			setSpeakerErrorMsg(error.message);
