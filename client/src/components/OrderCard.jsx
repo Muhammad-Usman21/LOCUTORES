@@ -67,7 +67,6 @@ const OrderCard = ({ order, orderUpdated }) => {
 	const handleFileUpload = async (orderId, statuss) => {
 		// Update the order in your backend with the file URL and status
 		try {
-
 			const response = await fetch(
 				`/api/order/status?orderId=${orderId}&status=${statuss}`,
 				{
@@ -77,8 +76,10 @@ const OrderCard = ({ order, orderUpdated }) => {
 					},
 					body: JSON.stringify({
 						audioFile: audioUrl,
-						rejectMessage: rejectMessage === order.rejectMessage ? null : rejectMessage,
-						speakerMessage: speakerMessage === order.speakerMessage ? null : speakerMessage,
+						rejectMessage:
+							rejectMessage === order.rejectMessage ? null : rejectMessage,
+						speakerMessage:
+							speakerMessage === order.speakerMessage ? null : speakerMessage,
 					}),
 				}
 			);
@@ -163,8 +164,8 @@ const OrderCard = ({ order, orderUpdated }) => {
 								order.status === "Rejected"
 									? "text-red-500 font-semibold"
 									: order.status === "Completed"
-										? "text-green-500 font-semibold"
-										: "font-semibold"
+									? "text-green-500 font-semibold"
+									: "font-semibold"
 							}>
 							{order.status}
 						</span>
@@ -178,120 +179,116 @@ const OrderCard = ({ order, orderUpdated }) => {
 				{(order.status === "Completed" ||
 					order.status === "Rejected" ||
 					order.status === "Delivered") && (
-						<div className="p-2 rounded-xl mt-2 border dark:border-gray-700">
-							{(order.status === "Delivered" || order.status === "Rejected") &&
-								order.speakerId.userId._id === currentUser._id && (
-									<p className="text-center py-2">
-										Customer recieved this audio <br />
-										But you can update this if there is any issue with this file
-									</p>
-								)}
-							{(order.status === "Delivered") &&
-								order.userId._id === currentUser._id && (
-									<p className="text-center py-2">
-										Order {order.status} and Speaker send this audio <br />
-										If there are any issues in the file then you can contact with
-										your Speaker.
-									</p>
-								)}
-							<ReactAudioPlayer
-								src={order.audioFile}
-								controls
-								controlsList={order.status === "Completed" ? "" : "nodownload"}
-								className="w-full"
-							/>
-							{(order.status === "Delivered" || order.status === "Rejected") &&
-								order.userId._id === currentUser._id && (
-									<div className="flex flex-col gap-2">
-										{order.speakerMessage && (
-											<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
-												<p className="text-xxs">Message from Speaker</p>
-												<p>{order.speakerMessage}</p>
-											</div>
-										)}
+					<div className="p-2 rounded-xl mt-2 border dark:border-gray-700">
+						{(order.status === "Delivered" || order.status === "Rejected") &&
+							order.speakerId.userId._id === currentUser._id && (
+								<p className="text-center py-2">
+									Customer recieved this audio <br />
+									But you can update this if there is any issue with this file
+								</p>
+							)}
+						{order.status === "Delivered" &&
+							order.userId._id === currentUser._id && (
+								<p className="text-center py-2">
+									Order {order.status} and Speaker send this audio <br />
+									If there are any issues in the file then you can contact with
+									your Speaker.
+								</p>
+							)}
+						<ReactAudioPlayer
+							src={order.audioFile}
+							controls
+							controlsList={order.status === "Completed" ? "" : "nodownload"}
+							className="w-full"
+						/>
+						{(order.status === "Delivered" || order.status === "Rejected") &&
+							order.userId._id === currentUser._id && (
+								<div className="flex flex-col gap-2">
+									{order.speakerMessage && (
+										<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
+											<p className="text-xxs">Message from Speaker</p>
+											<p>{order.speakerMessage}</p>
+										</div>
+									)}
 
-										{status === "Delivered" && (
-											<>
-												<p className="text-center">
-													You can download above audio after ACCEPT
-												</p>
-												<div className="flex w-full gap-4">
+									{status === "Delivered" && (
+										<>
+											<p className="text-center">
+												You can download above audio after ACCEPT
+											</p>
+											<div className="flex w-full gap-4">
+												<Button
+													type="button"
+													gradientDuoTone="purpleToBlue"
+													size="sm"
+													outline
+													className="focus:ring-1 flex-1"
+													onClick={() => {
+														handleFileUpload(order._id, "Completed");
+													}}>
+													Accept
+												</Button>
+												<Button
+													type="button"
+													gradientDuoTone="purpleToPink"
+													size="sm"
+													outline
+													className="focus:ring-1 flex-1"
+													onClick={() => setStatus("Rejected")}>
+													Reject
+												</Button>
+											</div>
+										</>
+									)}
+									{status === "Rejected" && (
+										<div className="w-full">
+											<span className="text-sm">
+												Write an message for Speaker
+											</span>
+											<form
+												onSubmit={() => handleFileUpload(order._id, "Rejected")}
+												className="mt-1 w-full">
+												<Textarea
+													className="mb-2"
+													rows="2"
+													placeholder="Write reason for rejection...."
+													onChange={(e) => setRejectMessage(e.target.value)}
+													disabled={audioUploading}
+												/>
+												<div className="flex gap-2">
 													<Button
-														type="button"
-														gradientDuoTone="purpleToBlue"
+														type="submit"
+														gradientDuoTone="purpleToPink"
 														size="sm"
 														outline
-														className="focus:ring-1 flex-1"
-														onClick={() => {
-															handleFileUpload(order._id, "Completed");
-														}}>
-														Accept
+														className="focus:ring-1 w-full">
+														SEND
 													</Button>
 													<Button
 														type="button"
 														gradientDuoTone="purpleToPink"
 														size="sm"
 														outline
-														className="focus:ring-1 flex-1"
-														onClick={() => setStatus("Rejected")}>
-														Reject
+														className="focus:ring-1 w-full"
+														onClick={() => setStatus(order.status)}>
+														CANCEL
 													</Button>
-
-													{status === "Rejected" && (
-														<div className="w-full">
-															<span className="text-sm">Write an message for Speaker</span>
-															<form
-																onSubmit={() =>
-																	handleFileUpload(order._id, "Rejected")
-																}
-																className="mt-1 w-full">
-																<Textarea
-																	className="mb-2"
-																	rows="2"
-																	placeholder="Write reason for rejection...."
-																	onChange={(e) =>
-																		setRejectMessage(e.target.value)
-																	}
-																	disabled={audioUploading}
-																/>
-																<div>
-																	<Button
-																		type="submit"
-																		gradientDuoTone="purpleToPink"
-																		size="sm"
-																		outline
-																		className="focus:ring-1 w-full">
-																		SEND
-																	</Button>
-																	<Button
-																		type="button"
-																		gradientDuoTone="purpleToPink"
-																		size="sm"
-																		outline
-																		className="focus:ring-1 w-full"
-																		onClick={() => setStatus(order.status)}
-																	>
-																		CANCEL
-																	</Button>
-																</div>
-															</form>
-														</div>
-													)}
 												</div>
-											</>
-										)}
-									</div>
-								)}
-							{order.status === "Rejected" &&
-								order.speakerId.userId._id === currentUser._id &&
-								order.rejectMessage && (
-									<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
-										<p className="text-xxs">Message from Customer</p>
-										<p>{order.rejectMessage}</p>
-									</div>
-								)}
-						</div>
-					)}
+											</form>
+										</div>
+									)}
+								</div>
+							)}
+						{order.status === "Rejected" &&
+							order.speakerId.userId._id === currentUser._id &&
+							order.rejectMessage && (
+								<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
+									<p className="text-xxs">Message from Customer</p>
+									<p>{order.rejectMessage}</p>
+								</div>
+							)}
+					</div>
+				)}
 
 				{order.speakerId.userId._id === currentUser._id &&
 					(order.status === "Rejected" ||
@@ -316,34 +313,38 @@ const OrderCard = ({ order, orderUpdated }) => {
 									{audioUploading ? "Uploading... Please Wait!" : "Upload"}
 								</Button>
 							</div>
-							{audioUrl && (order.status === 'Pending Delivery' || order.status === 'Rejected') && (
-								<div className="flex flex-col gap-2">
-									<div className="flex justify-between px-3 py-1 border items-center">
-										<ReactAudioPlayer
-											src={audioUrl}
-											controls
-											className="w-full"
-										/>
-										<button
-											disabled={audioUploading}
-											type="button"
-											onClick={() => setAudioUrl(null)}
-											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
-											Delete
-										</button>
+							{audioUrl &&
+								(order.status === "Pending Delivery" ||
+									order.status === "Rejected") && (
+									<div className="flex flex-col gap-2">
+										<div className="flex justify-between px-3 py-1 border items-center">
+											<ReactAudioPlayer
+												src={audioUrl}
+												controls
+												className="w-full"
+											/>
+											<button
+												disabled={audioUploading}
+												type="button"
+												onClick={() => setAudioUrl(null)}
+												className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
+												Delete
+											</button>
+										</div>
+										<div>
+											<span className="text-sm">
+												Write an message for Customer (optional)
+											</span>
+											<Textarea
+												className="mb-2 mt-1"
+												rows="2"
+												placeholder="Write something to customers...."
+												onChange={(e) => setSpeakerMessage(e.target.value)}
+												disabled={audioUploading}
+											/>
+										</div>
 									</div>
-									<div>
-										<span className="text-sm">Write an message for Customer (optional)</span>
-										<Textarea
-											className="mb-2 mt-1"
-											rows="2"
-											placeholder="Write something to customers...."
-											onChange={(e) => setSpeakerMessage(e.target.value)}
-											disabled={audioUploading}
-										/>
-									</div>
-								</div>
-							)}
+								)}
 							<Button
 								type="button"
 								gradientDuoTone="purpleToPink"
