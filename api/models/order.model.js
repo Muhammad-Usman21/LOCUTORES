@@ -4,12 +4,12 @@ const orderSchema = new mongoose.Schema(
 	{
 		userId: {
 			type: mongoose.Schema.Types.ObjectId,
-			requred: true,
+			required: true,
 			ref: "User",
 		},
 		speakerId: {
 			type: mongoose.Schema.Types.ObjectId,
-			requred: true,
+			required: true,
 			ref: "Speaker",
 		},
 		userPhone: {

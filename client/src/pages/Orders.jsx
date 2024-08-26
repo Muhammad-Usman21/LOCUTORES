@@ -67,18 +67,25 @@ const Orders = () => {
 		<div className="min-h-screen w-full">
 			<div className="max-w-6xl mx-auto items-center justify-center flex flex-col gap-10 py-14">
 				<h1 className="font-semibold text-3xl">Your Orders</h1>
-				{orders.map((order) => (
-					<div
-						key={order._id}
-						className="order-card flex w-full p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-						<OrderCard order={order} orderUpdated={orderUpdated} />
+				{orders.length > 0 && (
+					<div className="items-center justify-center flex flex-col gap-10">
+						{orders.map((order) => (
+							<div
+								key={order._id}
+								className="order-card flex w-full p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+								<OrderCard order={order} orderUpdated={orderUpdated} />
+							</div>
+						))}
+						{showMore && (
+							<button
+								onClick={handleShowMore}
+								className="text-center self-center">
+								Show More
+							</button>
+						)}
 					</div>
-				))}
-				{showMore && (
-					<button onClick={handleShowMore} className="text-center self-center">
-						Show More
-					</button>
 				)}
+				{orders.length === 0 && <p className="">No have no order yet</p>}
 			</div>
 		</div>
 	);

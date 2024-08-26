@@ -45,6 +45,8 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 	const [audioUploading, setAudioUploading] = useState(false);
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	const [updateLoading, setUpdateLoading] = useState(false);
+	const [updateMsg, setUpdateMsg] = useState(null);
 
 	const countryOptions = Object.values(countries).map(
 		(country) => country.name
@@ -238,7 +240,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			} else {
 				setLoading(false);
 				setSpeakerErrorMsg(null);
-				navigate(`/`);
+				setUpdateMsg("Speaker Account updaded successfully!");
 			}
 		} catch (error) {
 			setSpeakerErrorMsg(error.message);
@@ -583,6 +585,19 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 								<MdCancelPresentation
 									className="cursor-pointer w-6 h-6"
 									onClick={() => setSpeakerErrorMsg(null)}
+								/>
+							</span>
+						</div>
+					</Alert>
+				)}
+				{updateMsg && (
+					<Alert className="flex-auto" color="success" withBorderAccent>
+						<div className="flex justify-between">
+							<span>{updateMsg}</span>
+							<span className="w-5 h-5">
+								<MdCancelPresentation
+									className="cursor-pointer w-6 h-6"
+									onClick={() => setUpdateMsg(null)}
 								/>
 							</span>
 						</div>

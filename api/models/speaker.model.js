@@ -4,7 +4,7 @@ const speakerSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      requred: true,
+      required: true,
       unique: true,
       ref: "User",
     },

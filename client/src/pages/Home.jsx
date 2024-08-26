@@ -22,12 +22,12 @@ const Home = () => {
 		// console.log(voiceType, country);
 		try {
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sort}`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sort}&limit=9`
 			);
 			const data = await response.json();
 			// console.log(data);
 			setSpeaker(data);
-			if (speaker.length < 9) {
+			if (data.length < 9) {
 				setShowMore(false);
 			}
 		} catch (error) {
@@ -43,7 +43,7 @@ const Home = () => {
 		try {
 			const startIndex = speaker.length;
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}&sort=${sort}`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}&sort=${sort}&limit=9`
 			);
 			const data = await response.json();
 			// console.log(data);
@@ -119,18 +119,23 @@ const Home = () => {
 				<div
 					className="flex flex-col items-center justify-center gap-10 p-10 mb-20
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-					<div className="flex flex-wrap gap-5 items-center justify-center">
-						{speaker.map((speaker) => (
-							<CardComponent key={speaker._id} speaker={speaker} />
-						))}
-					</div>
-					{showMore && (
-						<button
-							onClick={handleShowMore}
-							className="text-center self-center">
-							Show More
-						</button>
+					{speaker.length > 0 && (
+						<>
+							<div className="flex flex-wrap gap-5 items-center justify-center">
+								{speaker.map((speaker) => (
+									<CardComponent key={speaker._id} speaker={speaker} />
+								))}
+							</div>
+							{showMore && (
+								<button
+									onClick={handleShowMore}
+									className="text-center self-center">
+									Show More
+								</button>
+							)}
+						</>
 					)}
+					{speaker.length === 0 && <p>There are no speakers yet</p>}
 				</div>
 			</div>
 		</div>

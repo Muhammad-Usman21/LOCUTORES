@@ -247,7 +247,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						type="button"
 						gradientDuoTone=""
 						outline
-						className="focus:ring-1 py-2"
+						className="focus:ring-1 my-2"
 						disabled={loading || imageUploading || audioUploading}
 						onClick={handleStripeLogin}
 						>
