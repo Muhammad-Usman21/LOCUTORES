@@ -33,7 +33,11 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 	const [speakerErrorMsg, setSpeakerErrorMsg] = useState(null);
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [formData, setFormData] = useState({ demos: [], prices: {}, stripeAccountId });
+	const [formData, setFormData] = useState({
+		demos: [],
+		prices: {},
+		stripeAccountId,
+	});
 	const navigate = useNavigate();
 	const { theme } = useSelector((state) => state.theme);
 	const [audioFile, setAudioFile] = useState(null);
@@ -247,11 +251,10 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			const response = await fetch(`/api/auth/signin-stripe?tab=edit-speaker`);
 			const result = await response.json();
 			window.location.href = result.url;
-		}
-		catch (error) {
+		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 	return (
 		<div
 			className="w-full bg-cover bg-center
@@ -265,16 +268,25 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
 					onSubmit={handleSubmit}>
-					<Button
-						type="button"
-						gradientDuoTone=""
-						outline
-						className="focus:ring-1"
-						disabled={loading || imageUploading || audioUploading}
-						onClick={handleStripeLogin}
-					>
-						Login with Stripe {formData.stripeAccountId == "" || formData.stripeAccountId == null ? "" : "✅"}
-					</Button>
+					<div className="w-full flex gap-1 flex-col items-center py-2">
+						<p>
+							Don&apos;t change your Stripe account during any uncompleted
+							orders.
+						</p>
+						<Button
+							type="button"
+							gradientDuoTone=""
+							outline
+							className="focus:ring-1 w-full"
+							disabled={loading || imageUploading || audioUploading}
+							onClick={handleStripeLogin}>
+							Login with Stripe{" "}
+							{formData.stripeAccountId == "" ||
+							formData.stripeAccountId == null
+								? ""
+								: "✅"}
+						</Button>
+					</div>
 					<div className="flex flex-col gap-4 sm:flex-row justify-around">
 						<div className="flex flex-col gap-1">
 							<Label value="Select your gender" />

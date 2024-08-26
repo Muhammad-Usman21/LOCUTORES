@@ -291,6 +291,12 @@ const OrderCard = ({ order, orderUpdated }) => {
 											</form>
 										</div>
 									)}
+									{order.status === "Rejected" && (
+										<p className="text-center py-2">
+											Order {order.status}. Waiting for Speaker to send another
+											Audio.
+										</p>
+									)}
 								</div>
 							)}
 						{order.status === "Rejected" &&
@@ -374,7 +380,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 						</div>
 					)}
 				{order.status === "Completed" && (
-					<div className="w-full flex items-center justify-center bg-green-600 my-2 rounded-full">
+					<div className="w-full flex items-center justify-center bg-green-600 my-2 rounded-full p-1">
 						<span className="text-3xl text-center text-green-200 self-center">
 							ORDER COMPLETED
 						</span>

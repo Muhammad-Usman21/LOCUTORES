@@ -45,7 +45,7 @@ export const getOrderNotification = async (req, res) => {
 			"_id status updatedAt"
 		)
 			.sort({ updatedAt: -1 })
-			.limit(limit || 10);
+			.limit(10);
 
 		res.status(200).json(orderInfo);
 	} catch (error) {

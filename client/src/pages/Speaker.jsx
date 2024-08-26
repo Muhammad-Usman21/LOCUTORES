@@ -94,9 +94,7 @@ const Speaker = () => {
 		try {
 			setLoading(true);
 			setErrorMessage(null);
-			const stripe = await loadStripe(
-				"pk_test_51PrLnjISagHb5Xr13f8PuJs7EFOwxi5jIXxS4l0DTdT4vGtW6N8m09YOCckaR6vglbqEZitXvNFyoUOhSgR1EpUF00d7wABlaO"
-			);
+			const stripe = await loadStripe(import.meta.env.STRIPE_PUBLIC_KEY);
 			const response = await fetch("/api/order/create-new-order", {
 				method: "POST",
 				headers: {
