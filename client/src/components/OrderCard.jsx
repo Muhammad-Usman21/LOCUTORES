@@ -67,7 +67,6 @@ const OrderCard = ({ order, orderUpdated }) => {
 	const handleFileUpload = async (orderId, statuss) => {
 		// Update the order in your backend with the file URL and status
 		try {
-
 			const response = await fetch(
 				`/api/order/status?orderId=${orderId}&status=${statuss}`,
 				{
@@ -77,8 +76,10 @@ const OrderCard = ({ order, orderUpdated }) => {
 					},
 					body: JSON.stringify({
 						audioFile: audioUrl,
-						rejectMessage: rejectMessage === order.rejectMessage ? null : rejectMessage,
-						speakerMessage: speakerMessage === order.speakerMessage ? null : speakerMessage,
+						rejectMessage:
+							rejectMessage === order.rejectMessage ? null : rejectMessage,
+						speakerMessage:
+							speakerMessage === order.speakerMessage ? null : speakerMessage,
 					}),
 				}
 			);
@@ -188,7 +189,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 										But you can update this if there is any issue with this file
 									</p>
 								)}
-							{(order.status === "Delivered") &&
+							{order.status === "Delivered" &&
 								order.userId._id === currentUser._id && (
 									<p className="text-center py-2">
 										Order {order.status} and Speaker send this audio <br />
@@ -238,11 +239,10 @@ const OrderCard = ({ order, orderUpdated }) => {
 														onClick={() => setStatus("Reject")}>
 														Reject
 													</Button>
-
-
 												</div>
 											</>
 										)}
+
 										{status === "Reject" && (
 											<div className="w-full">
 												<span className="text-sm">Write an message for Speaker</span>
@@ -321,34 +321,38 @@ const OrderCard = ({ order, orderUpdated }) => {
 									{audioUploading ? "Uploading... Please Wait!" : "Upload"}
 								</Button>
 							</div>
-							{audioUrl && (order.status === 'Pending Delivery' || order.status === 'Rejected') && (
-								<div className="flex flex-col gap-2">
-									<div className="flex justify-between px-3 py-1 border items-center">
-										<ReactAudioPlayer
-											src={audioUrl}
-											controls
-											className="w-full"
-										/>
-										<button
-											disabled={audioUploading}
-											type="button"
-											onClick={() => setAudioUrl(null)}
-											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
-											Delete
-										</button>
+							{audioUrl &&
+								(order.status === "Pending Delivery" ||
+									order.status === "Rejected") && (
+									<div className="flex flex-col gap-2">
+										<div className="flex justify-between px-3 py-1 border items-center">
+											<ReactAudioPlayer
+												src={audioUrl}
+												controls
+												className="w-full"
+											/>
+											<button
+												disabled={audioUploading}
+												type="button"
+												onClick={() => setAudioUrl(null)}
+												className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
+												Delete
+											</button>
+										</div>
+										<div>
+											<span className="text-sm">
+												Write an message for Customer (optional)
+											</span>
+											<Textarea
+												className="mb-2 mt-1"
+												rows="2"
+												placeholder="Write something to customers...."
+												onChange={(e) => setSpeakerMessage(e.target.value)}
+												disabled={audioUploading}
+											/>
+										</div>
 									</div>
-									<div>
-										<span className="text-sm">Write an message for Customer (optional)</span>
-										<Textarea
-											className="mb-2 mt-1"
-											rows="2"
-											placeholder="Write something to customers...."
-											onChange={(e) => setSpeakerMessage(e.target.value)}
-											disabled={audioUploading}
-										/>
-									</div>
-								</div>
-							)}
+								)}
 							<Button
 								type="button"
 								gradientDuoTone="purpleToPink"
