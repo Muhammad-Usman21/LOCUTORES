@@ -40,7 +40,7 @@ const Orders = () => {
 
 	return (
 		<div className="min-h-screen w-full">
-			<div className="max-w-6xl mx-auto items-center justify-center flex flex-col gap-10 my-14">
+			<div className="max-w-6xl mx-auto items-center justify-center flex flex-col gap-10 py-14">
 				<h1 className="font-semibold text-3xl">Your Orders</h1>
 				{orders.map((order) => (
 					<div

@@ -20,7 +20,7 @@ export const getOrders = async (req, res) => {
 				},
 			})
 			.populate("userId")
-			.sort({ createdAt: -1 });
+			.sort({ updatedAt: -1 });
 
 		res.status(200).json(orders);
 	} catch (error) {

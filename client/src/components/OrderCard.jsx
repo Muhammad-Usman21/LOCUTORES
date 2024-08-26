@@ -17,7 +17,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 	const { currentUser } = useSelector((state) => state.user);
 	const [file, setFile] = useState(null);
 	const [audioUploading, setAudioUploading] = useState(false);
-	const [audioUrl, setAudioUrl] = useState(order.audioFile);
+	const [audioUrl, setAudioUrl] = useState(null);
 
 	const [status, setStatus] = useState(order.status);
 	const [rejectMessage, setRejectMessage] = useState(order.rejectMessage);
@@ -64,7 +64,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 		);
 	};
 
-	const handleFileUpload = async (orderId) => {
+	const handleFileUpload = async (orderId, statuss) => {
 		// Update the order in your backend with the file URL and status
 		try {
 			if (rejectMessage === "") {
@@ -75,7 +75,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			}
 
 			const response = await fetch(
-				`/api/order/status?orderId=${orderId}&status=${status}`,
+				`/api/order/status?orderId=${orderId}&status=${statuss}`,
 				{
 					method: "POST",
 					headers: {
@@ -94,7 +94,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 				setAudioUrl(null);
 				orderUpdated({
 					orderId,
-					status,
+					status: statuss,
 					audioFile: audioUrl,
 					rejectMessage,
 					speakerMessage,
@@ -137,102 +137,153 @@ const OrderCard = ({ order, orderUpdated }) => {
 			)}
 
 			<div className="flex-auto p-5">
-				<p>
-					<strong>Service:</strong> {order.service}
-				</p>
-				<p>
-					<strong>Audio Duration:</strong> {order.audioDuration}
-				</p>
-				<p>
-					<strong>Status:</strong> {order.status}
-				</p>
+				<div className="border rounded-xl p-2">
+					<div>
+						<span className="font-semibold mr-12">Created Date:</span>
+						<span>
+							{new Date(order.createdAt).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})}
+						</span>
+					</div>
+					<div>
+						<span className="font-semibold mr-11">Order Service:</span>
+						<span>{order.service}</span>
+					</div>
+					<div>
+						<span className="font-semibold mr-8">Audio Duration:</span>
+						<span>{order.audioDuration === "small" && "10 ~ 20 seconds"}</span>
+						<span>{order.audioDuration === "medium" && "30 ~ 40 seconds"}</span>
+						<span>{order.audioDuration === "large" && "1 minute"}</span>
+					</div>
+					<div>
+						<span className="font-semibold mr-4">Payment Amount:</span>
+						<span className="font-semibold">$ {order.amount}</span>
+					</div>
+					<div>
+						<span className="font-semibold mr-[53px]">Order Status:</span>
+						<span
+							className={
+								order.status === "Rejected"
+									? "text-red-500 font-semibold"
+									: order.status === "Completed"
+									? "text-green-500 font-semibold"
+									: "font-semibold"
+							}>
+							{order.status}
+						</span>
+					</div>
+					<div>
+						<span className="font-semibold mr-[102px]">Specs:</span>
+						<span>{order.specs ? `${order.specs}` : "None"}</span>
+					</div>
+				</div>
 
 				{(order.status === "Completed" ||
 					order.status === "Rejected" ||
 					order.status === "Delivered") && (
 					<div className="p-2 rounded-xl mt-2 border">
-						{order.status === "Delivered" &&
+						{(order.status === "Delivered" || order.status === "Rejected") &&
 							order.speakerId.userId._id === currentUser._id && (
 								<p className="text-center py-2">
-									Customer recieved this audio, but you can update this if there
-									is any issue with this file.
+									Customer recieved this audio <br />
+									But you can update this if there is any issue with this file
 								</p>
 							)}
-						{order.status === "Delivered" ||
-							(order.status === "Completed" && 
-								order.userId._id === currentUser._id && (
-								<p className="text-center py-2">
-									Order {order.status} and Speaker send this audio. If there are
-									any issues in the file then you can contact with your Speaker.
-								</p>
-							))}
-						{order.status === "Delivered" ||
-							(order.status === "Completed" && (
-								<ReactAudioPlayer
-									src={order.audioFile}
-									controls
-									controlsList={
-										order.status === "Completed" ? "" : "nodownload"
-									}
-									className="w-full"
-								/>
-							))}
-						{order.status === "Delivered" && 
+						{(order.status === "Delivered" || order.status === "Completed") &&
 							order.userId._id === currentUser._id && (
-							<div className="flex flex-col gap-2">
-								{order.message && (
-									<div className="my-2 p-2 border rounded-xl">
-										<p>Message from Speaker</p>
-										<p>{order.message}</p>
-									</div>
-								)}
-								<p className="text-center">
-									You can download above audio after clicking ACCEPT
+								<p className="text-center py-2">
+									Order {order.status} and Speaker send this audio <br />
+									If there are any issues in the file then you can contact with
+									your Speaker.
 								</p>
-								<div className="flex w-full gap-4">
-									<Button
-										type="button"
-										gradientDuoTone="purpleToBlue"
-										size="sm"
-										outline
-										className="focus:ring-1 flex-1"
-										onClick={() => setStatus("Completed")}>
-										Accept
-									</Button>
-									<Button
-										type="button"
-										gradientDuoTone="purpleToPink"
-										size="sm"
-										outline
-										className="focus:ring-1 flex-1"
-										onClick={() => setStatus("Rejected")}>
-										Reject
-									</Button>
-
-									{status === "Rejected" && (
-										<div className="w-full">
-											<span>Write an message for Speaker</span>
-											<Textarea
-												className="mb-2 mt-1"
-												rows="2"
-												placeholder="Write reason for rejection...."
-												onChange={(e) => setRejectMessage(e.target.value)}
-												disabled={audioUploading}
-											/>
-											<Button
-												type="button"
-												gradientDuoTone="purpleToPink"
-												size="sm"
-												outline
-												className="focus:ring-1 w-full"
-												onClick={() => handleFileUpload(order._id)}>
-												SEND
-											</Button>
+							)}
+						<ReactAudioPlayer
+							src={order.audioFile}
+							controls
+							controlsList={order.status === "Completed" ? "" : "nodownload"}
+							className="w-full"
+						/>
+						{(order.status === "Delivered" || order.status === "Rejected") &&
+							order.userId._id === currentUser._id && (
+								<div className="flex flex-col gap-2">
+									{order.speakerMessage && (
+										<div className="my-2 p-2 border rounded-xl">
+											<p>Message from Speaker</p>
+											<p>{order.speakerMessage}</p>
 										</div>
 									)}
+
+									{order.status === "Delivered" && (
+										<>
+											<p className="text-center">
+												You can download above audio after clicking ACCEPT
+											</p>
+											<div className="flex w-full gap-4">
+												<Button
+													type="button"
+													gradientDuoTone="purpleToBlue"
+													size="sm"
+													outline
+													className="focus:ring-1 flex-1"
+													onClick={() => {
+														handleFileUpload(order._id, "Completed");
+													}}>
+													Accept
+												</Button>
+												<Button
+													type="button"
+													gradientDuoTone="purpleToPink"
+													size="sm"
+													outline
+													className="focus:ring-1 flex-1"
+													onClick={() => setStatus("Rejected")}>
+													Reject
+												</Button>
+
+												{status === "Rejected" && (
+													<div className="w-full">
+														<span>Write an message for Speaker</span>
+														<form
+															onSubmit={() =>
+																handleFileUpload(order._id, "Rejected")
+															}
+															className="mt-1 w-full">
+															<Textarea
+																className="mb-2"
+																rows="2"
+																placeholder="Write reason for rejection...."
+																onChange={(e) =>
+																	setRejectMessage(e.target.value)
+																}
+																disabled={audioUploading}
+															/>
+															<Button
+																type="submit"
+																gradientDuoTone="purpleToPink"
+																size="sm"
+																outline
+																className="focus:ring-1 w-full">
+																SEND
+															</Button>
+														</form>
+													</div>
+												)}
+											</div>
+										</>
+									)}
 								</div>
-							</div>
-						)}
+							)}
+						{order.status === "Rejected" &&
+							order.speaker.userId._id === currentUser._id &&
+							order.rejectMessage && (
+								<div className="my-2 p-2 border rounded-xl">
+									<p>Message from Customer</p>
+									<p>{order.rejectMessage}</p>
+								</div>
+							)}
 					</div>
 				)}
 
@@ -293,9 +344,11 @@ const OrderCard = ({ order, orderUpdated }) => {
 								size="sm"
 								outline
 								className="focus:ring-1 w-full sm:w-auto uppercase"
-								onClick={() => handleFileUpload(order._id)}
+								onClick={() => {
+									handleFileUpload(order._id, "Delivered");
+								}}
 								disabled={audioUploading}>
-								{order.status === "Completed" ? "Update" : "Confirm"}
+								{order.status === "Delivered" ? "Update" : "Confirm"}
 							</Button>
 						</div>
 					)}

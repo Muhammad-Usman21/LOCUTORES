@@ -7,6 +7,7 @@ const Home = () => {
 	const [speaker, setSpeaker] = useState([]);
 	const [voiceType, setVoiceType] = useState("");
 	const [country, setCountry] = useState("");
+	const [sort, setSort] = useState("desc");
 	const [showMore, setShowMore] = useState(true);
 
 	const countryOptions = Object.values(countries).map(
@@ -21,7 +22,7 @@ const Home = () => {
 		// console.log(voiceType, country);
 		try {
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sort}`
 			);
 			const data = await response.json();
 			// console.log(data);
@@ -42,7 +43,7 @@ const Home = () => {
 		try {
 			const startIndex = speaker.length;
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}&sort=${sort}`
 			);
 			const data = await response.json();
 			// console.log(data);
@@ -99,6 +100,13 @@ const Home = () => {
 								</option>
 							))}
 						</Select>
+						<Select
+							className="w-28"
+							value={sort}
+							onChange={(e) => setSort(e.target.value)}>
+							<option value="desc">Latest</option>
+							<option value="asc">Oldest</option>
+						</Select>
 						<Button
 							className=" w-full sm:w-28 focus:ring-1"
 							gradientDuoTone={"purpleToPink"}
@@ -108,7 +116,8 @@ const Home = () => {
 					</div>
 				</div>
 
-				<div className="flex flex-col items-center justify-center gap-10 p-10 mb-20
+				<div
+					className="flex flex-col items-center justify-center gap-10 p-10 mb-20
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<div className="flex flex-wrap gap-5 items-center justify-center">
 						{speaker.map((speaker) => (

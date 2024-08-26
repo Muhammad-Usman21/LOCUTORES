@@ -416,7 +416,7 @@ const DashSpeaker = () => {
 							<span className="font-bold">$</span>
 							{")"}
 						</span>
-						<div className="flex flex-col mb-4 gap-4 items-center justify-between dark:shadow-whiteLg">
+						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
 							<div className="flex gap-2 items-center">
 								<Label value="Voice for 10 - 20 seconds" />
 								<TextInput

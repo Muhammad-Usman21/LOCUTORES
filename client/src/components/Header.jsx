@@ -13,7 +13,6 @@ import { signOutSuccess } from "../redux/user/userSlice";
 import { useEffect, useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
 
-
 const Header = () => {
 	const path = useLocation().pathname;
 	const { currentUser } = useSelector((state) => state.user);
@@ -22,21 +21,26 @@ const Header = () => {
 
 	const [hasNewUpdates, setHasNewUpdates] = useState(false);
 
-
 	useEffect(() => {
-		if(!currentUser) return;
+		if (!currentUser) return;
 		const checkForOrderUpdates = async () => {
-			const storedOrderInfo = JSON.parse(localStorage.getItem('orderInfo'));
+			const storedOrderInfo = JSON.parse(localStorage.getItem("orderInfo"));
 			if (!storedOrderInfo) return;
 
-			const response = await fetch('/api/order/orders-notifications');
+			const response = await fetch("/api/order/orders-notifications");
 			const data = await response.json();
 			console.log(data);
 
-			const hasUpdates = data.some(order => {
-				const storedOrder = storedOrderInfo.find(stored => stored.id === order._id);
+			const hasUpdates = data.some((order) => {
+				const storedOrder = storedOrderInfo.find(
+					(stored) => stored.id === order._id
+				);
 				if (!storedOrder) return true;
-				return storedOrder && (storedOrder.status !== order.status || new Date(storedOrder.updatedAt) < new Date(order.updatedAt));
+				return (
+					storedOrder &&
+					(storedOrder.status !== order.status ||
+						new Date(storedOrder.updatedAt) < new Date(order.updatedAt))
+				);
 			});
 			console.log(hasUpdates);
 			setHasNewUpdates(hasUpdates);
@@ -120,9 +124,12 @@ const Header = () => {
 						Home
 					</Navbar.Link>
 				</Link>
-				<Link to="/orders" onClick={() => setHasNewUpdates(false)} >
+				<Link to="/orders" onClick={() => setHasNewUpdates(false)}>
 					<Navbar.Link active={path === "/orders"} as={"div"}>
-						Orders {hasNewUpdates && <IoIosNotifications className="text-red-500 inline-block" />}
+						Orders{" "}
+						{hasNewUpdates && (
+							<IoIosNotifications className="text-red-500 inline-block" />
+						)}
 					</Navbar.Link>
 				</Link>
 				<Link to="/customers">
@@ -130,8 +137,18 @@ const Header = () => {
 						Customers
 					</Navbar.Link>
 				</Link>
-				<Link to="/speaker">
-					<Navbar.Link active={path === "/speaker"} as={"div"}>
+				<Link
+					to={
+						currentUser?.isSpeaker
+							? "/dashboard?tab=edit-speaker"
+							: "/dashboard?tab=speaker"
+					}>
+					<Navbar.Link
+						active={
+							path === "/dashboard?tab=speaker" ||
+							path === "/dashboard?tab=edit-speaker"
+						}
+						as={"div"}>
 						Are you a speaker?
 					</Navbar.Link>
 				</Link>
