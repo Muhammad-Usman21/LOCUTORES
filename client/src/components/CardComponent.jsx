@@ -45,7 +45,7 @@ const CardComponent = ({ speaker }) => {
 								},
 							},
 						}}
-						// width={"100%"}
+						width={"100%"}
 						className="react-player"
 					/>
 				) : (
