@@ -201,7 +201,7 @@ const DashUser = () => {
 			delete formData.email;
 		}
 
-		if (!forgetPassword) {
+		if (!currentUser.googleAuth && !forgetPassword) {
 			if (!formData.currentPassword || formData.currentPassword === "") {
 				setUpdateUserLoading(false);
 				setMyMessages((prevMessages) => ({
@@ -225,7 +225,10 @@ const DashUser = () => {
 			return;
 		}
 
-		if (Object.keys(formData).length < 2) {
+		if (
+			(!currentUser.googleAuth && Object.keys(formData).length < 2) ||
+			(currentUser.googleAuth && Object.keys(formData).length === 0)
+		) {
 			setUpdateUserLoading(false);
 			setMyMessages((prevMessages) => ({
 				...prevMessages,
@@ -286,13 +289,15 @@ const DashUser = () => {
 		e.preventDefault();
 		setShowModal(false);
 
-		if (!inputPasswordValue || inputPasswordValue === "") {
-			setInputPasswordValue(null);
-			setMyMessages((prevMessages) => ({
-				...prevMessages,
-				deleteUserErrorMsg: "Password required!",
-			}));
-			return;
+		if (!currentUser.googleAuth) {
+			if (!inputPasswordValue || inputPasswordValue === "") {
+				setInputPasswordValue(null);
+				setMyMessages((prevMessages) => ({
+					...prevMessages,
+					deleteUserErrorMsg: "Password required!",
+				}));
+				return;
+			}
 		}
 
 		try {
@@ -445,15 +450,17 @@ const DashUser = () => {
 						defaultValue={currentUser.email}
 						disabled
 					/>
-					<TextInput
-						type="password"
-						id="currentPassword"
-						placeholder="Current Password"
-						onChange={handleChange}
-						value={formData.currentPassword || ""}
-						disabled={forgetPassword}
-						required
-					/>
+					{!currentUser.googleAuth && (
+						<TextInput
+							type="password"
+							id="currentPassword"
+							placeholder="Current Password"
+							onChange={handleChange}
+							value={formData.currentPassword || ""}
+							disabled={forgetPassword}
+							required
+						/>
+					)}
 					<div className="flex items-center gap-1">
 						<TextInput
 							type={showPassword ? "text" : "password"}

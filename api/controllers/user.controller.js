@@ -29,7 +29,7 @@ export const updateUser = async (req, res, next) => {
 		return next(errorHandler(404, "Oops! User not found."));
 	}
 
-	if (!forgetPassword) {
+	if (!validUser.googleAuth && !forgetPassword) {
 		if (!currentPassword || currentPassword === "") {
 			return next(
 				errorHandler(
@@ -112,15 +112,17 @@ export const deleteUser = async (req, res, next) => {
 		return next(errorHandler(404, "Oops! User not found."));
 	}
 
-	if (!inputPassword || inputPassword === "") {
-		return next(errorHandler(400, "Password required!"));
-	} else {
-		const validPassword = bcryptjs.compareSync(
-			inputPassword,
-			validUser.password
-		);
-		if (!validPassword) {
-			return next(errorHandler(400, "Invalid password. Try again!"));
+	if (!validUser.googleAuth) {
+		if (!inputPassword || inputPassword === "") {
+			return next(errorHandler(400, "Password required!"));
+		} else {
+			const validPassword = bcryptjs.compareSync(
+				inputPassword,
+				validUser.password
+			);
+			if (!validPassword) {
+				return next(errorHandler(400, "Invalid password. Try again!"));
+			}
 		}
 	}
 

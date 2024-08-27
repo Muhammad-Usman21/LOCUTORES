@@ -27,9 +27,9 @@ const CardComponent = ({ speaker }) => {
 	return (
 		<div
 			className="bg-gray-300 dark:bg-gray-700 shadow-xl hover:shadow-2xl dark:shadow-whiteLg transition-shadow 
-            overflow-hidden rounded-lg w-full sm:w-[360px] flex flex-col justify-center relative">
+            overflow-hidden rounded-lg w-[350px] md:w-[360px] flex flex-col justify-center relative">
 			{/* <FileInput onChange={handleChange} /> */}
-			<div className="h-[320px] sm:h-[200px] w-full bg-slate-400">
+			<div className="sm:h-[200px] w-full bg-slate-400">
 				{speaker.video ? (
 					<ReactPlayer
 						url={speaker.video}
@@ -64,20 +64,20 @@ const CardComponent = ({ speaker }) => {
 					{isMenuVisible ? (
 						<IoMdClose
 							size={30}
-							className="cursor-pointer hover:shadow-xl z-20"
+							className="cursor-pointer z-20 bg-transparent"
 							onClick={handleMenuToggle}
 						/>
 					) : (
 						<TiThMenuOutline
 							size={30}
-							className="cursor-pointer hover:shadow-xl z-20"
+							className="cursor-pointer z-20 bg-transparent"
 							onClick={handleMenuToggle}
 						/>
 					)}
 				</div>
 				<Link
 					to={`/speaker/${speaker._id}`}
-					className="w-[300px] self-center m-5">
+					className="w-[300px] self-center mx-5 my-2">
 					<Button
 						className="w-full"
 						pill
@@ -95,7 +95,7 @@ const CardComponent = ({ speaker }) => {
 				</div>
 			</div>
 			<div
-				className={`absolute right-0 bottom-0 w-full h-4/5 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform duration-300 ease-in-out transform ${
+				className={`absolute right-0 bottom-0 w-full h-full bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform duration-300 ease-in-out transform ${
 					isMenuVisible ? "translate-y-0" : "translate-y-full"
 				}`}>
 				{isMenuVisible && (

@@ -137,25 +137,25 @@ const Speaker = () => {
 	return (
 		<div className="min-h-screen w-full flex items-center justify-center">
 			{speaker ? (
-				<div className="flex lg:flex-row flex-col p-5">
-					<div className="container mx-auto p-4 lg:w-2/5 w-full">
+				<div className="flex lg:flex-row flex-col p-2 lg:p-5 justify-center items-center">
+					<div className="container lg:mx-auto p-2 lg:p-4 lg:w-2/5 w-[340px]">
 						<div className="flex flex-col items-center gap-4">
-							<div className=" w-full mt-10 flex flex-row gap-5 justify-between content-between place-content-between">
+							<div className=" w-full lg:mt-10 flex lg:flex-row flex-col gap-5 justify-between items-center content-between place-content-between">
 								<img
 									src={speaker.image}
 									alt={speaker.userId.name}
 									className="rounded-3xl shadow-2xl w-64 h-44 self-center dark:shadow-whiteLg flex-1 object-cover"
 								/>
-								<div className="w-3/5 flex flex-col justify-center gap-3 flex-1">
-									<p className="text-xl">
+								<div className="lg:w-3/5 flex flex-col justify-center gap-3 flex-1">
+									<p className="lg:text-xl">
 										<FaRegUser className="inline-block mr-2" />
 										{speaker.userId.name}
 									</p>
-									<p className="text-xl">
+									<p className="lg:text-xl">
 										<MdEmail className="inline-block mr-2" />
 										{speaker.userId.email}
 									</p>
-									<p className="text-xl">
+									<p className="lg:text-xl">
 										{speaker.gender == "male" ? (
 											<FaMale className="inline-block mr-2" />
 										) : (
@@ -163,7 +163,7 @@ const Speaker = () => {
 										)}
 										{speaker.gender}
 									</p>
-									<p className="text-xl">
+									<p className="lg:text-xl">
 										<Flag
 											code={getCountryCodeFromName(speaker.country)}
 											className="w-8 inline-block mr-2"
@@ -174,11 +174,11 @@ const Speaker = () => {
 							</div>
 
 							<div className="self-start mt-3 mb-3 flex flex-col">
-								<span className="text-xl">Speaker&apos;s About: </span>
-								<span className="text-justify">{speaker.about}</span>
+								<span className="lg:text-xl">Speaker&apos;s About: </span>
+								<span className="text-justify text-sm md:text-base">{speaker.about}</span>
 							</div>
 							<div className=" flex justify-center align-middle flex-col items-center w-full my-2">
-								<h3 className="text-2xl mb-4 font-semibold">Prices</h3>
+								<h3 className="text-xl lg:text-2xl mb-4 font-semibold">Prices</h3>
 								<div className="overflow-x-auto w-3/4">
 									<table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md text-center">
 										<thead>
@@ -222,7 +222,7 @@ const Speaker = () => {
 							</div>
 
 							{speaker.video && (
-								<div className="self-center my-5">
+								<div className="self-center my-5 abs">
 									<ReactPlayer
 										url={speaker.video}
 										controls
@@ -242,7 +242,7 @@ const Speaker = () => {
 								</div>
 							)}
 							<div className="w-full my-2">
-								<h3 className="text-2xl mb-3 pl-4">Example Audio</h3>
+								<h3 className="text-lg lg:text-2xl mb-3 pl-4">Example Audio</h3>
 								<div className="flex flex-wrap justify-between">
 									{speaker.demos.length > 0 ? (
 										speaker.demos.map((demo, index) => (
@@ -250,7 +250,7 @@ const Speaker = () => {
 												key={index}
 												src={demo}
 												controls
-												className="w-[350px] mb-4"
+												className="w-[350px] mb-2"
 											/>
 										))
 									) : (
@@ -261,9 +261,9 @@ const Speaker = () => {
 						</div>
 					</div>
 
-					<div className="flex w-1/2 h-min self-center m-4 p-10 max-w-2xl flex-col md:items-center gap-10">
+					<div className="flex lg:w-1/2 h-min self-center lg:m-4 p-2 lg:p-10 max-w-2xl flex-col md:items-center gap-10">
 						<div
-							className="flex flex-col md:flex-row md:items-center gap-10 p-10 py-14 w-full
+							className="flex flex-col md:flex-row md:items-center gap-10 p-4 lg:p-10 py-14 w-full
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 							<div className="flex-1">
 								<h1 className="flex self-center justify-center text-3xl font-semibold mb-6">
@@ -316,8 +316,8 @@ const Speaker = () => {
 											required
 										/>
 									</div>
-									<div className="flex flex-row content-between justify-between">
-										<div className="flex flex-col gap-1 w-1/2">
+									<div className="flex lg:flex-row flex-col content-between justify-between gap-2">
+										<div className="flex flex-col gap-1 lg:w-1/2">
 											<Label value="City" />
 											<TextInput
 												type="text"
@@ -328,7 +328,7 @@ const Speaker = () => {
 												required
 											/>
 										</div>
-										<div className="flex flex-col gap-1 w-2/5">
+										<div className="flex flex-col gap-1 lg:w-2/5">
 											<Label value="Country" />
 											<Select
 												className="w-full"
@@ -348,8 +348,8 @@ const Speaker = () => {
 										</div>
 									</div>
 
-									<div className="flex flex-row content-between justify-between">
-										<div className="flex flex-col gap-1 w-2/5">
+									<div className="flex lg:flex-row flex-col content-between justify-between gap-2">
+										<div className="flex flex-col gap-1 lg:w-2/5">
 											<Label value="Type of Service" />
 											<Select
 												className="w-full"
@@ -370,7 +370,7 @@ const Speaker = () => {
 												</option>
 											</Select>
 										</div>
-										<div className="flex flex-col gap-1 w-2/5">
+										<div className="flex flex-col gap-1 lg:w-2/5">
 											<Label value="Audio Duration" />
 											<Select
 												className="w-full"
@@ -445,7 +445,7 @@ const Speaker = () => {
 						</div>
 
 						<div
-							className="flex flex-col w-full md:flex-row md:items-center gap-10 p-10 
+							className="flex flex-col w-full md:flex-row md:items-center gap-10 lg:p-10 py-5 px-3 
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 							{speaker && (
 								<div className="flex flex-col gap-2 mt-2 w-full">

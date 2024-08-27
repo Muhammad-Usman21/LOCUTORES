@@ -146,3 +146,42 @@ export const stripeCallback = async (req, res) => {
 		res.status(500).send({ error: error.message });
 	}
 };
+
+export const google = async (req, res, next) => {
+	const { email, name, googlePhotoUrl } = req.body;
+	try {
+		const user = await User.findOne({ email });
+		if (user) {
+			const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+			const { password, ...restInfo } = user._doc;
+			res
+				.status(200)
+				.cookie("access_token", token, { httpOnly: true })
+				.json(restInfo);
+		} else {
+			const generatedPassword =
+				Math.random().toString(36).slice(-8) +
+				Math.random().toString(36).slice(-8);
+			const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+			const newUser = new User({
+				name,
+				email,
+				password: hashedPassword,
+				profilePicture: googlePhotoUrl,
+				googleAuth: true,
+			});
+			await newUser.save();
+			const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+			const { password, ...restInfo } = newUser._doc;
+
+			res
+				.status(200)
+				.cookie("access_token", token, {
+					httpOnly: true,
+				})
+				.json(restInfo);
+		}
+	} catch (error) {
+		next(error);
+	}
+};

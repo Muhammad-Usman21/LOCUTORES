@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MdCancelPresentation } from "react-icons/md";
+import OAuth from "../components/OAuth";
 
 const SignIn = () => {
 	const [formData, setFormData] = useState({});
@@ -59,11 +60,11 @@ const SignIn = () => {
 	return (
 		<div className="min-h-screen py-20">
 			<div
-				className="flex p-10 max-w-2xl mx-10 sm:mx-14 md:mx-20 lg:mx-auto flex-col md:flex-row md:items-center gap-10
+				className="flex p-5 md:p-10 max-w-2xl mx-5 sm:mx-10 md:mx-20 lg:mx-auto flex-col md:flex-row md:items-center gap-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-				<div className="flex-1 px-5">
+				<div className="flex-1 md:px-5">
 					<form
-						className={`flex flex-col gap-4 ${theme}`}
+						className={`flex flex-col gap-3 ${theme}`}
 						onSubmit={handleSubmit}>
 						<div className="flex flex-col gap-1">
 							<Label value="Sign in with email" />
@@ -99,6 +100,7 @@ const SignIn = () => {
 								"Sign in"
 							)}
 						</Button>
+						<OAuth />
 					</form>
 					<div className="flex gap-2 text-sm mt-4">
 						<span>Dont have an account?</span>

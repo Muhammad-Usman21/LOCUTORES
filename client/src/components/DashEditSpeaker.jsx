@@ -262,7 +262,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			className="w-full bg-cover bg-center
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg2-dark.jpg')]">
 			<div
-				className="max-w-3xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
+				className="max-w-3xl my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
 					Edit your Speaker Account
@@ -289,7 +289,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 								: "✅"}
 						</Button>
 					</div>
-					<div className="flex flex-col gap-4 sm:flex-row justify-around">
+					<div className="flex flex-col gap-4 sm:flex-row justify-around items-center">
 						<div className="flex flex-col gap-1">
 							<Label value="Select your gender" />
 							<Select
@@ -458,7 +458,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 							formData.demos.map((url, index) => (
 								<div
 									key={url}
-									className="flex justify-between px-3 py-1 border items-center">
+									className="flex flex-col md:flex-row justify-between px-3 py-1 border items-center gap-1">
 									<ReactAudioPlayer src={url} controls className="w-full" />
 									<button
 										disabled={loading || imageUploading || audioUploading}
@@ -520,7 +520,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 									disabled={loading || imageUploading || audioUploading}
 								/>
 							</div>
-							<div className="flex gap-2 items-center pl-11">
+							<div className="flex gap-2 items-center lg:pl-11">
 								<Label value="Voice for 1 minute" />
 								<TextInput
 									className="w-40"

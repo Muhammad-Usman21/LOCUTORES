@@ -57,24 +57,24 @@ const Home = () => {
 	};
 
 	return (
-		<div className="min-w-screen w-full">
-			<div className="max-w-7xl mx-auto items-center justify-center flex flex-col gap-24 my-24">
+		<div className="min-h-screen w-full">
+			<div className="max-w-7xl mx-3 sm:mx-5 lg:mx-auto items-center justify-center flex flex-col gap-12 lg:gap-24 my-10 lg:my-24">
 				<div
-					className="flex flex-col items-center justify-center gap-8 p-10
+					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-					<span className="text-4xl">PROFESSIONALS VOICEOVERS</span>
-					<span className="text-2xl text-center">
+					<span className="text-2xl md:text-4xl text-center">PROFESSIONALS VOICEOVERS</span>
+					<span className="text-lg md:text-2xl text-center">
 						Professional Voice-Over, Commercial Voice-Over, Institutional
 						Voice-Over
 					</span>
 				</div>
 				<div
-					className="flex flex-col items-center justify-center gap-8 p-10
+					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-					<span className="text-2xl">
+					<span className="text-lg md:text-2xl text-center px-5">
 						What kind of voice are you looking for?
 					</span>
-					<div className="flex flex-col sm:flex-row gap-4">
+					<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 						<Select
 							className="w-48"
 							value={voiceType}
@@ -101,14 +101,14 @@ const Home = () => {
 							))}
 						</Select>
 						<Select
-							className="w-28"
+							className="w-48 md:w-28"
 							value={sort}
 							onChange={(e) => setSort(e.target.value)}>
 							<option value="desc">Latest</option>
 							<option value="asc">Oldest</option>
 						</Select>
 						<Button
-							className=" w-full sm:w-28 focus:ring-1"
+							className="w-48 sm:w-28 focus:ring-1"
 							gradientDuoTone={"purpleToPink"}
 							onClick={handleSearch}>
 							Search
@@ -117,7 +117,7 @@ const Home = () => {
 				</div>
 
 				<div
-					className="flex flex-col items-center justify-center gap-10 p-10 mb-20
+					className="flex flex-col items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 lg:mb-20
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					{speaker.length > 0 && (
 						<>

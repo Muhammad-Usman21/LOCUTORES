@@ -107,6 +107,7 @@ const Header = () => {
 						<Button
 							gradientDuoTone="purpleToBlue"
 							outline
+							size="sm"
 							className="focus:ring-1">
 							Sign In
 						</Button>
