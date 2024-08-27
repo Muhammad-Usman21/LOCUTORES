@@ -117,11 +117,11 @@ const Home = () => {
 				</div>
 
 				<div
-					className="flex flex-col items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 lg:mb-20
+					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 lg:mb-20
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					{speaker.length > 0 && (
 						<>
-							<div className="flex flex-wrap gap-5 items-center justify-center">
+							<div className="flex flex-wrap gap-5 items-center justify-center w-full">
 								{speaker.map((speaker) => (
 									<CardComponent key={speaker._id} speaker={speaker} />
 								))}

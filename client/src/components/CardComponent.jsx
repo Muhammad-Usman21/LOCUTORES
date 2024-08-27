@@ -27,7 +27,7 @@ const CardComponent = ({ speaker }) => {
 	return (
 		<div
 			className="bg-gray-300 dark:bg-gray-700 shadow-xl hover:shadow-2xl dark:shadow-whiteLg transition-shadow 
-            overflow-hidden rounded-lg w-[350px] md:w-[360px] flex flex-col justify-center relative">
+            overflow-hidden rounded-lg w-full md:w-[360px] flex flex-col justify-center relative">
 			{/* <FileInput onChange={handleChange} /> */}
 			<div className="sm:h-[200px] w-full bg-slate-400">
 				{speaker.video ? (
@@ -45,6 +45,7 @@ const CardComponent = ({ speaker }) => {
 								},
 							},
 						}}
+						// width={"100%"}
 						className="react-player"
 					/>
 				) : (

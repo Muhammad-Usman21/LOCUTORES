@@ -137,9 +137,9 @@ const Speaker = () => {
 	return (
 		<div className="min-h-screen w-full flex items-center justify-center">
 			{speaker ? (
-				<div className="flex lg:flex-row flex-col p-2 lg:p-5 justify-center items-center">
-					<div className="container lg:mx-auto p-2 lg:p-4 lg:w-2/5 w-[340px]">
-						<div className="flex flex-col items-center gap-4">
+				<div className="flex lg:flex-row flex-col w-full p-2 lg:p-5 justify-center items-center">
+					<div className="container lg:mx-auto p-2 lg:p-4 lg:w-2/5">
+						<div className="flex flex-col items-center gap-4 w-full">
 							<div className=" w-full lg:mt-10 flex lg:flex-row flex-col gap-5 justify-between items-center content-between place-content-between">
 								<img
 									src={speaker.image}
@@ -222,7 +222,7 @@ const Speaker = () => {
 							</div>
 
 							{speaker.video && (
-								<div className="self-center my-5 abs">
+								<div className="self-center my-5 w-full">
 									<ReactPlayer
 										url={speaker.video}
 										controls
@@ -237,13 +237,14 @@ const Speaker = () => {
 												},
 											},
 										}}
-										className="react-player-form"
+										width={"100%"}
+										className="react-player-form w-full"
 									/>
 								</div>
 							)}
 							<div className="w-full my-2">
 								<h3 className="text-lg lg:text-2xl mb-3 pl-4">Example Audio</h3>
-								<div className="flex flex-wrap justify-between">
+								<div className="flex flex-wrap justify-center gap-2">
 									{speaker.demos.length > 0 ? (
 										speaker.demos.map((demo, index) => (
 											<ReactAudioPlayer
