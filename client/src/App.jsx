@@ -9,24 +9,29 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import Payment from "./pages/Payment";
 import Orders from "./pages/Orders";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
 	return (
-		<BrowserRouter>
-			<ScrollToTop />
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/sign-in" element={<SignIn />} />
-				<Route path="/sign-up" element={<SignUp />} />
-				<Route element={<PrivateRoute />}>
-					<Route path="/dashboard" element={<Dashboard />} />
-					<Route path="/orders" element={<Orders />} />
-					<Route path="/speaker/:id" element={<Speaker />} />
-				</Route>
-				<Route path="/payment" element={<Payment />} />
-			</Routes>
-		</BrowserRouter>
+		<>
+			<ToastContainer />
+			<BrowserRouter>
+				<ScrollToTop />
+				<Header />
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/sign-in" element={<SignIn />} />
+					<Route path="/sign-up" element={<SignUp />} />
+					<Route element={<PrivateRoute />}>
+						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/orders" element={<Orders />} />
+						<Route path="/speaker/:id" element={<Speaker />} />
+					</Route>
+					<Route path="/payment" element={<Payment />} />
+				</Routes>
+			</BrowserRouter>
+		</>
 	);
 };
 
