@@ -10,16 +10,15 @@ import { HiMoon, HiSun } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutSuccess } from "../redux/user/userSlice";
-import { useEffect, useState } from "react";
-import { IoIosNotifications } from "react-icons/io";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
 	const path = useLocation().pathname;
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const { theme } = useSelector((state) => state.theme);
-
-	const [hasNewUpdates, setHasNewUpdates] = useState(false);
 
 	useEffect(() => {
 		if (!currentUser) return;
@@ -43,7 +42,9 @@ const Header = () => {
 				);
 			});
 			console.log(hasUpdates);
-			setHasNewUpdates(hasUpdates);
+			if(hasUpdates){
+				toast.info("You have new order updates");
+			}
 		};
 
 		checkForOrderUpdates();
@@ -120,12 +121,9 @@ const Header = () => {
 						Home
 					</Navbar.Link>
 				</Link>
-				<Link to="/orders" onClick={() => setHasNewUpdates(false)}>
+				<Link to="/orders">
 					<Navbar.Link active={path === "/orders"} as={"div"}>
 						Orders{" "}
-						{hasNewUpdates && (
-							<IoIosNotifications className="text-red-500 inline-block" />
-						)}
 					</Navbar.Link>
 				</Link>
 				<Link
