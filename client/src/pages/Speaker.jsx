@@ -90,7 +90,9 @@ const Speaker = () => {
 		) {
 			return setErrorMessage("All fields are required!");
 		}
-		console.log(formData);
+		// console.log(formData);
+		// console.log(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+		// console.log(import.meta.env.VITE_FIREBASE_API_KEY);
 		try {
 			setLoading(true);
 			setErrorMessage(null);
