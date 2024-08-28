@@ -11,6 +11,7 @@ import Payment from "./pages/Payment";
 import Orders from "./pages/Orders";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
 	return (
@@ -29,6 +30,7 @@ const App = () => {
 						<Route path="/speaker/:id" element={<Speaker />} />
 					</Route>
 					<Route path="/payment" element={<Payment />} />
+					<Route path="/reset-password" element={<ResetPassword />} />
 				</Routes>
 			</BrowserRouter>
 		</>

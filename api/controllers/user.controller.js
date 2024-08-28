@@ -13,7 +13,7 @@ export const updateUser = async (req, res, next) => {
 		return next(errorHandler(403, "You are not allowed to update this user"));
 	}
 
-	let hashedPassword;
+	// let hashedPassword;
 	const {
 		name,
 		email,
@@ -29,55 +29,55 @@ export const updateUser = async (req, res, next) => {
 		return next(errorHandler(404, "Oops! User not found."));
 	}
 
-	if (!validUser.googleAuth && !forgetPassword) {
-		if (!currentPassword || currentPassword === "") {
-			return next(
-				errorHandler(
-					400,
-					"Enter your current password for update your profile."
-				)
-			);
-		} else {
-			const validPassword = bcryptjs.compareSync(
-				currentPassword,
-				validUser.password
-			);
-			if (!validPassword) {
-				return next(errorHandler(400, "Invalid password. Try again!"));
-			}
-		}
-	}
+	// if (!validUser.googleAuth && !forgetPassword) {
+	// 	if (!currentPassword || currentPassword === "") {
+	// 		return next(
+	// 			errorHandler(
+	// 				400,
+	// 				"Enter your current password for update your profile."
+	// 			)
+	// 		);
+	// 	} else {
+	// 		const validPassword = bcryptjs.compareSync(
+	// 			currentPassword,
+	// 			validUser.password
+	// 		);
+	// 		if (!validPassword) {
+	// 			return next(errorHandler(400, "Invalid password. Try again!"));
+	// 		}
+	// 	}
+	// }
 
-	if (password || password === "") {
-		if (password !== confirmPassword) {
-			return next(errorHandler(400, "Your password isn't same. Try again!"));
-		}
-		if (password.length < 8) {
-			return next(errorHandler(400, "Password must be atleast 8 characters!"));
-		}
+	// if (password || password === "") {
+	// 	if (password !== confirmPassword) {
+	// 		return next(errorHandler(400, "Your password isn't same. Try again!"));
+	// 	}
+	// 	if (password.length < 8) {
+	// 		return next(errorHandler(400, "Password must be atleast 8 characters!"));
+	// 	}
 
-		hashedPassword = bcryptjs.hashSync(password, 10);
-	}
+	// 	hashedPassword = bcryptjs.hashSync(password, 10);
+	// }
 
-	if (name || name === "") {
-		if (name === "") {
-			return next(errorHandler(400, "Name required!"));
-		}
-	}
+	// if (name || name === "") {
+	// 	if (name === "") {
+	// 		return next(errorHandler(400, "Name required!"));
+	// 	}
+	// }
 
-	if (email || email === "") {
-		if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-			return next(errorHandler(400, "Enter a valid email (name@company.com)"));
-		}
-		if (email !== email.toLowerCase()) {
-			return next(errorHandler(400, "Email must be lowercase!"));
-		}
+	// if (email || email === "") {
+	// 	if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+	// 		return next(errorHandler(400, "Enter a valid email (name@company.com)"));
+	// 	}
+	// 	if (email !== email.toLowerCase()) {
+	// 		return next(errorHandler(400, "Email must be lowercase!"));
+	// 	}
 
-		const checkEmail = await User.findOne({ email });
-		if (checkEmail) {
-			return next(errorHandler(400, "Email already exists. Try another one!"));
-		}
-	}
+	// 	const checkEmail = await User.findOne({ email });
+	// 	if (checkEmail) {
+	// 		return next(errorHandler(400, "Email already exists. Try another one!"));
+	// 	}
+	// }
 
 	try {
 		const updatedUser = await User.findByIdAndUpdate(
@@ -85,16 +85,16 @@ export const updateUser = async (req, res, next) => {
 			{
 				$set: {
 					name,
-					email,
-					password: hashedPassword,
+					// email,
+					// password: hashedPassword,
 					profilePicture,
 				},
 			},
 			{ new: true }
 		);
 
-		const { password: pass, ...restInfo } = updatedUser._doc;
-		res.status(200).json(restInfo);
+		// const { password: pass, ...restInfo } = updatedUser._doc;
+		res.status(200).json(updatedUser._doc);
 	} catch (error) {
 		next(error);
 	}
@@ -148,13 +148,14 @@ export const getUsers = async (req, res, next) => {
 			.skip(startIndex)
 			.limit(limit);
 
-		const usersWithoutPassword = users.map((user) => {
-			const { password, ...rest } = user._doc;
-			return rest;
-		});
+		// const usersWithoutPassword = users.map((user) => {
+		// 	const { password, ...rest } = user._doc;
+		// 	return rest;
+		// });
 
 		res.status(200).json({
-			users: usersWithoutPassword,
+			users,
+			// users: usersWithoutPassword,
 		});
 	} catch (error) {
 		next(error);
@@ -168,8 +169,8 @@ export const getUser = async (req, res, next) => {
 			return next(errorHandler("User not found!"));
 		}
 
-		const { password, ...restInfo } = user._doc;
-		res.status(200).json(restInfo);
+		// const { password, ...restInfo } = user._doc;
+		res.status(200).json(user._doc);
 	} catch (error) {
 		next(error);
 	}

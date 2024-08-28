@@ -9,40 +9,42 @@ import Speaker from "../models/speaker.model.js";
 export const signup = async (req, res, next) => {
 	const { name, email, password, confirmPassword } = req.body;
 
-	if (password !== confirmPassword) {
-		return next(errorHandler(400, "Your password isn't same. Try again!"));
-	}
+	// if (password !== confirmPassword) {
+	// 	return next(errorHandler(400, "Your password isn't same. Try again!"));
+	// }
 
-	if (!name || !email || !password || !confirmPassword) {
-		return next(errorHandler(400, "All fields are required"));
-	}
+	// if (!name || !email || !password || !confirmPassword) {
+	// if (!name || !email || !password) {
+	// 	return next(errorHandler(400, "All fields are required"));
+	// }
 
-	if (name === "") {
-		return next(errorHandler(400, "Name required!"));
-	}
+	// if (name === "") {
+	// 	return next(errorHandler(400, "Name required!"));
+	// }
 
-	if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-		return next(errorHandler(400, "Enter a valid email (name@company.com)"));
-	}
-	if (email !== email.toLowerCase()) {
-		return next(errorHandler(400, "Email must be lowercase!"));
-	}
+	// if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+	// 	return next(errorHandler(400, "Enter a valid email (name@company.com)"));
+	// }
+	// if (email !== email.toLowerCase()) {
+	// 	return next(errorHandler(400, "Email must be lowercase!"));
+	// }
 
-	if (password.length < 8) {
-		return next(errorHandler(400, "Password must be atleast 8 characters!"));
-	}
+	// if (password.length < 8) {
+	// 	return next(errorHandler(400, "Password must be atleast 8 characters!"));
+	// }
 
 	const checkEmail = await User.findOne({ email });
 	if (checkEmail) {
 		return next(errorHandler(400, "Email already exists. Try another one!"));
 	}
 
-	const hashedPassword = bcryptjs.hashSync(password, 10);
+	// const hashedPassword = bcryptjs.hashSync(password, 10);
 
 	const newUser = new User({
 		name,
 		email,
-		password: hashedPassword,
+		firebaseId: password,
+		// password: hashedPassword,
 	});
 
 	try {
@@ -65,29 +67,30 @@ export const signin = async (req, res, next) => {
 			email: email,
 		});
 
-		if (!validUser) {
+		if (!validUser || password !== validUser.firebaseId) {
 			return next(errorHandler(404, "Oops! User not found."));
 		}
 
-		const validPassword = bcryptjs.compareSync(password, validUser.password);
-		if (!validPassword) {
-			return next(errorHandler(400, "Invalid password. Try again!"));
-		}
+		// const validPassword = bcryptjs.compareSync(password, validUser.password);
+		// if (!validPassword) {
+		// 	return next(errorHandler(400, "Invalid password. Try again!"));
+		// }
 
 		const token = jwt.sign(
 			{
 				id: validUser._id,
+				firebaseId: validUser.firebaseId,
 			},
 			process.env.JWT_SECRET
 		);
 
-		const { password: pass, ...restInfo } = validUser._doc;
+		// const { password: pass, ...restInfo } = validUser._doc;
 		res
 			.status(200)
 			.cookie("access_token", token, {
 				httpOnly: true,
 			})
-			.json(restInfo);
+			.json(validUser._doc);
 	} catch (error) {
 		next(error);
 	}
@@ -148,38 +151,51 @@ export const stripeCallback = async (req, res) => {
 };
 
 export const google = async (req, res, next) => {
-	const { email, name, googlePhotoUrl } = req.body;
+	const { email, name, googlePhotoUrl, firebaseId } = req.body;
 	try {
 		const user = await User.findOne({ email });
 		if (user) {
-			const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-			const { password, ...restInfo } = user._doc;
+			const token = jwt.sign(
+				{
+					id: user._id,
+					firebaseId: user.firebaseId,
+				},
+				process.env.JWT_SECRET
+			);
+			// const { password, ...restInfo } = user._doc;
 			res
 				.status(200)
 				.cookie("access_token", token, { httpOnly: true })
-				.json(restInfo);
+				.json(user._doc);
 		} else {
-			const generatedPassword =
-				Math.random().toString(36).slice(-8) +
-				Math.random().toString(36).slice(-8);
-			const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+			// const generatedPassword =
+			// 	Math.random().toString(36).slice(-8) +
+			// 	Math.random().toString(36).slice(-8);
+			// const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
 			const newUser = new User({
 				name,
 				email,
-				password: hashedPassword,
+				// password: hashedPassword,
 				profilePicture: googlePhotoUrl,
 				googleAuth: true,
+				firebaseId,
 			});
 			await newUser.save();
-			const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-			const { password, ...restInfo } = newUser._doc;
+			const token = jwt.sign(
+				{
+					id: newUser._id,
+					firebaseId: newUser.firebaseId,
+				},
+				process.env.JWT_SECRET
+			);
+			// const { password, ...restInfo } = newUser._doc;
 
 			res
 				.status(200)
 				.cookie("access_token", token, {
 					httpOnly: true,
 				})
-				.json(restInfo);
+				.json(newUser._doc);
 		}
 	} catch (error) {
 		next(error);

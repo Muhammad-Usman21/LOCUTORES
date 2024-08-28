@@ -21,6 +21,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { MdCancelPresentation } from "react-icons/md";
 import { BiSolidHide, BiSolidShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const DashUser = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -36,6 +37,7 @@ const DashUser = () => {
 	// const [updateUserSuccessMsg, setUpdateUserSuccessMsg] = useState(null);
 	// const [deleteUserErrorMsg, setDeleteUserErrorMsg] = useState(null);
 	// const [signOutErrorMsg, setSignOutErrorMsg] = useState(null);
+	const auth = getAuth(app);
 	const filePickerRef = useRef();
 	const dispatch = useDispatch();
 	const [formData, setFormData] = useState({});
@@ -43,6 +45,7 @@ const DashUser = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [forgetPassword, setForgetPassword] = useState(false);
+	const [changePasswordLoading, setChangePasswordLoading] = useState(false);
 	const [myMessages, setMyMessages] = useState({
 		updateUserErrorMsg: null,
 		updateUserSuccessMsg: null,
@@ -50,6 +53,8 @@ const DashUser = () => {
 		signOutErrorMsg: null,
 		imageFileErrorMsg: null,
 		imageFileSuccessMsg: null,
+		changePasswordMsg: null,
+		changePasswordErrorMsg: null,
 	});
 
 	const handleImageChange = (e) => {
@@ -188,12 +193,12 @@ const DashUser = () => {
 			return;
 		}
 
-		if (formData.password === "") {
-			delete formData.password;
-		}
-		if (formData.confirmPassword === "") {
-			delete formData.confirmPassword;
-		}
+		// if (formData.password === "") {
+		// 	delete formData.password;
+		// }
+		// if (formData.confirmPassword === "") {
+		// 	delete formData.confirmPassword;
+		// }
 		if (formData.name === currentUser.name) {
 			delete formData.name;
 		}
@@ -201,34 +206,42 @@ const DashUser = () => {
 			delete formData.email;
 		}
 
-		if (!currentUser.googleAuth && !forgetPassword) {
-			if (!formData.currentPassword || formData.currentPassword === "") {
+		if (formData.name || formData.name === "") {
+			if (formData.name === "") {
 				setUpdateUserLoading(false);
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
-					updateUserErrorMsg:
-						"Enter your current password for update your profile.",
+					updateUserErrorMsg: "Name Required!",
 				}));
 				return;
 			}
 		}
 
-		if (
-			(formData.password || formData.confirmPassword) &&
-			formData.password !== formData.confirmPassword
-		) {
-			setUpdateUserLoading(false);
-			setMyMessages((prevMessages) => ({
-				...prevMessages,
-				updateUserErrorMsg: "Your password isn't same. Try again!",
-			}));
-			return;
-		}
+		// if (!currentUser.googleAuth && !forgetPassword) {
+		// 	if (!formData.currentPassword || formData.currentPassword === "") {
+		// 		setUpdateUserLoading(false);
+		// 		setMyMessages((prevMessages) => ({
+		// 			...prevMessages,
+		// 			updateUserErrorMsg:
+		// 				"Enter your current password for update your profile.",
+		// 		}));
+		// 		return;
+		// 	}
+		// }
 
-		if (
-			(!currentUser.googleAuth && Object.keys(formData).length < 2) ||
-			(currentUser.googleAuth && Object.keys(formData).length === 0)
-		) {
+		// if (
+		// 	(formData.password || formData.confirmPassword) &&
+		// 	formData.password !== formData.confirmPassword
+		// ) {
+		// 	setUpdateUserLoading(false);
+		// 	setMyMessages((prevMessages) => ({
+		// 		...prevMessages,
+		// 		updateUserErrorMsg: "Your password isn't same. Try again!",
+		// 	}));
+		// 	return;
+		// }
+
+		if (Object.keys(formData).length === 0) {
 			setUpdateUserLoading(false);
 			setMyMessages((prevMessages) => ({
 				...prevMessages,
@@ -376,6 +389,33 @@ const DashUser = () => {
 		setInputPasswordValue(null);
 	};
 
+	const handleChangePassword = async (e) => {
+		e.preventDefault();
+		setChangePasswordLoading(true);
+
+		setMyMessages((prevMessages) => ({
+			...prevMessages,
+			changePasswordMsg: null,
+			changePasswordErrorMsg: null,
+		}));
+
+		try {
+			await sendPasswordResetEmail(auth, currentUser.email);
+			setMyMessages((prevMessages) => ({
+				...prevMessages,
+				changePasswordMsg: "Email sent for change password! Check your inbox.",
+			}));
+			setChangePasswordLoading(false);
+		} catch (error) {
+			console.error("Error sending password reset email:", error);
+			setMyMessages((prevMessages) => ({
+				...prevMessages,
+				changePasswordErrorMsg: error.message,
+			}));
+			setChangePasswordLoading(false);
+		}
+	};
+
 	return (
 		<div
 			className="w-full bg-cover bg-center
@@ -385,7 +425,7 @@ const DashUser = () => {
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="mt-2 mb-4 text-center font-semibold text-3xl">User</h1>
 				<form
-					className={`flex flex-col gap-3 ${theme}`}
+					className={`flex flex-col gap-2 ${theme}`}
 					onSubmit={handleUpdateUserSubmit}>
 					<input
 						type="file"
@@ -450,7 +490,7 @@ const DashUser = () => {
 						defaultValue={currentUser.email}
 						disabled
 					/>
-					{!currentUser.googleAuth && (
+					{/* {!currentUser.googleAuth && (
 						<TextInput
 							type="password"
 							id="currentPassword"
@@ -460,8 +500,8 @@ const DashUser = () => {
 							disabled={forgetPassword}
 							required
 						/>
-					)}
-					<div className="flex items-center gap-1">
+					)} */}
+					{/* <div className="flex items-center gap-1">
 						<TextInput
 							type={showPassword ? "text" : "password"}
 							placeholder="New Password"
@@ -485,7 +525,7 @@ const DashUser = () => {
 						placeholder="Confirm Password"
 						onChange={handleChange}
 						value={formData.confirmPassword || ""}
-					/>
+					/> */}
 
 					<Button
 						type="submit"
@@ -504,12 +544,21 @@ const DashUser = () => {
 					</Button>
 				</form>
 
+				<Button
+					type="button"
+					gradientDuoTone="purpleToBlue"
+					className="uppercase focus:ring-1 mt-4 w-full"
+					onClick={handleChangePassword}
+					disabled={changePasswordLoading}>
+					Change Password
+				</Button>
+
 				{!currentUser.isSpeaker && (
 					<Link to={"/dashboard?tab=speaker"}>
 						<Button
 							type="button"
 							gradientDuoTone="purpleToPink"
-							className="uppercase focus:ring-1 mt-4 w-full">
+							className="uppercase focus:ring-1 mt-3 w-full">
 							Become a Speaker
 						</Button>
 					</Link>

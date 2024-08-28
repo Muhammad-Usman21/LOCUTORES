@@ -5,6 +5,8 @@ import { BiSolidShow, BiSolidHide } from "react-icons/bi";
 import { MdCancelPresentation } from "react-icons/md";
 import { useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { app } from "../firebase";
 
 const SignUp = () => {
 	const [formData, setFormData] = useState({});
@@ -13,6 +15,7 @@ const SignUp = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
 	const { theme } = useSelector((state) => state.theme);
+	const auth = getAuth(app);
 
 	const handleChange = (e) => {
 		// console.log(e.target.value);
@@ -34,17 +37,44 @@ const SignUp = () => {
 			!formData.confirmPassword
 		) {
 			return setErrorMessage("All fields are required!");
-		} else if (formData.password !== formData.confirmPassword) {
+		}
+		if (formData.password !== formData.confirmPassword) {
 			return setErrorMessage("Your password isn't same. Try again!");
+		}
+		if (formData.password.length < 8) {
+			return setErrorMessage("Password must be atleast 8 characters!");
+		}
+
+		if (formData.name === "") {
+			return setErrorMessage("Name required!");
+		}
+		if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+			return setErrorMessage("Enter a valid email (name@company.com)");
+		}
+		if (formData.email !== formData.email.toLowerCase()) {
+			return setErrorMessage("Email must be lowercase!");
 		}
 
 		try {
 			setLoading(true);
 			setErrorMessage(null);
+
+			const firebaseUser = await createUserWithEmailAndPassword(
+				auth,
+				formData.email,
+				formData.password
+			);
+			console.log(firebaseUser.user.uid);
+
+			setFormData({ ...formData, password: firebaseUser.user.uid });
+
 			const res = await fetch("/api/auth/signup", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(formData),
+				body: JSON.stringify({
+					...formData,
+					password: firebaseUser.user.uid,
+				}),
 			});
 			const data = await res.json();
 			if (data.success === false) {
@@ -52,7 +82,7 @@ const SignUp = () => {
 				setLoading(false);
 				return;
 			}
-			if (res.ok) {
+			if (res.ok && firebaseUser && firebaseUser.user) {
 				setLoading(false);
 				navigate("/sign-in");
 			}

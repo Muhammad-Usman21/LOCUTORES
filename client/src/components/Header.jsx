@@ -13,12 +13,15 @@ import { signOutSuccess } from "../redux/user/userSlice";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "../firebase";
 
 const Header = () => {
 	const path = useLocation().pathname;
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const { theme } = useSelector((state) => state.theme);
+	const auth = getAuth(app);
 
 	useEffect(() => {
 		if (!currentUser) return;
@@ -42,7 +45,7 @@ const Header = () => {
 				);
 			});
 			console.log(hasUpdates);
-			if(hasUpdates){
+			if (hasUpdates) {
 				toast.info("You have new order updates");
 			}
 		};
@@ -52,6 +55,8 @@ const Header = () => {
 
 	const handleSignOut = async () => {
 		try {
+			await signOut(auth);
+
 			const res = await fetch("/api/auth/signout", {
 				method: "POST",
 			});
@@ -59,7 +64,8 @@ const Header = () => {
 
 			if (!res.ok) {
 				return console.log(data.message);
-			} else {
+			}
+			if (res.ok) {
 				dispatch(signOutSuccess(data));
 			}
 		} catch (error) {

@@ -24,6 +24,7 @@ const OAuth = () => {
 					name: resultsFromGoogle.user.displayName,
 					email: resultsFromGoogle.user.email,
 					googlePhotoUrl: resultsFromGoogle.user.photoURL,
+					firebaseId: resultsFromGoogle.user.uid,
 				}),
 			});
 			const data = await res.json();
