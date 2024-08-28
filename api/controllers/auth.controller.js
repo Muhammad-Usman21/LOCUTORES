@@ -6,6 +6,8 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import Speaker from "../models/speaker.model.js";
 
+dotenv.config();
+
 export const signup = async (req, res, next) => {
 	const { name, email, password, confirmPassword } = req.body;
 
@@ -143,7 +145,7 @@ export const stripeCallback = async (req, res) => {
 
 		// res.redirect(`http://localhost:5173/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`);
 		res.redirect(
-			`https://locutores-project.onrender.com/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`
+			`/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`
 		);
 	} catch (error) {
 		res.status(500).send({ error: error.message });

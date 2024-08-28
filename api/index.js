@@ -42,60 +42,6 @@ app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
-// import Stripe from "stripe";
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-// app.post('/become-a-speaker', async (req, res) => {
-//     const { name, email, address } = req.body;
-
-//     try {
-//         // Create a new speaker document (but don't save the Stripe account ID yet)
-//         const speaker = new Speaker({ name, email, address });
-//         await speaker.save();
-
-//         // Generate the Stripe OAuth link
-//         const state = speaker._id.toString(); // Use the speaker's MongoDB ID as state to retrieve it later
-//         const clientId = process.env.STRIPE_CLIENT_ID;
-
-//         const redirectUri = stripe.oauth.authorizeUrl({
-//             response_type: 'code',
-//             client_id: clientId,
-//             scope: 'read_write',
-//             redirect_uri: `${process.env.CLIENT_URL}/stripe/callback`,
-//             state: state,
-//         });
-
-//         res.status(200).send({ url: redirectUri });
-//     } catch (error) {
-//         res.status(500).send({ error: error.message });
-//     }
-// });
-
-// // Handle the OAuth callback from Stripe
-// app.get('/stripe/callback', async (req, res) => {
-//     const { code, state } = req.query;
-
-//     try {
-//         const response = await stripe.oauth.token({
-//             grant_type: 'authorization_code',
-//             code: code,
-//         });
-
-//         const stripeAccountId = response.stripe_user_id;
-
-//         // Find the speaker using the state (which is the speaker's ID)
-//         const speaker = await Speaker.findByIdAndUpdate(state, { stripeAccountId: stripeAccountId }, { new: true });
-
-//         if (!speaker) {
-//             return res.status(404).send({ error: 'Speaker not found' });
-//         }
-
-//         res.redirect('http://localhost:3000/success'); // Redirect to a success page on your frontend
-//     } catch (error) {
-//         res.status(500).send({ error: error.message });
-//     }
-// });
-
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500;
 	const message = err.message || "Internal Server Error";
