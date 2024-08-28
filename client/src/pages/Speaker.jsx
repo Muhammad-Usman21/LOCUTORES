@@ -25,8 +25,8 @@ const Speaker = () => {
 
 	const { currentUser } = useSelector((state) => state.user);
 	const [formData, setFormData] = useState({
-		name: currentUser.name,
-		email: currentUser.email,
+		name: currentUser?.name || "",
+		email: currentUser?.email || "",
 		number: "",
 		company: "",
 		city: "",
@@ -447,7 +447,7 @@ const Speaker = () => {
 
 						<div
 							className="flex flex-col w-full md:flex-row md:items-center gap-10 lg:p-10 py-5 px-3 
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+								bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 							{speaker && (
 								<div className="flex flex-col gap-2 mt-2 w-full">
 									<p>

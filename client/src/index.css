@@ -13,15 +13,13 @@
 }
 
 .video-wrapper-form {
-	width: 100%;
-	height: auto;
-	display: block;
-	text-align: center;
+	width: 100% !important;
+	/* height: 200px !important; */
 }
 .react-player-form {
-	display: inline-block;
-	margin: 0 auto;
-	overflow: hidden;
+	object-fit: cover;
+	width: 100% !important;
+	height: 100% !important;
 }
 
 [data-testid="flowbite-avatar-img"] {

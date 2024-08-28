@@ -78,7 +78,7 @@ const Header = () => {
 			<Link
 				to="/"
 				className="font-semibold dark:text-white text-md sm:text-xl flex items-center">
-				<span className="ml-1 text-xl sm:ml-2 sm:3xl">LOCUTORES</span>
+				<span className="ml-1 text-xl sm:ml-2 sm:3xl">CASEVOX</span>
 			</Link>
 			<div className=" flex gap-2 md:order-2 items-center">
 				<Button

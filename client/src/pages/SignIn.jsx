@@ -136,7 +136,7 @@ const SignIn = () => {
 						</Button>
 						<OAuth />
 					</form>
-					<div className="flex justify-between text-sm mt-4">
+					<div className="flex flex-col md:flex-row justify-between text-sm mt-4">
 						<div className="flex gap-2 text-sm">
 							<span>Dont have an account?</span>
 							<Link to="/sign-up" className="text-blue-500">
