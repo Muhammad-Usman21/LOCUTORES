@@ -175,10 +175,14 @@ const Speaker = () => {
 
 							<div className="self-start mt-3 mb-3 flex flex-col">
 								<span className="lg:text-xl">Speaker&apos;s About: </span>
-								<span className="text-justify text-sm md:text-base">{speaker.about}</span>
+								<span className="text-justify text-sm md:text-base">
+									{speaker.about}
+								</span>
 							</div>
 							<div className=" flex justify-center align-middle flex-col items-center w-full my-2">
-								<h3 className="text-xl lg:text-2xl mb-4 font-semibold">Prices</h3>
+								<h3 className="text-xl lg:text-2xl mb-4 font-semibold">
+									Prices
+								</h3>
 								<div className="overflow-x-auto w-3/4">
 									<table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md text-center">
 										<thead>
@@ -222,7 +226,7 @@ const Speaker = () => {
 							</div>
 
 							{speaker.video && (
-								<div className="self-center my-5 w-full">
+								<div className="self-center my-5 video-wrapper-form h-[180px] sm:h-[270px] md:h-[320px] lg:h-[220px] xl:h-[300px] w-full">
 									<ReactPlayer
 										url={speaker.video}
 										controls

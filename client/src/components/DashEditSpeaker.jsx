@@ -339,7 +339,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 							disabled={loading || imageUploading || audioUploading}
 						/>
 						{formData?.video && (
-							<div className="video-wrapper-form w-full">
+							<div className="video-wrapper-form h-[180px] sm:h-[270px] md:h-[260px] lg:h-[370px] w-full">
 								<ReactPlayer
 									url={formData.video}
 									controls

@@ -29,7 +29,7 @@ const CardComponent = ({ speaker }) => {
 			className="bg-gray-300 dark:bg-gray-700 shadow-xl hover:shadow-2xl dark:shadow-whiteLg transition-shadow 
             overflow-hidden rounded-lg w-full md:w-[360px] flex flex-col justify-center relative">
 			{/* <FileInput onChange={handleChange} /> */}
-			<div className="h-[200px] w-full bg-slate-400">
+			<div className="h-[180px] w-full bg-slate-400">
 				{speaker.video ? (
 					<ReactPlayer
 						url={speaker.video}
@@ -52,7 +52,7 @@ const CardComponent = ({ speaker }) => {
 					<img
 						src={speaker.image}
 						alt="img"
-						className="h-[200px] w-full object-cover
+						className="h-[180px] w-full object-cover
                     		hover:scale-105 transition-scale duration-300"
 					/>
 				)}

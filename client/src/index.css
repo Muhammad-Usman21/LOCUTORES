@@ -4,7 +4,7 @@
 
 .react-player {
 	width: 100% !important;
-	height: 200px !important;
+	height: 180px !important;
 }
 .react-player video {
 	object-fit: cover;

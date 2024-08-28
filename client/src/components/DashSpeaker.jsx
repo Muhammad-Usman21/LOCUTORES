@@ -33,7 +33,11 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const [speakerErrorMsg, setSpeakerErrorMsg] = useState(null);
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [formData, setFormData] = useState({ demos: [], prices: {}, stripeAccountId });
+	const [formData, setFormData] = useState({
+		demos: [],
+		prices: {},
+		stripeAccountId,
+	});
 	const { theme } = useSelector((state) => state.theme);
 	const [audioFile, setAudioFile] = useState(null);
 	const [audioUploadErrorMsg, setAudioUploadErrorMsg] = useState(null);
@@ -224,11 +228,10 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			const response = await fetch(`/api/auth/signin-stripe?tab=speaker`);
 			const result = await response.json();
 			window.location.href = result.url;
-		}
-		catch (error) {
+		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 
 	return (
 		<div
@@ -302,7 +305,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 							disabled={loading || imageUploading || audioUploading}
 						/>
 						{formData.video && (
-							<div className="video-wrapper-form h-[180px] sm:h-[270px] md:h-[280px] lg:h-[370px] w-full">
+							<div className="video-wrapper-form h-[180px] sm:h-[270px] md:h-[260px] lg:h-[370px] w-full">
 								<ReactPlayer
 									url={formData.video}
 									controls
