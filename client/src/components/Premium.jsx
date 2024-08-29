@@ -21,6 +21,7 @@ const Premium = ({ updateUser }) => {
 
 	const handlePremium = async () => {
 		const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+		console.log(stripe);
 		const response = await fetch(
 			`/api/user/subscribe?userId=${currentUser._id}`
 		);
