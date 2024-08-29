@@ -21,6 +21,7 @@ const Premium = ({ updateUser }) => {
 
 	const handlePremium = async () => {
 		const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+		console.log(stripe);
 		const response = await fetch(
 			`/api/user/subscribe?userId=${currentUser._id}`
 		);
@@ -89,7 +90,7 @@ const Premium = ({ updateUser }) => {
 					</p>
 					<p className="mt-2">
 						The Premium Plan is available for just{" "}
-						<span className="font-bold">$5</span>. This upgrade is designed to
+						<span className="font-bold">${import.meta.env.VITE_PREMIUM_AMOUNT}</span>. This upgrade is designed to
 						give you the freedom to expand your profile and show your more
 						talents.
 					</p>
@@ -105,7 +106,7 @@ const Premium = ({ updateUser }) => {
 						outline
 						disabled={currentUser.isPremium}
 						className="uppercase focus:ring-1 mt-6 w-full">
-						Premium in $5
+						Premium in ${import.meta.env.VITE_PREMIUM_AMOUNT}
 					</Button>
 				</div>
 			</div>

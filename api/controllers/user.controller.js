@@ -199,14 +199,14 @@ export const subscribe = async (req, res, next) => {
             product_data: {
               name: "Premium Subscription",
             },
-            unit_amount: process.env.PREMIUM_AMOUNT * 100,
+            unit_amount: process.env.VITE_PREMIUM_AMOUNT * 100,
           },
           quantity: 1,
         },
       ],
       mode: "payment",
       success_url: `${process.env.CLIENT_URL}/api/user/subscribe-callback?userId=${userId}`,
-      cancel_url: `http://localhost:5173/dashboard?tab=premium`,
+      cancel_url: `${process.env.CLIENT_URL}/dashboard?tab=premium`,
     });
 
     await User.findByIdAndUpdate(userId, {
@@ -242,7 +242,7 @@ export const subscribeCallback = async (req, res, next) => {
       await user.save();
     }
 
-    res.redirect(`http://localhost:5173/dashboard?tab=premium&updateUser=true`);
+    res.redirect(`/dashboard?tab=premium&updateUser=true`);
   } catch (error) {
     next(error);
   }
