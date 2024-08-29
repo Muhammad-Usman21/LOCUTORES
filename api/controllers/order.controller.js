@@ -174,7 +174,6 @@ export const updateOrderPaymentStatus = async (req, res) => {
 		order.status = status;
 		await order.save();
 
-		// res.redirect("http://localhost:5173/orders");
 		res.redirect("/orders");
 	} catch (error) {
 		res.status(500).send({ error: error.message });

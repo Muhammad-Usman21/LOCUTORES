@@ -143,7 +143,6 @@ export const stripeCallback = async (req, res) => {
 
 		const stripeAccountId = response.stripe_user_id;
 
-		// res.redirect(`http://localhost:5173/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`);
 		res.redirect(
 			`/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`
 		);

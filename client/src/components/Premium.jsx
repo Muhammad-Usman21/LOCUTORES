@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserSuccess } from "../redux/user/userSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "flowbite-react";
+import { configDotenv } from "dotenv";
 
 const Premium = ({ updateUser }) => {
+	configDotenv();
 	const dispatch = useDispatch();
 	const { currentUser } = useSelector((state) => state.user);
 
@@ -104,7 +106,7 @@ const Premium = ({ updateUser }) => {
 						gradientDuoTone="purpleToPink"
 						outline
 						className="uppercase focus:ring-1 mt-6 w-full">
-						Premium in $5
+						Premium in ${process.env.PREMIUM_AMOUNT}
 					</Button>
 				</div>
 			</div>
