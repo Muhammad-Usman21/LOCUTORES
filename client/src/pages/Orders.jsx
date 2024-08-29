@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import OrderCard from "../components/OrderCard";
+import { Spinner } from "flowbite-react";
 
 const Orders = () => {
 	const [orders, setOrders] = useState([]);
 	const [showMore, setShowMore] = useState(true);
+	const [loading, setLoading] = useState(true);
 	// console.log(orders);
 
 	useEffect(() => {
 		const fetchOrders = async () => {
+			setLoading(true);
 			const response = await fetch("/api/order/orders?limit=10");
 			const data = await response.json();
 			setOrders(data);
@@ -23,6 +26,7 @@ const Orders = () => {
 				updatedAt: order.updatedAt,
 			}));
 			localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
+			setLoading(false);
 		};
 
 		fetchOrders();
@@ -67,7 +71,7 @@ const Orders = () => {
 		<div className="min-h-screen w-full">
 			<div className="min-w-6xl max-w-6xl mx-auto items-center justify-center flex flex-col gap-4 lg:gap-10 py-5 lg:py-14">
 				<h1 className="font-semibold text-xl lg:text-3xl">Your Orders</h1>
-				{orders.length > 0 && (
+				{!loading && orders.length > 0 && (
 					<div className="w-full items-center justify-center flex flex-col gap-12">
 						{orders.map((order) => (
 							<div
@@ -85,7 +89,15 @@ const Orders = () => {
 						)}
 					</div>
 				)}
-				{orders.length === 0 && <p className="">No have no order yet</p>}
+				{!loading && orders.length === 0 && (
+					<p className="">No have no order yet</p>
+				)}
+				{loading && (
+					<div className="self-center">
+						<Spinner size="lg" />
+						<span className="pl-3">Loading...</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);

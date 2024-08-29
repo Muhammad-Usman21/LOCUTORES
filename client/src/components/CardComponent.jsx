@@ -30,7 +30,7 @@ const CardComponent = ({ speaker }) => {
             overflow-hidden rounded-lg w-full md:w-[360px] flex flex-col justify-center relative">
 			{/* <FileInput onChange={handleChange} /> */}
 			<div className="h-[180px] w-full bg-slate-400">
-				{speaker.videos ? (
+				{speaker.videos.length !== 0 ? (
 					<ReactPlayer
 						url={speaker.videos[0]}
 						controls

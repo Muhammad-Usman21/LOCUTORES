@@ -5,10 +5,10 @@ import {
 	ref,
 	uploadBytesResumable,
 } from "firebase/storage";
-import { Button, FileInput, Textarea } from "flowbite-react";
+import { Alert, Button, FileInput, Textarea } from "flowbite-react";
 import { useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
-import { MdEmail } from "react-icons/md";
+import { MdCancelPresentation, MdEmail } from "react-icons/md";
 import { useSelector } from "react-redux";
 import Flag from "react-world-flags";
 import { app } from "../firebase";
@@ -23,6 +23,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 	const [status, setStatus] = useState(order.status);
 	const [rejectMessage, setRejectMessage] = useState(order.rejectMessage);
 	const [speakerMessage, setSpeakerMessage] = useState(order.speakerMessage);
+	const [errorMsg, setErrorMsg] = useState(null);
 
 	const getCountryCodeFromName = (countryName) => {
 		for (const [code, { name }] of Object.entries(countries)) {
@@ -34,7 +35,8 @@ const OrderCard = ({ order, orderUpdated }) => {
 	};
 
 	const handleUploadAudio = async () => {
-		if (!file) return;
+		setErrorMsg(null);
+		if (!file) return setErrorMsg("Select a file");
 		setAudioUploading(true);
 
 		// Initialize Firebase storage
@@ -54,6 +56,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			(error) => {
 				console.error("Upload failed:", error);
 				setAudioUploading(false);
+				setErrorMsg(error.message);
 			},
 			async () => {
 				// Handle successful uploads
@@ -67,6 +70,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 
 	const handleFileUpload = async (orderId, statuss) => {
 		// Update the order in your backend with the file URL and status
+		setErrorMsg(null);
 		try {
 			const response = await fetch(
 				`/api/order/status?orderId=${orderId}&status=${statuss}`,
@@ -100,6 +104,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			}
 		} catch (error) {
 			console.log(error);
+			setErrorMsg(error.message);
 		}
 	};
 
@@ -400,6 +405,19 @@ const OrderCard = ({ order, orderUpdated }) => {
 					</div>
 				)}
 			</div>
+			{errorMsg && (
+				<Alert className="flex-auto" color="failure" withBorderAccent>
+					<div className="flex justify-between">
+						<span dangerouslySetInnerHTML={{ __html: errorMsg }} />
+						<span className="w-5 h-5">
+							<MdCancelPresentation
+								className="cursor-pointer w-6 h-6"
+								onClick={() => setErrorMsg(null)}
+							/>
+						</span>
+					</div>
+				</Alert>
+			)}
 
 			{currentUser._id === order.userId._id && (
 				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
