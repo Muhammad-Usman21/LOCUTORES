@@ -58,7 +58,7 @@ const DashUser = () => {
 		changePasswordErrorMsg: null,
 	});
 
-	var prevProfilePicture;
+	const [prevUrlData, setPrevUrlData] = useState([]);
 
 	const handleImageChange = (e) => {
 		setMyMessages((prevMessages) => ({
@@ -113,10 +113,10 @@ const DashUser = () => {
 		const fileName = new Date().getTime() + imageFile.name;
 		const storageRef = ref(storage, fileName);
 		const metadata = {
-			customMetadata :{
+			customMetadata: {
 				uid: currentUser.firebaseId,
-			}
-		}
+			},
+		};
 		const uploadTask = uploadBytesResumable(storageRef, imageFile, metadata);
 
 		uploadTask.on(
@@ -139,6 +139,9 @@ const DashUser = () => {
 			},
 			() => {
 				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+					if (formData.profilePicture) {
+						setPrevUrlData([...prevUrlData, formData.profilePicture]);
+					}
 					setFormData({ ...formData, profilePicture: downloadURL });
 					setImageFileUrl(downloadURL);
 					setImageFileUploading(false);
@@ -202,7 +205,7 @@ const DashUser = () => {
 		}
 
 		if (formData.profilePicture !== currentUser.profilePicture) {
-			prevProfilePicture = currentUser.profilePicture;
+			setPrevUrlData([...prevUrlData, currentUser.profilePicture]);
 		}
 
 		// if (formData.password === "") {
@@ -292,7 +295,7 @@ const DashUser = () => {
 				setImageFileUploadProgress(null);
 				setImageFileUrl(null);
 				setImageFile(null);
-				deleteFileByUrl(prevProfilePicture);
+				prevUrlData.map((item, index) => deleteFileByUrl(item));
 			}
 		} catch (error) {
 			setUpdateUserLoading(false);
@@ -428,7 +431,6 @@ const DashUser = () => {
 			setChangePasswordLoading(false);
 		}
 	};
-
 
 	return (
 		<div

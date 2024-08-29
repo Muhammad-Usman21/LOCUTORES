@@ -1,4 +1,5 @@
 import {
+	deleteObject,
 	getDownloadURL,
 	getStorage,
 	ref,
@@ -50,6 +51,8 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 	const [updateMsg, setUpdateMsg] = useState(null);
 	const [ytLink, setYTLink] = useState("");
 	const [videosErrorMsg, setVideosErrorMsg] = useState(null);
+
+	const [prevUrlData, setPrevUrlData] = useState([]);
 
 	const countryOptions = Object.values(countries).map(
 		(country) => country.name
@@ -104,7 +107,12 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			const storage = getStorage(app);
 			const fileName = new Date().getTime() + "-" + file.name;
 			const storgeRef = ref(storage, fileName);
-			const uploadTask = uploadBytesResumable(storgeRef, file);
+			const metadata = {
+				customMetadata: {
+					uid: currentUser.firebaseId,
+				},
+			};
+			const uploadTask = uploadBytesResumable(storgeRef, file, metadata);
 			uploadTask.on(
 				"state_changed",
 				(snapshot) => {
@@ -119,6 +127,9 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+						if (formData.image) {
+							setPrevUrlData([...prevUrlData, formData.image]);
+						}
 						setImageUploadProgress(null);
 						setFormData({ ...formData, image: downloadURL });
 						setImageUploading(false);
@@ -197,7 +208,12 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			const storage = getStorage(app);
 			const fileName = new Date().getTime() + audio.name;
 			const stoageRef = ref(storage, fileName);
-			const uploadTask = uploadBytesResumable(stoageRef, audio);
+			const metadata = {
+				customMetadata: {
+					uid: currentUser.firebaseId,
+				},
+			};
+			const uploadTask = uploadBytesResumable(stoageRef, audio, metadata);
 			uploadTask.on(
 				"state_changed",
 				(snapshot) => {
@@ -217,11 +233,12 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 		});
 	};
 
-	const handleRemoveAudio = (index) => {
+	const handleRemoveAudio = (index, url) => {
 		setFormData({
 			...formData,
 			demos: formData.demos.filter((x, i) => i !== index),
 		});
+		setPrevUrlData([...prevUrlData, url]);
 	};
 	const handleRemoveVideo = (index) => {
 		setFormData({
@@ -274,6 +291,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 				setLoading(false);
 				setSpeakerErrorMsg(null);
 				setUpdateMsg("Speaker Account updaded successfully!");
+				prevUrlData.map((item, index) => deleteFileByUrl(item));
 			}
 		} catch (error) {
 			setSpeakerErrorMsg(error.message);
@@ -593,7 +611,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 									<button
 										disabled={loading || imageUploading || audioUploading}
 										type="button"
-										onClick={() => handleRemoveAudio(index)}
+										onClick={() => handleRemoveAudio(index, url)}
 										className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
 										Delete
 									</button>
@@ -737,4 +755,29 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 		</div>
 	);
 };
+
 export default DashEditSpeaker;
+
+// Function to delete a file using its URL
+const deleteFileByUrl = async (fileUrl) => {
+	const storage = getStorage();
+
+	try {
+		// Extract the file path from the URL
+		const startIndex = fileUrl.indexOf("/o/") + 3;
+		const endIndex = fileUrl.indexOf("?alt=media");
+
+		const filePath = decodeURIComponent(
+			fileUrl.substring(startIndex, endIndex)
+		);
+
+		// Create a reference to the file to delete
+		const fileRef = ref(storage, filePath);
+
+		// Delete the file
+		await deleteObject(fileRef);
+		console.log("File deleted successfully");
+	} catch (error) {
+		console.error("Error deleting file:", error.message);
+	}
+};

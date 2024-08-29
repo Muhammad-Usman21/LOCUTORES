@@ -1,5 +1,6 @@
 import { countries } from "countries-list";
 import {
+	deleteObject,
 	getDownloadURL,
 	getStorage,
 	ref,
@@ -24,6 +25,8 @@ const OrderCard = ({ order, orderUpdated }) => {
 	const [rejectMessage, setRejectMessage] = useState(order.rejectMessage);
 	const [speakerMessage, setSpeakerMessage] = useState(order.speakerMessage);
 	const [errorMsg, setErrorMsg] = useState(null);
+
+	const [prevUrlData, setPrevUrlData] = useState([]);
 
 	const getCountryCodeFromName = (countryName) => {
 		for (const [code, { name }] of Object.entries(countries)) {
@@ -62,6 +65,9 @@ const OrderCard = ({ order, orderUpdated }) => {
 				// Handle successful uploads
 				const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 				console.log("File available at", downloadURL);
+				if (audioUrl) {
+					setPrevUrlData([...prevUrlData, audioUrl]);
+				}
 				setAudioUrl(downloadURL);
 				setAudioUploading(false);
 			}
@@ -91,6 +97,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 
 			if (response.ok) {
 				console.log("Order updated successfully");
+				prevUrlData.map((item, index) => deleteFileByUrl(item));
 				setAudioUrl(null);
 				orderUpdated({
 					orderId,
@@ -465,3 +472,27 @@ const OrderCard = ({ order, orderUpdated }) => {
 };
 
 export default OrderCard;
+
+// Function to delete a file using its URL
+const deleteFileByUrl = async (fileUrl) => {
+	const storage = getStorage();
+
+	try {
+		// Extract the file path from the URL
+		const startIndex = fileUrl.indexOf("/o/") + 3;
+		const endIndex = fileUrl.indexOf("?alt=media");
+
+		const filePath = decodeURIComponent(
+			fileUrl.substring(startIndex, endIndex)
+		);
+
+		// Create a reference to the file to delete
+		const fileRef = ref(storage, filePath);
+
+		// Delete the file
+		await deleteObject(fileRef);
+		console.log("File deleted successfully");
+	} catch (error) {
+		console.error("Error deleting file:", error.message);
+	}
+};
