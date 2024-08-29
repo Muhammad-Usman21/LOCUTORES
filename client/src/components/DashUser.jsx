@@ -429,13 +429,6 @@ const DashUser = () => {
 		}
 	};
 
-	const handleDelete = async () => {
-		const storage = getStorage(app);
-		const fileRef = ref(storage, currentUser.profilePicture);
-		console.log(fileRef);
-		await deleteObject(fileRef);
-	}
-
 
 	return (
 		<div
@@ -445,7 +438,6 @@ const DashUser = () => {
 				className="max-w-xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="mt-2 mb-4 text-center font-semibold text-3xl">User</h1>
-				<button onClick={handleDelete}>DELETE</button>
 				<form
 					className={`flex flex-col gap-2 ${theme}`}
 					onSubmit={handleUpdateUserSubmit}>
