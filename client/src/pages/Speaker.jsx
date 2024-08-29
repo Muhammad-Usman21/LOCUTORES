@@ -135,7 +135,7 @@ const Speaker = () => {
 	};
 
 	return (
-		<div className="min-h-screen w-full flex items-center justify-center">
+		<div className="min-h-screen w-full flex items-start justify-center">
 			{speaker ? (
 				<div className="flex lg:flex-row flex-col w-full p-2 lg:p-5 justify-center items-start">
 					<div className="container lg:mx-auto p-2 lg:p-4 lg:w-2/5">
@@ -234,10 +234,8 @@ const Speaker = () => {
 
 							{speaker.videos.length > 0 && (
 								<div className="w-full my-2 flex flex-col items-center">
-									<h3 className="text-lg lg:text-2xl mb-3 pl-4">
-										Youtube Videos
-									</h3>
-									<div className="flex flex-wrap justify-center gap-2">
+									<h3 className="text-lg lg:text-2xl pl-4">Youtube Videos</h3>
+									<div className="flex w-full flex-wrap justify-center gap-2">
 										{speaker.videos.map((video, index) => (
 											<div
 												key={index}
@@ -284,7 +282,7 @@ const Speaker = () => {
 						</div>
 					</div>
 
-					<div className="flex lg:w-1/2 h-min self-center lg:m-4 p-2 lg:p-10 max-w-2xl flex-col md:items-center gap-10">
+					<div className="flex lg:w-1/2 h-min lg:m-4 p-2 lg:p-10 max-w-2xl flex-col md:items-center gap-10 self-center lg:self-start">
 						{!currentUser && (
 							<Link to="/sign-in">
 								<div className=" p-3 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
