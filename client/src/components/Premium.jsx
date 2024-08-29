@@ -89,7 +89,7 @@ const Premium = ({ updateUser }) => {
 					</p>
 					<p className="mt-2">
 						The Premium Plan is available for just{" "}
-						<span className="font-bold">$5</span>. This upgrade is designed to
+						<span className="font-bold">${import.meta.env.VITE_PREMIUM_AMOUNT}</span>. This upgrade is designed to
 						give you the freedom to expand your profile and show your more
 						talents.
 					</p>
