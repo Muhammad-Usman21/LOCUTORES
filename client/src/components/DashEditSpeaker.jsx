@@ -26,6 +26,8 @@ import ReactPlayer from "react-player";
 import ReactAudioPlayer from "react-audio-player";
 import { updateUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
+
 
 const DashEditSpeaker = ({ stripeAccountId }) => {
 	const [file, setFile] = useState(null);
@@ -270,7 +272,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			);
 			return;
 		}
-
+		console.log(formData);
 		try {
 			const res = await fetch(
 				`/api/speaker/update-speaker/${currentUser._id}/${formData._id}`,
@@ -360,7 +362,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 							onClick={handleStripeLogin}>
 							Login with Stripe{" "}
 							{formData.stripeAccountId == "" ||
-							formData.stripeAccountId == null
+								formData.stripeAccountId == null
 								? ""
 								: "✅"}
 						</Button>
@@ -707,6 +709,93 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 							}
 							disabled={loading || imageUploading || audioUploading}
 						/>
+					</div>
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+						<span className="text-lg text-center my-2">
+							Social Media (optional)
+						</span>
+						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
+							<div className="flex gap-2 items-center">
+								{<FaInstagram />}
+								<Label value="Instagram"></Label>
+								<TextInput
+									className="w-72"
+									type="text"
+									placeholder="Instagram link"
+									value={formData.socialMedia?.instagram || ""}
+									onChange={(e) =>
+										setFormData({
+											...formData,
+											socialMedia: {
+												...formData.socialMedia,
+												instagram: e.target.value,
+											},
+										})
+									}
+									disabled={loading || imageUploading || audioUploading}
+								/>
+							</div>
+							<div className="flex gap-2 items-center">
+								<FaFacebook />
+								<Label value="Facebook" />
+								<TextInput
+									className="w-72"
+									type="text"
+									placeholder="facebook link"
+									value={formData.socialMedia?.facebook || ""}
+									onChange={(e) =>
+										setFormData({
+											...formData,
+											socialMedia: {
+												...formData.socialMedia,
+												facebook: e.target.value,
+											},
+										})
+									}
+									disabled={loading || imageUploading || audioUploading}
+								/>
+							</div>
+							<div className="flex gap-2 items-center lg:pl-11">
+								<FaTwitter />
+								<Label value="Twitter" />
+								<TextInput
+									className="w-72"
+									type="text"
+									placeholder="twitter link"
+									value={formData.socialMedia?.twitter || ""}
+									onChange={(e) =>
+										setFormData({
+											...formData,
+											socialMedia: {
+												...formData.socialMedia,
+												twitter: e.target.value,
+											},
+										})
+									}
+									disabled={loading || imageUploading || audioUploading}
+								/>
+							</div>
+							<div className="flex gap-2 items-center lg:pl-11">
+								<FaWhatsapp />
+								<Label value="Whatsapp" />
+								<TextInput
+									className="w-72"
+									type="text"
+									placeholder="whatsapp number"
+									value={formData.socialMedia?.whatsapp || ""}
+									onChange={(e) =>
+										setFormData({
+											...formData,
+											socialMedia: {
+												...formData.socialMedia,
+												whatsapp: e.target.value,
+											},
+										})
+									}
+									disabled={loading || imageUploading || audioUploading}
+								/>
+							</div>
+						</div>
 					</div>
 
 					<Button

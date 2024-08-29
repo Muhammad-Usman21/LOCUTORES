@@ -15,3 +15,20 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+
+
+// // Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+// apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+// authDomain: "casevox-95c84.firebaseapp.com",
+// projectId: "casevox-95c84",
+// storageBucket: "casevox-95c84.appspot.com",
+// messagingSenderId: "170790585228",
+// appId: "1:170790585228:web:26c43fce8676b4fce48ca9"
+// };
+// // Initialize Firebase
+// export const app = initializeApp(firebaseConfig);

@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { MdCancelPresentation, MdEmail } from "react-icons/md";
-import { FaRegUser, FaFemale, FaMale } from "react-icons/fa";
+import { FaRegUser, FaFemale, FaMale, FaInstagram, FaFacebook, FaTwitch, FaWhatsapp, FaTwitter } from "react-icons/fa";
 
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
@@ -180,6 +180,45 @@ const Speaker = () => {
 										{speaker.country}
 									</p>
 								</div>
+							</div>
+
+							<div className="self-start mt-3 mb-3 flex flex-row gap-3 justify-center items-center w-full">
+								{speaker.socialMedia?.instagram && (
+									<a
+										href={speaker.socialMedia.instagram}
+										target="_blank"
+										rel="noreferrer"
+									>
+										<FaInstagram className="inline-block mr-2 text-3xl hover:text-pink-600" />
+									</a>
+								)}
+								{speaker.socialMedia?.facebook && (
+									<a
+										href={speaker.socialMedia.facebook}
+										target="_blank"
+										rel="noreferrer"
+									>
+										<FaFacebook className="inline-block mr-2 text-3xl hover:text-blue-500" />
+									</a>
+								)}
+								{speaker.socialMedia?.twitter && (
+									<a
+										href={speaker.socialMedia.twitter}
+										target="_blank"
+										rel="noreferrer"
+									>
+										<FaTwitter className="inline-block mr-2 text-3xl hover:text-blue-500" />
+									</a>
+								)}
+								{speaker.socialMedia?.whatsapp && (
+									<a
+										href={`https://wa.me/${speaker.socialMedia.whatsapp}`}
+										target="_blank"
+										rel="noreferrer"
+									>
+										<FaWhatsapp className="inline-block mr-2 text-3xl hover:text-green-500" />
+									</a>
+								)}
 							</div>
 
 							<div className="self-start mt-3 mb-3 flex flex-col">

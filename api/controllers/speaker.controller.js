@@ -62,6 +62,7 @@ export const createSpeaker = async (req, res, next) => {
 			prices,
 			about,
 			stripeAccountId,
+			socialMedia,
 		} = req.body;
 
 		if (!image) {
@@ -108,6 +109,7 @@ export const createSpeaker = async (req, res, next) => {
 			prices,
 			about,
 			stripeAccountId,
+			socialMedia,
 		});
 
 		// Save the speaker to the database
@@ -164,6 +166,7 @@ export const updateSpeaker = async (req, res, next) => {
 			prices,
 			about,
 			stripeAccountId,
+			socialMedia,
 		} = req.body;
 
 		if (!image) {
@@ -203,6 +206,7 @@ export const updateSpeaker = async (req, res, next) => {
 					prices,
 					about,
 					stripeAccountId,
+					socialMedia,
 				},
 			},
 			{ new: true }
