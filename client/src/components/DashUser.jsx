@@ -58,6 +58,8 @@ const DashUser = () => {
 		changePasswordErrorMsg: null,
 	});
 
+	var prevProfilePicture;
+
 	const handleImageChange = (e) => {
 		setMyMessages((prevMessages) => ({
 			...prevMessages,
@@ -110,7 +112,12 @@ const DashUser = () => {
 		const storage = getStorage(app);
 		const fileName = new Date().getTime() + imageFile.name;
 		const storageRef = ref(storage, fileName);
-		const uploadTask = uploadBytesResumable(storageRef, imageFile);
+		const metadata = {
+			customMetadata :{
+				uid: currentUser.firebaseId,
+			}
+		}
+		const uploadTask = uploadBytesResumable(storageRef, imageFile, metadata);
 
 		uploadTask.on(
 			"state_changed",
@@ -192,6 +199,10 @@ const DashUser = () => {
 				updateUserErrorMsg: "Please wait for image to upload!",
 			}));
 			return;
+		}
+
+		if (formData.profilePicture !== currentUser.profilePicture) {
+			prevProfilePicture = currentUser.profilePicture;
 		}
 
 		// if (formData.password === "") {
@@ -281,6 +292,7 @@ const DashUser = () => {
 				setImageFileUploadProgress(null);
 				setImageFileUrl(null);
 				setImageFile(null);
+				deleteFileByUrl(prevProfilePicture);
 			}
 		} catch (error) {
 			setUpdateUserLoading(false);
@@ -685,3 +697,27 @@ const DashUser = () => {
 };
 
 export default DashUser;
+
+// Function to delete a file using its URL
+const deleteFileByUrl = async (fileUrl) => {
+	const storage = getStorage();
+
+	try {
+		// Extract the file path from the URL
+		const startIndex = fileUrl.indexOf("/o/") + 3;
+		const endIndex = fileUrl.indexOf("?alt=media");
+
+		const filePath = decodeURIComponent(
+			fileUrl.substring(startIndex, endIndex)
+		);
+
+		// Create a reference to the file to delete
+		const fileRef = ref(storage, filePath);
+
+		// Delete the file
+		await deleteObject(fileRef);
+		console.log("File deleted successfully");
+	} catch (error) {
+		console.error("Error deleting file:", error.message);
+	}
+};
