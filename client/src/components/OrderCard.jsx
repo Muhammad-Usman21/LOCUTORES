@@ -146,7 +146,14 @@ const OrderCard = ({ order, orderUpdated }) => {
 					</div>
 					<div>
 						<span className="font-semibold mr-11">Order Service:</span>
-						<span>{order.service}</span>
+						<span>{order.service === "voiceOver" && "Voice Over"}</span>
+						<span>{order.service === "womenVoice" && "Video Debbing"}</span>
+						<span>
+							{order.service === "holdswitch" && "Message on HOLD/SWITCH"}
+						</span>
+						<span>
+							{order.service === "auditoryLogos" && "Auditory Logos (Branding)"}
+						</span>
 					</div>
 					<div>
 						<span className="font-semibold mr-8">Audio Duration:</span>
@@ -412,6 +419,13 @@ const OrderCard = ({ order, orderUpdated }) => {
 						<span className="text-lg">
 							<Link to={`/speaker/${order.speakerId._id}`}>
 								{order.speakerId.userId.name}
+								{speaker.userId.isPremium && (
+									<img
+										className="w-7 h-7 ml-1"
+										src="../../icons8-blue-tick.svg"
+										alt="Premium"
+									/>
+								)}
 							</Link>
 						</span>
 					</div>

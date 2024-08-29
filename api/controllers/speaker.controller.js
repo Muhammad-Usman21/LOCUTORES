@@ -2,8 +2,6 @@ import Speaker from "../models/speaker.model.js";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
-
-
 export const getSpeakers = async (req, res) => {
 	try {
 		var { voiceType, country, startIndex, limit, sort } = req.query;
@@ -26,7 +24,11 @@ export const getSpeakers = async (req, res) => {
 		const speakers = await Speaker.find(query)
 			.sort({ createdAt: sort || "desc" })
 			.skip(startIndex || 0)
-			.limit(limit || 9);
+			.limit(limit || 9)
+			.populate({
+				path: "userId", // Field in Speaker schema that references User
+				select: "name isPremium", // Select only the name field from the User document
+			});
 
 		res.json(speakers);
 	} catch (error) {
@@ -51,7 +53,16 @@ export const createSpeaker = async (req, res, next) => {
 		}
 
 		console.log(req.body);
-		const { video, image, gender, country, demos, prices, about, stripeAccountId } = req.body;
+		const {
+			videos,
+			image,
+			gender,
+			country,
+			demos,
+			prices,
+			about,
+			stripeAccountId,
+		} = req.body;
 
 		if (!image) {
 			return next(errorHandler(400, "Image is required."));
@@ -89,14 +100,14 @@ export const createSpeaker = async (req, res, next) => {
 		// Create a new speaker
 		const newSpeaker = new Speaker({
 			userId: req.user.id,
-			video,
+			videos,
 			image,
 			gender,
 			country,
 			demos,
 			prices,
 			about,
-			stripeAccountId
+			stripeAccountId,
 		});
 
 		// Save the speaker to the database
@@ -144,7 +155,16 @@ export const updateSpeaker = async (req, res, next) => {
 		}
 
 		console.log(req.body);
-		const { video, image, gender, country, demos, prices, about, stripeAccountId } = req.body;
+		const {
+			videos,
+			image,
+			gender,
+			country,
+			demos,
+			prices,
+			about,
+			stripeAccountId,
+		} = req.body;
 
 		if (!image) {
 			return next(errorHandler(400, "Image is required."));
@@ -175,7 +195,7 @@ export const updateSpeaker = async (req, res, next) => {
 			req.params.speakerId,
 			{
 				$set: {
-					video,
+					videos,
 					image,
 					gender,
 					country,

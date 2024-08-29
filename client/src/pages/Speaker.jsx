@@ -137,25 +137,32 @@ const Speaker = () => {
 	return (
 		<div className="min-h-screen w-full flex items-center justify-center">
 			{speaker ? (
-				<div className="flex lg:flex-row flex-col w-full p-2 lg:p-5 justify-center items-center">
+				<div className="flex lg:flex-row flex-col w-full p-2 lg:p-5 justify-center items-start">
 					<div className="container lg:mx-auto p-2 lg:p-4 lg:w-2/5">
 						<div className="flex flex-col items-center gap-4 w-full">
-							<div className=" w-full lg:mt-10 flex lg:flex-row flex-col gap-5 justify-between items-center content-between place-content-between">
+							<div className=" w-full lg:mt-10 flex xl:flex-row flex-col gap-5 justify-between items-center content-between place-content-between">
 								<img
 									src={speaker.image}
 									alt={speaker.userId.name}
 									className="rounded-3xl shadow-2xl w-64 h-44 self-center dark:shadow-whiteLg flex-1 object-cover"
 								/>
 								<div className="lg:w-3/5 flex flex-col justify-center gap-3 flex-1">
-									<p className="lg:text-xl">
+									<p className="lg:text-xl items-center flex">
 										<FaRegUser className="inline-block mr-2" />
 										{speaker.userId.name}
+										{speaker.userId.isPremium && (
+											<img
+												className="w-7 h-7 ml-1"
+												src="../../icons8-blue-tick.svg"
+												alt="Premium"
+											/>
+										)}
 									</p>
-									<p className="lg:text-xl">
+									<p className="lg:text-xl items-center flex">
 										<MdEmail className="inline-block mr-2" />
 										{speaker.userId.email}
 									</p>
-									<p className="lg:text-xl">
+									<p className="lg:text-xl items-center flex">
 										{speaker.gender == "male" ? (
 											<FaMale className="inline-block mr-2" />
 										) : (
@@ -163,7 +170,7 @@ const Speaker = () => {
 										)}
 										{speaker.gender}
 									</p>
-									<p className="lg:text-xl">
+									<p className="lg:text-xl items-center flex">
 										<Flag
 											code={getCountryCodeFromName(speaker.country)}
 											className="w-8 inline-block mr-2"
@@ -225,30 +232,41 @@ const Speaker = () => {
 								</div>
 							</div>
 
-							{speaker.video && (
-								<div className="self-center my-5 video-wrapper-form h-[180px] sm:h-[270px] md:h-[320px] lg:h-[220px] xl:h-[300px] w-full">
-									<ReactPlayer
-										url={speaker.video}
-										controls
-										loop
-										config={{
-											youtube: {
-												playerVars: {
-													modestbranding: 1,
-													rel: 0,
-													showinfo: 0,
-													disablekb: 1,
-												},
-											},
-										}}
-										width={"100%"}
-										className="react-player-form w-full"
-									/>
+							{speaker.videos.length > 0 && (
+								<div className="w-full my-2 flex flex-col items-center">
+									<h3 className="text-lg lg:text-2xl mb-3 pl-4">
+										Youtube Videos
+									</h3>
+									<div className="flex flex-wrap justify-center gap-2">
+										{speaker.videos.map((video, index) => (
+											<div
+												key={index}
+												className="self-center my-5 video-wrapper-form h-[180px] sm:h-[270px] md:h-[320px] lg:h-[220px] xl:h-[300px] w-full">
+												<ReactPlayer
+													url={video}
+													controls
+													loop
+													config={{
+														youtube: {
+															playerVars: {
+																modestbranding: 1,
+																rel: 0,
+																showinfo: 0,
+																disablekb: 1,
+															},
+														},
+													}}
+													width={"100%"}
+													className="react-player-form w-full"
+												/>
+											</div>
+										))}
+									</div>
 								</div>
 							)}
-							<div className="w-full my-2">
+							<div className="w-full my-2 flex flex-col items-center">
 								<h3 className="text-lg lg:text-2xl mb-3 pl-4">Example Audio</h3>
-								<div className="flex flex-wrap justify-center gap-2">
+								<div className="flex flex-col justify-center gap-2">
 									{speaker.demos.length > 0 ? (
 										speaker.demos.map((demo, index) => (
 											<ReactAudioPlayer
@@ -267,9 +285,19 @@ const Speaker = () => {
 					</div>
 
 					<div className="flex lg:w-1/2 h-min self-center lg:m-4 p-2 lg:p-10 max-w-2xl flex-col md:items-center gap-10">
+						{!currentUser && (
+							<Link to="/sign-in">
+								<div className=" p-3 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+									<span className="text-lg hover:cursor-pointer">
+										First Sign in for place an order
+									</span>
+								</div>
+							</Link>
+						)}
 						<div
-							className="flex flex-col md:flex-row md:items-center gap-10 p-4 lg:p-10 py-14 w-full
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+							className={`flex flex-col md:flex-row md:items-center gap-10 p-4 lg:p-10 py-14 w-full
+									bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg
+										${!currentUser && "filter blur-sm transition ease-linear duration-300"}`}>
 							<div className="flex-1">
 								<h1 className="flex self-center justify-center text-3xl font-semibold mb-6">
 									Place an Order
@@ -417,7 +445,7 @@ const Speaker = () => {
 										gradientDuoTone="purpleToBlue"
 										type="submit"
 										className="uppercase focus:ring-1 mt-1"
-										disabled={loading || errorMessage}>
+										disabled={loading || errorMessage || !currentUser}>
 										{loading ? (
 											<>
 												<Spinner size="sm" />
@@ -448,34 +476,37 @@ const Speaker = () => {
 								)}
 							</div>
 						</div>
+						{currentUser && (
+							<div
+								className={`flex flex-col w-full md:flex-row md:items-center gap-10 lg:p-10 py-5 px-3 
+								bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg`}>
+								{speaker && (
+									<div className="flex flex-col gap-2 mt-2 w-full">
+										<p>
+											Contact{" "}
+											<span className="font-semibold">
+												{speaker.userId.name}
+											</span>{" "}
+											for any questions realated Voice-Over
+										</p>
+										<Textarea
+											name="message"
+											id="message"
+											rows="3"
+											value={message}
+											onChange={onChange}
+											placeholder="Enter your message here..."
+											className="w-full border p-3 rounded-lg"></Textarea>
 
-						<div
-							className="flex flex-col w-full md:flex-row md:items-center gap-10 lg:p-10 py-5 px-3 
-								bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-							{speaker && (
-								<div className="flex flex-col gap-2 mt-2 w-full">
-									<p>
-										Contact{" "}
-										<span className="font-semibold">{speaker.userId.name}</span>{" "}
-										for any questions realated Voice-Over
-									</p>
-									<Textarea
-										name="message"
-										id="message"
-										rows="3"
-										value={message}
-										onChange={onChange}
-										placeholder="Enter your message here..."
-										className="w-full border p-3 rounded-lg"></Textarea>
-
-									<Link
-										to={`mailto:${speaker.userId.email}?subject=Regarding Voice-Over &body=${message}`}
-										className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3 text-center">
-										Send Message
-									</Link>
-								</div>
-							)}
-						</div>
+										<Link
+											to={`mailto:${speaker.userId.email}?subject=Regarding Voice-Over &body=${message}`}
+											className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3 text-center">
+											Send Message
+										</Link>
+									</div>
+								)}
+							</div>
+						)}
 					</div>
 				</div>
 			) : (

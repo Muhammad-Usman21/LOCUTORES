@@ -90,12 +90,12 @@ const DashUser = () => {
 				}));
 				return;
 			}
-			if (imageFile.size >= 2 * 1024 * 1024) {
+			if (imageFile.size >= 5 * 1024 * 1024) {
 				setImageFile(null);
 				setImageFileUploading(false);
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
-					imageFileErrorMsg: "Image size must be less than 2 MBs!",
+					imageFileErrorMsg: "Image size must be less than 5 MBs!",
 				}));
 				return;
 			}

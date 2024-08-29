@@ -27,8 +27,8 @@ const App = () => {
 					<Route element={<PrivateRoute />}>
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/orders" element={<Orders />} />
-						<Route path="/speaker/:id" element={<Speaker />} />
 					</Route>
+					<Route path="/speaker/:id" element={<Speaker />} />
 					<Route path="/payment" element={<Payment />} />
 					<Route path="/reset-password" element={<ResetPassword />} />
 				</Routes>

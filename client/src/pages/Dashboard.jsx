@@ -38,7 +38,9 @@ const Dashboard = () => {
 			</div>
 			{tab === "user" && <DashUser />}
 			{tab === "speaker" && <DashSpeaker stripeAccountId={stripeAccountId} />}
-			{tab === "edit-speaker" && <DashEditSpeaker stripeAccountId={stripeAccountId} />}
+			{tab === "edit-speaker" && (
+				<DashEditSpeaker stripeAccountId={stripeAccountId} />
+			)}
 			{tab === "premium" && <Premium updateUser={updateUser} />}
 		</div>
 	);

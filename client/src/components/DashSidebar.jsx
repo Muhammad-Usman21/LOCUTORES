@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { HiCurrencyDollar } from "react-icons/hi2";
 
 const DashSidebar = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -68,6 +69,14 @@ const DashSidebar = () => {
 							</Sidebar.Item>
 						</Link>
 					)}
+					<Link to="/dashboard?tab=premium">
+						<Sidebar.Item
+							active={tab === "premium"}
+							icon={HiCurrencyDollar}
+							as="div">
+							Buy Premium
+						</Sidebar.Item>
+					</Link>
 					<Sidebar.Item
 						icon={HiArrowSmRight}
 						className="cursor-pointer"

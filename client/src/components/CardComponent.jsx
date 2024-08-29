@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const CardComponent = ({ speaker }) => {
 	const [isMenuVisible, setIsMenuVisible] = useState(false);
-
+	console.log(speaker);
 	const handleMenuToggle = () => {
 		setIsMenuVisible((prevState) => !prevState);
 	};
@@ -30,9 +30,9 @@ const CardComponent = ({ speaker }) => {
             overflow-hidden rounded-lg w-full md:w-[360px] flex flex-col justify-center relative">
 			{/* <FileInput onChange={handleChange} /> */}
 			<div className="h-[180px] w-full bg-slate-400">
-				{speaker.video ? (
+				{speaker.videos ? (
 					<ReactPlayer
-						url={speaker.video}
+						url={speaker.videos[0]}
 						controls
 						loop
 						config={{
@@ -56,6 +56,18 @@ const CardComponent = ({ speaker }) => {
                     		hover:scale-105 transition-scale duration-300"
 					/>
 				)}
+			</div>
+			<div className="flex gap-2 mt-2 items-center justify-center">
+				<Link to={`/speaker/${speaker._id}`}>
+					<span className="text-lg">{speaker.userId.name}</span>
+					{speaker.userId.isPremium && (
+						<img
+							className="w-7 h-7"
+							src="../../icons8-blue-tick.svg"
+							alt="Premium"
+						/>
+					)}
+				</Link>
 			</div>
 			<div className="p-3 flex flex-col gap-2 w-full">
 				<ReactAudioPlayer src={speaker.demos[0]} controls className="w-full" />
@@ -96,12 +108,12 @@ const CardComponent = ({ speaker }) => {
 				</div>
 			</div>
 			<div
-				className={`absolute right-0 bottom-0 w-full h-full bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform duration-300 ease-in-out transform ${
+				className={`absolute right-0 bottom-0 w-full h-4/5 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform duration-300 ease-in-out transform ${
 					isMenuVisible ? "translate-y-0" : "translate-y-full"
 				}`}>
 				{isMenuVisible && (
 					<>
-						{speaker.demos.slice(1).map((demo, index) => (
+						{speaker.demos.slice(1, 4).map((demo, index) => (
 							<ReactAudioPlayer
 								key={index}
 								src={demo}

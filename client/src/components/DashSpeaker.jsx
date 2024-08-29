@@ -35,6 +35,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({
 		demos: [],
+		videos: [],
 		prices: {},
 		stripeAccountId,
 	});
@@ -45,6 +46,8 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const { currentUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const natigate = useNavigate();
+	const [ytLink, setYTLink] = useState("");
+	const [videosErrorMsg, setVideosErrorMsg] = useState(null);
 
 	const countryOptions = Object.values(countries).map(
 		(country) => country.name
@@ -106,33 +109,57 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		setAudioUploadErrorMsg(null);
 		setAudioUploading(true);
 		try {
-			if (
-				audioFile.length > 0 &&
-				audioFile.length + formData.demos.length < 6
-			) {
-				const promises = [];
-
-				for (let i = 0; i < audioFile.length; i++) {
-					promises.push(storeAudio(audioFile[i]));
-				}
-
-				Promise.all(promises)
-					.then((urls) => {
-						setFormData({
-							...formData,
-							demos: formData.demos.concat(urls),
-						});
-						setAudioUploadErrorMsg(null);
-						setAudioUploading(false);
-					})
-					.catch((err) => {
-						setAudioUploadErrorMsg("Audio file size must be less than 20 MBs");
-						setAudioUploading(false);
-					});
-			} else {
-				setAudioUploadErrorMsg("You can upload only 5 Audio files");
+			if (audioFile.length === 0) {
+				setAudioUploadErrorMsg("Select an audio file.");
 				setAudioUploading(false);
+				return;
 			}
+			if (
+				!currentUser.isPremium &&
+				audioFile.length + formData.demos.length > 4
+			) {
+				setAudioUploadErrorMsg(
+					"You are currently using free plan, so you can upload upto 4 Audio files.<br />Try PREMIUM Account for upload upto 15 Audio files."
+				);
+				setAudioUploading(false);
+				return;
+			}
+			if (
+				currentUser.isPremium &&
+				audioFile.length + formData.demos.length > 15
+			) {
+				setAudioUploadErrorMsg("You can upload only 15 Audio files");
+				setAudioUploading(false);
+				return;
+			}
+
+			for (let i = 0; i < audioFile.length; i++) {
+				if (audioFile[i].size >= 20 * 1024 * 1024) {
+					setAudioUploadErrorMsg("Audio file size must be less than 20 MBs");
+					setAudioUploading(false);
+					return;
+				}
+			}
+
+			const promises = [];
+
+			for (let i = 0; i < audioFile.length; i++) {
+				promises.push(storeAudio(audioFile[i]));
+			}
+
+			Promise.all(promises)
+				.then((urls) => {
+					setFormData({
+						...formData,
+						demos: formData.demos.concat(urls),
+					});
+					setAudioUploadErrorMsg(null);
+					setAudioUploading(false);
+				})
+				.catch((err) => {
+					setAudioUploadErrorMsg("Audio file size must be less than 20 MBs");
+					setAudioUploading(false);
+				});
 		} catch (error) {
 			setAudioUploadErrorMsg(error.message);
 			setAudioUploading(false);
@@ -170,6 +197,12 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			demos: formData.demos.filter((x, i) => i !== index),
 		});
 	};
+	const handleRemoveVideo = (index) => {
+		setFormData({
+			...formData,
+			videos: formData.videos.filter((x, i) => i !== index),
+		});
+	};
 
 	console.log(formData);
 
@@ -190,7 +223,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		) {
 			setLoading(false);
 			setSpeakerErrorMsg(
-				"Only Youtube Video Link & About are optional.\nAll other fields are required."
+				"Only Youtube Video Link & About are optional.<br />All other fields are required."
 			);
 			return;
 		}
@@ -230,6 +263,30 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			window.location.href = result.url;
 		} catch (error) {
 			console.log(error);
+		}
+	};
+
+	const handleAddVideos = () => {
+		setVideosErrorMsg(null);
+		if (ytLink && ytLink !== "") {
+			if (!currentUser.isPremium && formData.videos.length === 1) {
+				setYTLink("");
+				setVideosErrorMsg(
+					"You are currently using free plan, so you can upload only one youtube link.<br />Try PREMIUM Account for upload upto 10 youtube links."
+				);
+				return;
+			}
+			if (currentUser.isPremium && formData.videos.length === 10) {
+				setYTLink("");
+				setVideosErrorMsg("You can upload upto 10 Youtube links.");
+				return;
+			}
+
+			setFormData({
+				...formData,
+				videos: [...formData.videos, ytLink],
+			});
+			setYTLink("");
 		}
 	};
 
@@ -295,19 +352,36 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
 						<Label value="Your youtube video link (optional)" />
-						<TextInput
-							className="mb-4"
-							type="text"
-							placeholder="Youtube Link"
-							onChange={(e) =>
-								setFormData({ ...formData, video: e.target.value })
-							}
-							disabled={loading || imageUploading || audioUploading}
-						/>
-						{formData.video && (
+						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
+							<TextInput
+								className="flex-grow"
+								type="text"
+								placeholder="Youtube Link"
+								onChange={(e) => setYTLink(e.target.value)}
+								disabled={loading || imageUploading || audioUploading}
+								value={ytLink}
+							/>
+							<Button
+								type="button"
+								gradientDuoTone="purpleToBlue"
+								size="sm"
+								outline
+								className="focus:ring-1 w-full sm:w-auto"
+								onClick={handleAddVideos}
+								disabled={
+									imageUploadProgress ||
+									loading ||
+									imageUploading ||
+									audioUploading ||
+									!ytLink
+								}>
+								Add
+							</Button>
+						</div>
+						{ytLink && (
 							<div className="video-wrapper-form h-[180px] sm:h-[270px] md:h-[260px] lg:h-[370px] w-full">
 								<ReactPlayer
-									url={formData.video}
+									url={ytLink}
 									controls
 									loop
 									config={{
@@ -325,6 +399,59 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								/>
 							</div>
 						)}
+						{videosErrorMsg && (
+							<Alert className="flex-auto" color="failure" withBorderAccent>
+								<div className="flex justify-between">
+									<span dangerouslySetInnerHTML={{ __html: videosErrorMsg }} />
+									<span className="w-5 h-5">
+										<MdCancelPresentation
+											className="cursor-pointer w-6 h-6"
+											onClick={() => setVideosErrorMsg(null)}
+										/>
+									</span>
+								</div>
+							</Alert>
+						)}
+						{formData.videos?.length > 0 &&
+							formData.videos.map((url, index) => (
+								<div
+									key={url}
+									className="flex-col md:flex-row justify-between px-2 py-1 items-center gap-1">
+									<div className="video-wrapper-form h-[180px] sm:h-[270px] md:h-[260px] lg:h-[370px] w-full">
+										<ReactPlayer
+											url={url}
+											controls
+											loop
+											config={{
+												youtube: {
+													playerVars: {
+														modestbranding: 1, // Hide the YouTube logo
+														rel: 0, // Minimizes related videos
+														showinfo: 0, // Hides video title and info (deprecated but still useful in some cases)
+														disablekb: 1, // Disables keyboard shortcuts
+													},
+												},
+											}}
+											width={"100%"}
+											className="react-player-form"
+										/>
+									</div>
+									<div className="flex flex-col md:flex-row justify-between px-3 py-3 border items-center gap-1">
+										<Label className="flex-grow">
+											<a href={url} target="_blank" rel="noopener noreferrer">
+												{url}
+											</a>
+										</Label>
+										<button
+											disabled={loading || imageUploading || audioUploading}
+											type="button"
+											onClick={() => handleRemoveVideo(index)}
+											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
+											Delete
+										</button>
+									</div>
+								</div>
+							))}
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
@@ -387,7 +514,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
-						<Label value="Upload demos maximum 5 (required minimum 1) " />
+						<Label value="Upload demos (required minimum 1) " />
 						<div className="flex flex-col mb-4 sm:flex-row gap-4 items-center justify-between">
 							<FileInput
 								type="file"
@@ -411,7 +538,9 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						{audioUploadErrorMsg && (
 							<Alert className="flex-auto" color="failure" withBorderAccent>
 								<div className="flex justify-between">
-									<span>{audioUploadErrorMsg}</span>
+									<span
+										dangerouslySetInnerHTML={{ __html: audioUploadErrorMsg }}
+									/>
 									<span className="w-5 h-5">
 										<MdCancelPresentation
 											className="cursor-pointer w-6 h-6"
@@ -543,7 +672,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				{speakerErrorMsg && (
 					<Alert className="flex-auto" color="failure" withBorderAccent>
 						<div className="flex justify-between">
-							<span>{speakerErrorMsg}</span>
+							<span dangerouslySetInnerHTML={{ __html: speakerErrorMsg }} />
 							<span className="w-5 h-5">
 								<MdCancelPresentation
 									className="cursor-pointer w-6 h-6"
