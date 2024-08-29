@@ -2,6 +2,8 @@ import { Button, Select } from "flowbite-react";
 import { countries } from "countries-list";
 import CardComponent from "../components/CardComponent";
 import { useEffect, useState } from "react";
+import YouTube from 'react-youtube';
+import YouTubePlayer from "react-player/youtube";
 
 const Home = () => {
 	const [speaker, setSpeaker] = useState([]);
@@ -58,6 +60,12 @@ const Home = () => {
 
 	return (
 		<div className="min-h-screen w-full">
+			<div className="w-full h-[44vw] overflow-clip flex justify-center items-center">
+				<div className="w-[120vw] h-[67vw]">
+					<div className="w-full h-full  absolute z-20 bg-slate-300 opacity-0 "></div>
+					<YouTubePlayer url={"https://youtu.be/gXBwWU1mmmw?si=gZ5OvYMFGkMstCLq"} playing={true} loop={true} muted={true} controls={false} width="100%" height="100%" />
+				</div>
+			</div>
 			<div className="max-w-7xl mx-3 sm:mx-5 lg:mx-auto items-center justify-center flex flex-col gap-12 lg:gap-24 my-10 lg:my-24">
 				<div
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
