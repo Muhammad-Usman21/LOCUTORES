@@ -199,7 +199,7 @@ export const subscribe = async (req, res, next) => {
             product_data: {
               name: "Premium Subscription",
             },
-            unit_amount: process.env.PREMIUM_AMMOUNT * 100,
+            unit_amount: process.env.PREMIUM_AMOUNT * 100,
           },
           quantity: 1,
         },
