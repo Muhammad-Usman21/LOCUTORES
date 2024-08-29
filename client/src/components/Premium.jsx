@@ -103,6 +103,7 @@ const Premium = ({ updateUser }) => {
 						type="button"
 						gradientDuoTone="purpleToPink"
 						outline
+						disabled={currentUser.isPremium}
 						className="uppercase focus:ring-1 mt-6 w-full">
 						Premium in $5
 					</Button>

@@ -231,7 +231,10 @@ export const getSpeaker = async (req, res, next) => {
 export const getSpeakerrr = async (req, res) => {
 	const { id } = req.params;
 	try {
-		const speaker = await Speaker.findById(id).populate("userId", "name email");
+		const speaker = await Speaker.findById(id).populate(
+			"userId",
+			"name email isPremium"
+		);
 		if (!speaker) {
 			return res.status(404).json({ message: "Speaker not found" });
 		}

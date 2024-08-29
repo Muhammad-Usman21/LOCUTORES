@@ -60,14 +60,14 @@ const CardComponent = ({ speaker }) => {
 			<div className="flex gap-2 mt-2 items-center justify-center">
 				<Link to={`/speaker/${speaker._id}`}>
 					<span className="text-lg">{speaker.userId.name}</span>
-					{speaker.userId.isPremium && (
-						<img
-							className="w-7 h-7"
-							src="../../icons8-blue-tick.svg"
-							alt="Premium"
-						/>
-					)}
 				</Link>
+				{speaker.userId.isPremium && (
+					<img
+						className="w-7 h-7"
+						src="../../icons8-blue-tick.svg"
+						alt="Premium"
+					/>
+				)}
 			</div>
 			<div className="p-3 flex flex-col gap-2 w-full">
 				<ReactAudioPlayer src={speaker.demos[0]} controls className="w-full" />

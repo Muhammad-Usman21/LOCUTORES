@@ -147,9 +147,11 @@ const Speaker = () => {
 									className="rounded-3xl shadow-2xl w-64 h-44 self-center dark:shadow-whiteLg flex-1 object-cover"
 								/>
 								<div className="lg:w-3/5 flex flex-col justify-center gap-3 flex-1">
-									<p className="lg:text-xl items-center flex">
-										<FaRegUser className="inline-block mr-2" />
-										{speaker.userId.name}
+									<div className="flex">
+										<p className="lg:text-xl items-center flex">
+											<FaRegUser className="inline-block mr-2" />
+											{speaker.userId.name}
+										</p>
 										{speaker.userId.isPremium && (
 											<img
 												className="w-7 h-7 ml-1"
@@ -157,7 +159,7 @@ const Speaker = () => {
 												alt="Premium"
 											/>
 										)}
-									</p>
+									</div>
 									<p className="lg:text-xl items-center flex">
 										<MdEmail className="inline-block mr-2" />
 										{speaker.userId.email}

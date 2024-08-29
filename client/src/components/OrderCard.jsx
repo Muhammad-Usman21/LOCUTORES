@@ -416,17 +416,17 @@ const OrderCard = ({ order, orderUpdated }) => {
 								className="w-10 h-10 object-cover rounded-full"
 							/>
 						</Link>
-						<span className="text-lg">
+						<span className="text-lg flex">
 							<Link to={`/speaker/${order.speakerId._id}`}>
 								{order.speakerId.userId.name}
-								{speaker.userId.isPremium && (
-									<img
-										className="w-7 h-7 ml-1"
-										src="../../icons8-blue-tick.svg"
-										alt="Premium"
-									/>
-								)}
 							</Link>
+							{order.speakerId.userId.isPremium && (
+								<img
+									className="w-7 h-7 ml-1"
+									src="../../icons8-blue-tick.svg"
+									alt="Premium"
+								/>
+							)}
 						</span>
 					</div>
 					<div className="flex items-center gap-3">
