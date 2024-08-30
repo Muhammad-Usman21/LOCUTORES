@@ -17,7 +17,7 @@ const CardCRecommend = ({ speaker }) => {
                     		hover:scale-105 transition-scale duration-300"
 								/>
 							</div>
-							<div className="absolute bottom-[15%] z-20 w-full flex flex-col items-center justify-center bg-black bg-opacity-50 font-serif">
+							<div className="absolute bottom-[15%] z-20 w-full flex flex-col items-center justify-center bg-black bg-opacity-50 font-serif text-white dark:text-white">
 								<span className="text-3xl">{speaker.userId.name}</span>
 								<span className="text-sm">{speaker.country}</span>
 							</div>
