@@ -82,6 +82,7 @@ export const signin = async (req, res, next) => {
 			{
 				id: validUser._id,
 				firebaseId: validUser.firebaseId,
+				isAdmin: validUser.isAdmin,
 			},
 			process.env.JWT_SECRET
 		);
@@ -143,9 +144,7 @@ export const stripeCallback = async (req, res) => {
 
 		const stripeAccountId = response.stripe_user_id;
 
-		res.redirect(
-			`/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`
-		);
+		res.redirect(`/dashboard?tab=${state}&stripeAccountId=${stripeAccountId}`);
 	} catch (error) {
 		res.status(500).send({ error: error.message });
 	}
@@ -160,6 +159,7 @@ export const google = async (req, res, next) => {
 				{
 					id: user._id,
 					firebaseId: user.firebaseId,
+					isAdmin: user.isAdmin,
 				},
 				process.env.JWT_SECRET
 			);
@@ -186,6 +186,7 @@ export const google = async (req, res, next) => {
 				{
 					id: newUser._id,
 					firebaseId: newUser.firebaseId,
+					isAdmin: newUser.isAdmin,
 				},
 				process.env.JWT_SECRET
 			);

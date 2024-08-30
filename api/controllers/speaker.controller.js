@@ -4,7 +4,7 @@ import { errorHandler } from "../utils/error.js";
 
 export const getSpeakers = async (req, res) => {
 	try {
-		var { voiceType, country, startIndex, limit, sort } = req.query;
+		var { voiceType, country, startIndex, limit, sort, speakerId } = req.query;
 		if (voiceType === "all") {
 			voiceType = null;
 		}
@@ -21,13 +21,17 @@ export const getSpeakers = async (req, res) => {
 			query.country = country;
 		}
 
+		if (speakerId) {
+			query._id = speakerId;
+		}
+
 		const speakers = await Speaker.find(query)
 			.sort({ createdAt: sort || "desc" })
 			.skip(startIndex || 0)
 			.limit(limit || 9)
 			.populate({
 				path: "userId", // Field in Speaker schema that references User
-				select: "name isPremium", // Select only the name field from the User document
+				select: "name email isPremium", // Select only the name field from the User document
 			});
 
 		res.json(speakers);

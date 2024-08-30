@@ -6,6 +6,7 @@ import DashSpeaker from "../components/DashSpeaker";
 import DashUser from "../components/DashUser";
 import DashEditSpeaker from "../components/DashEditSpeaker";
 import Premium from "../components/Premium";
+import DashAdmin from "../components/DashAdmin";
 
 const Dashboard = () => {
 	const location = useLocation();
@@ -38,10 +39,12 @@ const Dashboard = () => {
 			</div>
 			{tab === "user" && <DashUser />}
 			{tab === "speaker" && <DashSpeaker stripeAccountId={stripeAccountId} />}
-			{tab === "edit-speaker" && (
+			{currentUser.isSpeaker && tab === "edit-speaker" && (
 				<DashEditSpeaker stripeAccountId={stripeAccountId} />
 			)}
 			{tab === "premium" && <Premium updateUser={updateUser} />}
+			{currentUser.isAdmin && tab === "admin" && <DashAdmin />}
+			{/* update above line */}
 		</div>
 	);
 };

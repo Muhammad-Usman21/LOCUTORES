@@ -50,6 +50,13 @@ const DashSidebar = () => {
 							User
 						</Sidebar.Item>
 					</Link>
+					{currentUser.isAdmin && ( ///////////////////////
+						<Link to="/dashboard?tab=admin">
+							<Sidebar.Item active={tab === "admin"} icon={HiUser} as="div">
+								Admin
+							</Sidebar.Item>
+						</Link>
+					)}
 					{currentUser.isSpeaker ? (
 						<Link to="/dashboard?tab=edit-speaker">
 							<Sidebar.Item
