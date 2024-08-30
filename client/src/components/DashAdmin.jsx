@@ -263,6 +263,7 @@ const DashAdmin = () => {
 									{showMore && (
 										<div className="flex w-full">
 											<button
+												type="button"
 												onClick={handleShowMore}
 												className="text-teal-400 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 mx-auto text-sm py-4">
 												Show more
