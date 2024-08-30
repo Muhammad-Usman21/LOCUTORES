@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const DashAdmin = () => {
 	const [formData, setFormData] = useState({ recommended: [] });
 	const [speakers, setSpeakers] = useState([]);
-	const [showMore, setShowMore] = useState();
+	const [showMore, setShowMore] = useState(true);
 	const [addRemoveError, setAddRemoveError] = useState(null);
 	const [updatedMsg, setUpdatedMsg] = useState(null);
 	const [updatedError, setUpdatedError] = useState(null);
@@ -46,6 +46,7 @@ const DashAdmin = () => {
 				if (!res.ok) {
 					console.log(data.message);
 				} else {
+					setFormData(data);
 					return setUpdatedMsg("Updated successfully");
 				}
 			}
@@ -61,6 +62,7 @@ const DashAdmin = () => {
 				if (!res.ok) {
 					console.log(data.message);
 				} else {
+					setFormData(data);
 					return setUpdatedMsg("Updated successfully");
 				}
 			}
@@ -108,7 +110,7 @@ const DashAdmin = () => {
 	};
 
 	const handleAddSpeaker = (speakerId) => {
-		if (formData.recommended.length === 6) {
+		if (formData.recommended?.length === 6) {
 			return setAddRemoveError("You can add upto 6 speakers to recommended.");
 		}
 		setFormData({
