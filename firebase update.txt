@@ -20,4 +20,4 @@ service firebase.storage {
 
 
 
-after following the video also go to the Build > Authentication > Templates > Password reset, then click the edit icon option on the right side and click "Customize action URL" and paste your domain url after hosting (https://your-domain.com/reset-password).
+after you done the hosting go to the Build > Authentication > Templates > Password reset, then click the edit icon option on the right side and click "Customize action URL" and paste your domain url after hosting (https://your-domain.com/reset-password).
