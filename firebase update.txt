@@ -1,0 +1,23 @@
+
+Follow up the video instructions and paste this text in rules in stroage.
+
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read;
+      allow write: if 
+      request.resource.size < 30 * 1024 * 1024;
+      allow delete: if
+      request.auth != null && resource.metadata.uid == request.auth.uid ;
+    }
+  }
+}
+
+
+
+after following the video also go to the Build > Authentication > Templates > Password reset, then click the edit icon option on the right side and click "Customize action URL" and paste your domain url after hosting (https://your-domain.com/reset-password).
