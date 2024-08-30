@@ -232,7 +232,7 @@ const DashAdmin = () => {
 														</Link>
 													</Table.Cell>
 													<Table.Cell>
-														{formData.recommended.includes(speaker._id) ? (
+														{formData.recommended?.includes(speaker._id) ? (
 															<Button
 																onClick={() => handleRemoveSpeaker(speaker._id)}
 																size="sm"

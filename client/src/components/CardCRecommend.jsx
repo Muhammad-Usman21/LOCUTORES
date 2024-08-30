@@ -1,29 +1,6 @@
-import ReactAudioPlayer from "react-audio-player";
-import ReactPlayer from "react-player";
-import { useState } from "react";
-import { Button } from "flowbite-react";
-import Flag from "react-world-flags";
-import { TiThMenuOutline } from "react-icons/ti";
-import { IoMdClose } from "react-icons/io";
-import { countries } from "countries-list";
 import { Link } from "react-router-dom";
 
 const CardCRecommend = ({ speaker }) => {
-	const [isMenuVisible, setIsMenuVisible] = useState(false);
-	console.log(speaker);
-	const handleMenuToggle = () => {
-		setIsMenuVisible((prevState) => !prevState);
-	};
-
-	const getCountryCodeFromName = (countryName) => {
-		for (const [code, { name }] of Object.entries(countries)) {
-			if (name.toLowerCase() === countryName.toLowerCase()) {
-				return code; // Return the country code if a match is found
-			}
-		}
-		return null;
-	};
-
 	return (
 		<>
 			{speaker && (
@@ -39,7 +16,7 @@ const CardCRecommend = ({ speaker }) => {
                     		hover:scale-105 transition-scale duration-300"
 							/>
 						</div>
-						<div className="flex gap-2 my-4 items-center justify-center">
+						<div className="flex gap-2 my-4 items-center justify-center bg-opacity-25">
 							<Link to={`/speaker/${speaker._id}`}>
 								<span className="text-lg">{speaker.userId.name}</span>
 							</Link>
