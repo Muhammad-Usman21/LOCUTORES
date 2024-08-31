@@ -27,7 +27,7 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 const DashAdmin = () => {
 	const [formData, setFormData] = useState({ recommended: [], pdfs: [] });
 	const [speakers, setSpeakers] = useState([]);
-	const [showMore, setShowMore] = useState();
+	const [showMore, setShowMore] = useState(true);
 	const [addRemoveError, setAddRemoveError] = useState(null);
 	const [updatedMsg, setUpdatedMsg] = useState(null);
 	const [updatedError, setUpdatedError] = useState(null);
@@ -135,7 +135,7 @@ const DashAdmin = () => {
 	};
 
 	const handleAddSpeaker = (speakerId) => {
-		if (formData.recommended.length === 6) {
+		if (formData.recommended?.length === 6) {
 			return setAddRemoveError("You can add upto 6 speakers to recommended.");
 		}
 		setFormData({
@@ -345,7 +345,7 @@ const DashAdmin = () => {
 														</Link>
 													</Table.Cell>
 													<Table.Cell>
-														{formData.recommended.includes(speaker._id) ? (
+														{formData.recommended?.includes(speaker._id) ? (
 															<Button
 																onClick={() => handleRemoveSpeaker(speaker._id)}
 																size="sm"
@@ -374,6 +374,7 @@ const DashAdmin = () => {
 									{showMore && (
 										<div className="flex w-full">
 											<button
+												type="button"
 												onClick={handleShowMore}
 												className="text-teal-400 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 mx-auto text-sm py-4">
 												Show more

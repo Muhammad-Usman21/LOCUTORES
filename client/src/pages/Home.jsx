@@ -240,13 +240,6 @@ const Home = () => {
 										/>
 									))}
 								</div>
-								{showMore && (
-									<button
-										onClick={handleShowMore}
-										className="text-center self-center">
-										Show More
-									</button>
-								)}
 							</>
 						)}
 					{(!storage.found || storage.recommended?.length === 0) && (

@@ -11,23 +11,3 @@ STRIPE_CLIENT_ID=ca_QiqSecb7nGIXyLyms9A4FYL9vkEiPoy6 (Replace it with your Strip
 CLIENT_URL = https://your-domain.com/ (Replace it with your hosted domain)
 VITE_PREMIUM_AMOUNT = 20 (This is the amount for the premium user account, replace it with your suited amount.)
 JWT_SECRET = CaSeVoX (Write any words for security)
-
-
-
-Follow up the video instructions and paste this text in rules in stroage.
-rules_version = '2';
-
-// Craft rules based on data in your Firestore database
-// allow write: if firestore.get(
-//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read;
-      allow write: if 
-      request.resource.size < 30 * 1024 * 1024;
-      allow delete: if
-      request.auth != null && resource.metadata.uid == request.auth.uid ;
-    }
-  }
-}
