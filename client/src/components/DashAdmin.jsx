@@ -20,7 +20,6 @@ import { Link } from "react-router-dom";
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 
-
 const DashAdmin = () => {
 	const [formData, setFormData] = useState({ recommended: [], pdfs: [] });
 	const [speakers, setSpeakers] = useState([]);
@@ -417,7 +416,7 @@ const DashAdmin = () => {
 								className="focus:ring-1 w-full sm:w-auto"
 								onClick={handleUploadPdf}
 								disabled={pdfUploading}>
-								{pdfUploading ? "Uploading... Please Wait!" : "Upload PDfs"}
+								{pdfUploading ? "Uploading... Please Wait!" : "Upload PDFs"}
 							</Button>
 						</div>
 						{pdfUploadErrorMsg && (
@@ -439,13 +438,17 @@ const DashAdmin = () => {
 							formData.pdfs.map((url, index) => (
 								<div
 									key={url}
-									className="flex flex-col md:flex-row justify-between px-3 py-1 border items-center gap-1">
-									<iframe src={url} width="100%" height="600px" title="PDF Viewer"></iframe>
+									className="flex flex-col justify-between p-3 my-2 border items-center gap-1">
+									<iframe
+										src={url}
+										width="100%"
+										title="PDF Viewer"
+										className="h-[400px] md:h-[600px]"></iframe>
 									<button
 										disabled={pdfUploading}
 										type="button"
 										onClick={() => handleRemovePdf(index, url)}
-										className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
+										className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75">
 										Delete
 									</button>
 								</div>

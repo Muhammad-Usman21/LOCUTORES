@@ -32,8 +32,15 @@ const App = () => {
 					<Route path="/speaker/:id" element={<Speaker />} />
 					<Route path="/payment" element={<Payment />} />
 					<Route path="/reset-password" element={<ResetPassword />} />
-					<Route path="/instruction" element={<Instruction />} />
-					<Route path="*" element={<h1>Not Found</h1>} />
+					<Route path="/instructions" element={<Instruction />} />
+					<Route
+						path="*"
+						element={
+							<h1 className="text-center text-3xl my-20 w-full">
+								Page Not Found
+							</h1>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</>

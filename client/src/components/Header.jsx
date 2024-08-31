@@ -148,6 +148,11 @@ const Header = () => {
 						Are you a speaker?
 					</Navbar.Link>
 				</Link>
+				<Link to="/instructions">
+					<Navbar.Link active={path === "/instructions"} as={"div"}>
+						Instructions
+					</Navbar.Link>
+				</Link>
 			</Navbar.Collapse>
 		</Navbar>
 	);
