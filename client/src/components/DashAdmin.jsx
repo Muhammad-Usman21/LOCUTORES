@@ -21,6 +21,7 @@ import { app } from "../firebase";
 import { useSelector } from "react-redux";
 
 import { Viewer, Worker } from "@react-pdf-viewer/core";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
@@ -36,6 +37,7 @@ const DashAdmin = () => {
 	const [pdfUploading, setPdfUploading] = useState(false);
 	const [prevUrlData, setPrevUrlData] = useState([]);
 	const { currentUser } = useSelector((state) => state.user);
+	const newPlugin = defaultLayoutPlugin();
 
 	console.log(formData);
 
@@ -71,6 +73,7 @@ const DashAdmin = () => {
 				if (!res.ok) {
 					console.log(data.message);
 				} else {
+					setFormData(data);
 					prevUrlData.map((item, index) => deleteFileByUrl(item));
 					return setUpdatedMsg("Updated successfully");
 				}
@@ -87,6 +90,7 @@ const DashAdmin = () => {
 				if (!res.ok) {
 					console.log(data.message);
 				} else {
+					setFormData(data);
 					prevUrlData.map((item, index) => deleteFileByUrl(item));
 					return setUpdatedMsg("Updated successfully");
 				}
@@ -441,15 +445,8 @@ const DashAdmin = () => {
 								<div
 									key={url}
 									className="flex flex-col md:flex-row justify-between px-3 py-1 border items-center gap-1">
-									<Worker
-										workerUrl={`https://unpkg.com/pdfjs-dist@3.9.179/build/pdf.worker.min.js`}>
-										<div
-											style={{
-												height: "750px",
-												width: "100%",
-											}}>
-											<Viewer fileUrl={url} />
-										</div>
+									<Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+										<Viewer fileUrl={url} plugins={[newPlugin]} />
 									</Worker>
 									<button
 										disabled={pdfUploading}
