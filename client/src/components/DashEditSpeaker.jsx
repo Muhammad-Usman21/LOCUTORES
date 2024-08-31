@@ -28,7 +28,6 @@ import { updateUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 
-
 const DashEditSpeaker = ({ stripeAccountId }) => {
 	const [file, setFile] = useState(null);
 	const [imageUploadProgress, setImageUploadProgress] = useState(null);
@@ -148,7 +147,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 		setAudioUploadErrorMsg(null);
 		setAudioUploading(true);
 		try {
-			if (audioFile.length === 0) {
+			if (!audioFile || audioFile.length === 0) {
 				setAudioUploadErrorMsg("Select an audio file.");
 				setAudioUploading(false);
 				return;
@@ -362,7 +361,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 							onClick={handleStripeLogin}>
 							Login with Stripe{" "}
 							{formData.stripeAccountId == "" ||
-								formData.stripeAccountId == null
+							formData.stripeAccountId == null
 								? ""
 								: "✅"}
 						</Button>

@@ -3,18 +3,19 @@ import Storage from "../models/storage.model.js";
 export const storeInfo = async (req, res, next) => {
 	try {
 		if (req.user.isAdmin) {
-		const { youtubeLink, recommended } = req.body;
+			const { youtubeLink, recommended } = req.body;
 
-		const newStorage = new Storage({
-			youtubeLink,
-			recommended,
-		});
+			const newStorage = new Storage({
+				youtubeLink,
+				recommended,
+				pdfs,
+			});
 
-		await newStorage.save();
+			await newStorage.save();
 
-		return res.status(201).json({
-			storage: newStorage,
-		});
+			return res.status(201).json({
+				storage: newStorage,
+			});
 		}
 	} catch (error) {
 		next(error);
@@ -24,22 +25,23 @@ export const storeInfo = async (req, res, next) => {
 export const updateInfo = async (req, res, next) => {
 	try {
 		if (req.user.isAdmin) {
-		const { youtubeLink, recommended } = req.body;
+			const { youtubeLink, recommended, pdfs } = req.body;
 
-		const updatedStorage = await Storage.findOneAndUpdate(
-			{},
-			{
-				$set: {
-					youtubeLink,
-					recommended,
+			const updatedStorage = await Storage.findOneAndUpdate(
+				{},
+				{
+					$set: {
+						youtubeLink,
+						recommended,
+						pdfs,
+					},
 				},
-			},
-			{ new: true }
-		);
+				{ new: true }
+			);
 
-		return res.status(201).json({
-			storage: updatedStorage._doc,
-		});
+			return res.status(201).json({
+				storage: updatedStorage._doc,
+			});
 		}
 	} catch (error) {
 		next(error);
@@ -56,6 +58,7 @@ export const getInfo = async (req, res, next) => {
 			res.json({
 				youtubeLink: data[0].youtubeLink,
 				recommended: data[0].recommended,
+				pdfs: data[0].pdfs,
 				found: true,
 			});
 		} else {

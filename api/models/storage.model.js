@@ -9,6 +9,10 @@ const storageSchema = new mongoose.Schema(
 			type: Array,
 			default: [],
 		},
+		pdfs: {
+			type: Array,
+			default: [],
+		},
 	},
 	{ timestamps: true }
 );

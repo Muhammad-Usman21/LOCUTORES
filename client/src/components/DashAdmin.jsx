@@ -1,16 +1,41 @@
-import { Alert, Button, Label, Table, TextInput } from "flowbite-react";
+import {
+	deleteObject,
+	getDownloadURL,
+	getStorage,
+	ref,
+	uploadBytesResumable,
+} from "firebase/storage";
+import {
+	Alert,
+	Button,
+	FileInput,
+	Label,
+	Table,
+	TextInput,
+} from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdCancelPresentation } from "react-icons/md";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
+import { app } from "../firebase";
+import { useSelector } from "react-redux";
+
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 const DashAdmin = () => {
-	const [formData, setFormData] = useState({ recommended: [] });
+	const [formData, setFormData] = useState({ recommended: [], pdfs: [] });
 	const [speakers, setSpeakers] = useState([]);
 	const [showMore, setShowMore] = useState();
 	const [addRemoveError, setAddRemoveError] = useState(null);
 	const [updatedMsg, setUpdatedMsg] = useState(null);
 	const [updatedError, setUpdatedError] = useState(null);
+	const [pdfFile, setPdfFile] = useState(null);
+	const [pdfUploadErrorMsg, setPdfUploadErrorMsg] = useState(null);
+	const [pdfUploading, setPdfUploading] = useState(false);
+	const [prevUrlData, setPrevUrlData] = useState([]);
+	const { currentUser } = useSelector((state) => state.user);
 
 	console.log(formData);
 
@@ -46,6 +71,7 @@ const DashAdmin = () => {
 				if (!res.ok) {
 					console.log(data.message);
 				} else {
+					prevUrlData.map((item, index) => deleteFileByUrl(item));
 					return setUpdatedMsg("Updated successfully");
 				}
 			}
@@ -61,6 +87,7 @@ const DashAdmin = () => {
 				if (!res.ok) {
 					console.log(data.message);
 				} else {
+					prevUrlData.map((item, index) => deleteFileByUrl(item));
 					return setUpdatedMsg("Updated successfully");
 				}
 			}
@@ -121,6 +148,92 @@ const DashAdmin = () => {
 			...formData,
 			recommended: formData.recommended.filter((id, index) => id !== speakerId),
 		});
+	};
+
+	const handleUploadPdf = async () => {
+		setPdfUploadErrorMsg(null);
+		setPdfUploading(true);
+		try {
+			if (!pdfFile || pdfFile.length === 0) {
+				setPdfUploadErrorMsg("Select an PDF file.");
+				setPdfUploading(false);
+				return;
+			}
+			if (pdfFile.length + formData.pdfs?.length > 6) {
+				setPdfUploadErrorMsg("You can upload upto 6 PDF files");
+				setPdfUploading(false);
+				return;
+			}
+
+			for (let i = 0; i < pdfFile.length; i++) {
+				if (pdfFile[i].size >= 20 * 1024 * 1024) {
+					setPdfUploadErrorMsg("PDF file size must be less than 20 MBs");
+					setPdfUploading(false);
+					return;
+				}
+			}
+
+			const promises = [];
+
+			for (let i = 0; i < pdfFile.length; i++) {
+				promises.push(storePdf(pdfFile[i]));
+			}
+
+			Promise.all(promises)
+				.then((urls) => {
+					setFormData({
+						...formData,
+						pdfs: formData.pdfs.concat(urls),
+					});
+					setPdfUploadErrorMsg(null);
+					setPdfUploading(false);
+				})
+				.catch((err) => {
+					setPdfUploadErrorMsg(err);
+					setPdfUploading(false);
+				});
+		} catch (error) {
+			setPdfUploadErrorMsg(error.message);
+			setPdfUploading(false);
+		}
+	};
+
+	const storePdf = async (pdf) => {
+		return new Promise((resolve, reject) => {
+			const storage = getStorage(app);
+			const fileName = new Date().getTime() + pdf.name;
+			const stoageRef = ref(storage, fileName);
+			const metadata = {
+				customMetadata: {
+					uid: currentUser.firebaseId,
+				},
+			};
+			const uploadTask = uploadBytesResumable(stoageRef, pdf, metadata);
+			uploadTask.on(
+				"state_changed",
+				(snapshot) => {
+					const progress =
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					console.log(`Upload is ${progress}% done`);
+				},
+				(error) => {
+					reject(error);
+				},
+				() => {
+					getDownloadURL(uploadTask.snapshot.ref).then((downlaodURL) => {
+						resolve(downlaodURL);
+					});
+				}
+			);
+		});
+	};
+
+	const handleRemovePdf = (index, url) => {
+		setFormData({
+			...formData,
+			pdfs: formData.pdfs.filter((x, i) => i !== index),
+		});
+		setPrevUrlData([...prevUrlData, url]);
 	};
 
 	return (
@@ -188,7 +301,7 @@ const DashAdmin = () => {
 										hoverable
 										className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
-										<Table.Head className=" xl:sticky xl:top-[68px]">
+										<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 											<Table.HeadCell>Speaker Image</Table.HeadCell>
 											<Table.HeadCell>Speaker Name</Table.HeadCell>
 											<Table.HeadCell>Speaker Email</Table.HeadCell>
@@ -284,6 +397,69 @@ const DashAdmin = () => {
 							</>
 						)}
 					</div>
+
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+						<Label value="Upload PDFs" />
+						<div className="flex flex-col mb-4 sm:flex-row gap-4 items-center justify-between">
+							<FileInput
+								type="file"
+								accept="application/pdf" // Accepts only PDF files
+								onChange={(e) => setPdfFile(e.target.files)} // Handles file selection
+								className="w-full sm:w-auto"
+								multiple
+								disabled={pdfUploading}
+							/>
+							<Button
+								type="button"
+								gradientDuoTone="purpleToBlue"
+								size="sm"
+								outline
+								className="focus:ring-1 w-full sm:w-auto"
+								onClick={handleUploadPdf}
+								disabled={pdfUploading}>
+								{pdfUploading ? "Uploading... Please Wait!" : "Upload PDfs"}
+							</Button>
+						</div>
+						{pdfUploadErrorMsg && (
+							<Alert className="flex-auto" color="failure" withBorderAccent>
+								<div className="flex justify-between">
+									<span
+										dangerouslySetInnerHTML={{ __html: pdfUploadErrorMsg }}
+									/>
+									<span className="w-5 h-5">
+										<MdCancelPresentation
+											className="cursor-pointer w-6 h-6"
+											onClick={() => setPdfUploadErrorMsg(null)}
+										/>
+									</span>
+								</div>
+							</Alert>
+						)}
+						{formData.pdfs?.length > 0 &&
+							formData.pdfs.map((url, index) => (
+								<div
+									key={url}
+									className="flex flex-col md:flex-row justify-between px-3 py-1 border items-center gap-1">
+									<Worker
+										workerUrl={`https://unpkg.com/pdfjs-dist@3.9.179/build/pdf.worker.min.js`}>
+										<div
+											style={{
+												height: "750px",
+												width: "100%",
+											}}>
+											<Viewer fileUrl={url} />
+										</div>
+									</Worker>
+									<button
+										disabled={pdfUploading}
+										type="button"
+										onClick={() => handleRemovePdf(index, url)}
+										className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
+										Delete
+									</button>
+								</div>
+							))}
+					</div>
 					<Button
 						type="submit"
 						gradientDuoTone="purpleToPink"
@@ -311,3 +487,27 @@ const DashAdmin = () => {
 };
 
 export default DashAdmin;
+
+// Function to delete a file using its URL
+const deleteFileByUrl = async (fileUrl) => {
+	const storage = getStorage();
+
+	try {
+		// Extract the file path from the URL
+		const startIndex = fileUrl.indexOf("/o/") + 3;
+		const endIndex = fileUrl.indexOf("?alt=media");
+
+		const filePath = decodeURIComponent(
+			fileUrl.substring(startIndex, endIndex)
+		);
+
+		// Create a reference to the file to delete
+		const fileRef = ref(storage, filePath);
+
+		// Delete the file
+		await deleteObject(fileRef);
+		console.log("File deleted successfully");
+	} catch (error) {
+		console.error("Error deleting file:", error.message);
+	}
+};

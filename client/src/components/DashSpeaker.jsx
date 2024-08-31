@@ -121,7 +121,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		setAudioUploadErrorMsg(null);
 		setAudioUploading(true);
 		try {
-			if (audioFile.length === 0) {
+			if (!audioFile || audioFile.length === 0) {
 				setAudioUploadErrorMsg("Select an audio file.");
 				setAudioUploading(false);
 				return;
