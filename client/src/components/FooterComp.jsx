@@ -26,18 +26,18 @@ const FooterComp = () => {
 						</Link>
 					</div>
 					<div
-						className="flex gap-8 sm:gap-10 mt-4 sm:mt-0 text-center dark:shadow-whiteLg
+						className="flex flex-col gap-3 md:flex-row md:gap-8 sm:gap-10 mt-4 sm:mt-0 text-center dark:shadow-whiteLg
 						bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl px-7 py-4">
-						<div>
+						{/* <div>
 							<Footer.LinkGroup col className="space-y-2">
-								<div className="flex flex-col gap-3 lg:gap-8 lg:flex-row">
+								<div className="flex flex-col gap-3 md:gap-8 md:flex-row">
 									<Link to="/instructions">Instructions</Link>
 								</div>
 							</Footer.LinkGroup>
-						</div>
+						</div> */}
 						<div>
 							<Footer.LinkGroup col className="space-y-2">
-								<div className="flex gap-3 lg:gap-8 lg:flex-row">
+								<div className="flex gap-8 md:gap-8 md:flex-row justify-around">
 									<Link to="/practice">Scripts to practice</Link>
 									<Link to="/about">Who we are?</Link>
 								</div>
@@ -45,7 +45,7 @@ const FooterComp = () => {
 						</div>
 						<div>
 							<Footer.LinkGroup col className="space-y-2">
-								<div className="flex gap-3 lg:gap-8 lg:flex-row">
+								<div className="flex gap-8 md:gap-8 md:flex-row justify-around">
 									<Link to="/privacy">Privacy policy</Link>
 									<Link to="/legal">Legal terms</Link>
 								</div>

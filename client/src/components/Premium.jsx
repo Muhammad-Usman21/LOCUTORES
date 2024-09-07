@@ -35,7 +35,7 @@ const Premium = ({ updateUser }) => {
 	return (
 		<div className="w-full bg-cover bg-center">
 			<div
-				className="max-w-3xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg items-center justify-center flex flex-col
+				className="max-w-3xl my-3 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg items-center justify-center flex flex-col
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-2xl font-semibold">Buy Premium</h1>
 				<h2>For Speakers</h2>

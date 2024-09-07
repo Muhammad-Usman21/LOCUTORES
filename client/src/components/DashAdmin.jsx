@@ -239,7 +239,7 @@ const DashAdmin = () => {
 			className="w-full bg-cover bg-center
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg2-dark.jpg')]">
 			<div
-				className="max-w-6xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
+				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h2 className="self-center text-2xl text-center font-semibold">
 					For Admin Only
@@ -397,7 +397,7 @@ const DashAdmin = () => {
 						)}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					{/* <div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label value="Upload PDFs" />
 						<div className="flex flex-col mb-4 sm:flex-row gap-4 items-center justify-between">
 							<FileInput
@@ -453,7 +453,7 @@ const DashAdmin = () => {
 									</button>
 								</div>
 							))}
-					</div>
+					</div> */}
 					<Button
 						type="submit"
 						gradientDuoTone="purpleToPink"

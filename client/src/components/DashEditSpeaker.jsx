@@ -348,7 +348,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 					className={`flex py-5 flex-col gap-6 ${theme}`}
 					onSubmit={handleSubmit}>
 					<div className="w-full flex gap-1 flex-col items-center py-2">
-						<p>
+						<p className="text-center">
 							Don&apos;t change your Stripe account during any uncompleted
 							orders.
 						</p>
@@ -407,7 +407,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 						<Label value="Your youtube video link (optional)" />
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
 							<TextInput
-								className="flex-grow"
+								className="flex-grow w-full"
 								type="text"
 								placeholder="Youtube Link"
 								onChange={(e) => setYTLink(e.target.value)}
@@ -714,9 +714,11 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 							Social Media (optional)
 						</span>
 						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
-							<div className="flex gap-2 items-center">
-								{<FaInstagram />}
-								<Label value="Instagram"></Label>
+							<div className="flex sm:flex-row flex-col gap-2 items-center">
+								<div className="flex items-center justify-center gap-2">
+									{<FaInstagram />}
+									<Label value="Instagram"></Label>
+								</div>
 								<TextInput
 									className="w-72"
 									type="text"
@@ -734,9 +736,11 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 									disabled={loading || imageUploading || audioUploading}
 								/>
 							</div>
-							<div className="flex gap-2 items-center">
-								<FaFacebook />
-								<Label value="Facebook" />
+							<div className="flex sm:flex-row flex-col gap-2 items-center">
+								<div className="flex items-center justify-center gap-2">
+									<FaFacebook />
+									<Label value="Facebook" />
+								</div>
 								<TextInput
 									className="w-72"
 									type="text"
@@ -754,9 +758,11 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 									disabled={loading || imageUploading || audioUploading}
 								/>
 							</div>
-							<div className="flex gap-2 items-center lg:pl-11">
-								<FaTwitter />
-								<Label value="Twitter" />
+							<div className="flex sm:flex-row flex-col gap-2 items-center sm:pl-4">
+								<div className="flex items-center justify-center gap-2">
+									<FaTwitter />
+									<Label value="Twitter" />
+								</div>
 								<TextInput
 									className="w-72"
 									type="text"
@@ -774,9 +780,11 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 									disabled={loading || imageUploading || audioUploading}
 								/>
 							</div>
-							<div className="flex gap-2 items-center lg:pl-11">
-								<FaWhatsapp />
-								<Label value="Whatsapp" />
+							<div className="flex sm:flex-row flex-col gap-2 items-center">
+								<div className="flex items-center justify-center gap-2">
+									<FaWhatsapp />
+									<Label value="Whatsapp" />
+								</div>
 								<TextInput
 									className="w-72"
 									type="text"

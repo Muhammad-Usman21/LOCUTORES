@@ -82,7 +82,7 @@ const Annoucements = () => {
 
 	return (
 		<div
-			className="p-5 w-full bg-cover bg-center min-h-screen flex flex-col
+			className="p-3 sm:p-5 w-full bg-cover bg-center min-h-screen flex flex-col
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg2-dark.jpg')]">
 			{getPostsLoading ? (
 				<div className="flex mt-20 justify-center">
@@ -93,7 +93,7 @@ const Annoucements = () => {
 					{posts.map((post) => (
 						<div
 							key={post._id}
-							className="max-w-6xl flex flex-col w-full p-4 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+							className="max-w-6xl flex flex-col w-full p-3 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 							{currentUser._id !== post.userId._id && (
 								<div className="flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 									<span className="text-xl lg:text-2xl text-center mb-3">
