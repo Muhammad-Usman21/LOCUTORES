@@ -26,19 +26,26 @@ const FooterComp = () => {
 						</Link>
 					</div>
 					<div
-						className="grid gap-8 grid-cols-2 sm:gap-10 mt-4 sm:mt-0 text-center dark:shadow-whiteLg
+						className="flex gap-8 sm:gap-10 mt-4 sm:mt-0 text-center dark:shadow-whiteLg
 						bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl px-7 py-4">
 						<div>
 							<Footer.LinkGroup col className="space-y-2">
 								<div className="flex flex-col gap-3 lg:gap-8 lg:flex-row">
-									<Link to="/instructions">Scripts to practice</Link>
+									<Link to="/instructions">Instructions</Link>
+								</div>
+							</Footer.LinkGroup>
+						</div>
+						<div>
+							<Footer.LinkGroup col className="space-y-2">
+								<div className="flex gap-3 lg:gap-8 lg:flex-row">
+									<Link to="/practice">Scripts to practice</Link>
 									<Link to="/about">Who we are?</Link>
 								</div>
 							</Footer.LinkGroup>
 						</div>
 						<div>
 							<Footer.LinkGroup col className="space-y-2">
-								<div className="flex flex-col gap-3 lg:gap-8 lg:flex-row">
+								<div className="flex gap-3 lg:gap-8 lg:flex-row">
 									<Link to="/privacy">Privacy policy</Link>
 									<Link to="/legal">Legal terms</Link>
 								</div>

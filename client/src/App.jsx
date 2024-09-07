@@ -19,6 +19,7 @@ import FooterComp from "./components/FooterComp";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Legal from "./pages/Legal";
+import Practice from "./pages/Practice";
 
 const App = () => {
 	return (
@@ -44,6 +45,7 @@ const App = () => {
 					<Route path="/about" element={<About />} />
 					<Route path="/privacy" element={<Privacy />} />
 					<Route path="/legal" element={<Legal />} />
+					<Route path="/practice" element={<Practice />} />
 					<Route
 						path="*"
 						element={
