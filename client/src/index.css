@@ -43,3 +43,83 @@ body {
 [data-testid="flowbite-alert-wrapper"] > div {
 	width: 100%;
 }
+
+.ql-editor {
+	font-size: 1.05rem !important;
+}
+
+.ql-editor.ql-blank::before {
+	color: gray !important;
+}
+
+.post-content p {
+	margin-bottom: 0.7rem;
+	text-align: justify;
+}
+.post-content span {
+	margin-bottom: 0.7rem;
+	text-align: justify;
+}
+.dark .post-content p > span,
+.dark .post-content p > em {
+	color: azure !important;
+}
+.post-content h1 {
+	font-size: 1.6rem;
+	font-weight: 600;
+	font-family: sans-serif;
+	margin: 1.6rem 0;
+}
+.post-content h2 {
+	font-size: 1.5rem;
+	font-weight: 600;
+	font-family: sans-serif;
+	margin: 1.5rem 0;
+}
+.post-content h3 {
+	font-size: 1.4rem;
+	font-family: sans-serif;
+	margin: 1.4rem 0;
+}
+.post-content h4 {
+	font-size: 1.2rem;
+	font-family: sans-serif;
+	margin: 1.2rem 0;
+}
+.post-content a {
+	color: rgb(59, 136, 187);
+	text-decoration: none;
+}
+.dark .post-content a {
+	color: rgb(49, 95, 126);
+	text-decoration: none;
+}
+.post-content a:hover {
+	text-decoration: underline;
+}
+.post-content code {
+	background-color: aliceblue;
+	border-radius: 0.5rem;
+	padding: 0 0.3rem;
+}
+.dark .post-content code {
+	color: #000;
+}
+.post-content pre {
+	padding: 1rem;
+	margin: 0.7rem 0;
+	width: 100%;
+}
+.light .post-content pre {
+	background-color: #000;
+	color: azure;
+}
+.dark .post-content pre {
+	background-color: rgb(202, 221, 238);
+	color: #000;
+}
+@media (max-width: 1024px) {
+	.post-content pre {
+		display: none;
+	}
+}

@@ -148,11 +148,16 @@ const Header = () => {
 						Are you a speaker?
 					</Navbar.Link>
 				</Link>
-				<Link to="/instructions">
+				<Link to="/annoucements">
+					<Navbar.Link active={path === "/annoucements"} as={"div"}>
+						Annoucements
+					</Navbar.Link>
+				</Link>
+				{/* <Link to="/instructions">
 					<Navbar.Link active={path === "/instructions"} as={"div"}>
 						Instructions
 					</Navbar.Link>
-				</Link>
+				</Link> */}
 			</Navbar.Collapse>
 		</Navbar>
 	);

@@ -7,6 +7,7 @@ import DashUser from "../components/DashUser";
 import DashEditSpeaker from "../components/DashEditSpeaker";
 import Premium from "../components/Premium";
 import DashAdmin from "../components/DashAdmin";
+import DashPosts from "../components/DashPosts";
 
 const Dashboard = () => {
 	const location = useLocation();
@@ -44,7 +45,7 @@ const Dashboard = () => {
 			)}
 			{tab === "premium" && <Premium updateUser={updateUser} />}
 			{currentUser.isAdmin && tab === "admin" && <DashAdmin />}
-			{/* update above line */}
+			{tab === "posts" && <DashPosts />}
 		</div>
 	);
 };

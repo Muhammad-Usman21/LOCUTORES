@@ -13,6 +13,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ResetPassword from "./components/ResetPassword";
 import Instruction from "./pages/Instruction";
+import CreatePost from "./pages/CreatePost";
+import Annoucements from "./pages/Annoucements";
+import FooterComp from "./components/FooterComp";
+import About from "./pages/About";
+import Privacy from "./pages/Privacy";
+import Legal from "./pages/Legal";
 
 const App = () => {
 	return (
@@ -28,11 +34,16 @@ const App = () => {
 					<Route element={<PrivateRoute />}>
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/orders" element={<Orders />} />
+						<Route path="/create-post" element={<CreatePost />} />
+						<Route path="/annoucements" element={<Annoucements />} />
 					</Route>
 					<Route path="/speaker/:id" element={<Speaker />} />
 					<Route path="/payment" element={<Payment />} />
 					<Route path="/reset-password" element={<ResetPassword />} />
 					<Route path="/instructions" element={<Instruction />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/privacy" element={<Privacy />} />
+					<Route path="/legal" element={<Legal />} />
 					<Route
 						path="*"
 						element={
@@ -42,6 +53,7 @@ const App = () => {
 						}
 					/>
 				</Routes>
+				<FooterComp />
 			</BrowserRouter>
 		</>
 	);

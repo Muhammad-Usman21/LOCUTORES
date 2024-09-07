@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.route.js";
 import speakerRoutes from "./routes/speaker.route.js";
 import orderRoutes from "./routes/order.route.js";
 import storageRoutes from "./routes/storage.route.js";
+import postRoutes from "./routes/post.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/speaker", speakerRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/storage", storageRoutes);
+app.use("/api/post", postRoutes);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
