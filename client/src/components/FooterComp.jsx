@@ -23,12 +23,12 @@ const FooterComp = () => {
 							to="/"
 							className="font-semibold dark:text-white text-md sm:text-xl flex items-center">
 							<img
-								src="../../public/logo3.png"
+								src="logo3.png"
 								alt="logo"
 								className="object-cover w-20 h-20 sm:w-24 sm:h-24"
 							/>
 							<img
-								src="../../public/logo2.png"
+								src="logo2.png"
 								alt="logo"
 								className="object-cover h-8 sm:h-14"
 							/>

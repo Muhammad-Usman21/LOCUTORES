@@ -79,12 +79,12 @@ const Header = () => {
 				to="/"
 				className="font-semibold dark:text-white text-md sm:text-xl flex items-center justify-center">
 				<img
-					src="../../public/logo3.png"
+					src="logo3.png"
 					alt="logo"
 					className="object-cover w-10 h-10"
 				/>
 				<img
-					src="../../public/logo2.png"
+					src="logo2.png"
 					alt="logo"
 					className="object-cover h-6 sm:h-8"
 				/>
