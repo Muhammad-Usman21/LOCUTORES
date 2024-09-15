@@ -36,7 +36,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({
-		demos: {},
+		demos: [],
 		videos: [],
 		prices: {},
 		stripeAccountId,
@@ -134,7 +134,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			}
 			if (
 				!currentUser.isPremium &&
-				audioFile.length + Object.keys(formData.demos).length > 4
+				audioFile.length + formData.demos.length > 4
 			) {
 				setAudioUploadErrorMsg(
 					"You are currently using free plan, so you can upload upto 4 Audio files.<br />Try PREMIUM Account for upload upto 15 Audio files."
@@ -144,7 +144,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			}
 			if (
 				currentUser.isPremium &&
-				audioFile.length + Object.keys(formData.demos).length > 15
+				audioFile.length + formData.demos.length > 15
 			) {
 				setAudioUploadErrorMsg("You can upload only 15 Audio files");
 				setAudioUploading(false);
@@ -169,10 +169,13 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				.then((urls) => {
 					setFormData({
 						...formData,
-						demos: {
+						demos: [
 							...formData.demos,
-							[keywords]: urls[0],
-						},
+							{
+								keywords: keywords,
+								url: urls[0],
+							},
+						],
 					});
 					setAudioUploadErrorMsg(null);
 					setAudioUploading(false);
@@ -218,13 +221,12 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		});
 	};
 
-	const handleRemoveAudio = (index, url, key) => {
-		const updatedDemos = { ...formData.demos }; // Copy demos object
-		delete updatedDemos[key]; // Remove the key from the object
-
+	const handleRemoveAudio = (index, url) => {
+		// Create a new array with the item removed
+		const updatedDemos = formData.demos.filter((_, i) => i !== index);
 		setFormData({
 			...formData,
-			demos: updatedDemos, // Set the updated demos object
+			demos: updatedDemos, // Set the updated demos array
 		});
 		setPrevUrlData([...prevUrlData, url]); // Store removed URL
 	};
@@ -246,7 +248,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			!formData.gender ||
 			!formData.country ||
 			!formData.image ||
-			Object.keys(formData.demos).length === 0 ||
+			formData.demos.length === 0 ||
 			!formData.prices.small ||
 			!formData.prices.medium ||
 			!formData.prices.large ||
@@ -599,21 +601,25 @@ const DashSpeaker = ({ stripeAccountId }) => {
 							</Alert>
 						)}
 						{formData.demos &&
-							Object.keys(formData.demos).length > 0 &&
-							Object.entries(formData.demos).map(([key, url], index) => (
+							formData.demos.length > 0 &&
+							formData.demos.map((demo, index) => (
 								<div
 									key={index}
 									className="flex flex-col px-3 py-1 border gap-1">
 									<div className="w-full">
-										<Label value={`Keywords : ${key}`} />
+										<Label value={`Keywords : ${demo.keywords}`} />
 									</div>
 									<div className="flex flex-col md:flex-row justify-between px-3 py-1 items-center gap-1">
-										{console.log("URL:", url)}
-										<ReactAudioPlayer src={url} controls className="w-full" />
+										{console.log("URL:", demo.url)}
+										<ReactAudioPlayer
+											src={demo.url}
+											controls
+											className="w-full"
+										/>
 										<button
 											disabled={loading || imageUploading || audioUploading}
 											type="button"
-											onClick={() => handleRemoveAudio(index, url, key)}
+											onClick={() => handleRemoveAudio(index, demo.url)}
 											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
 											Delete
 										</button>

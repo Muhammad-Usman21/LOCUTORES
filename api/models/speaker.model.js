@@ -24,12 +24,12 @@ const speakerSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		demos: {
-			type: Map,
-			of: String,
-			default: {},
-		},
-		keywords: [String],
+		demos: [
+			{
+				keywords: { type: String, required: true },
+				url: { type: String, required: true },
+			},
+		],
 		prices: {
 			small: { type: Number, required: true },
 			medium: { type: Number, required: true },

@@ -80,7 +80,7 @@ const CardComponent = ({ speaker }) => {
 					</div>
 					<div className="p-3 flex flex-col gap-2 w-full">
 						<ReactAudioPlayer
-							src={Object.values(speaker.demos)[0]} // Get the first value from the demos object
+							src={speaker.demos.length > 0 ? speaker.demos[0].url : ""} // Get the URL from the first demo object
 							controls
 							className="w-full"
 						/>
@@ -126,12 +126,12 @@ const CardComponent = ({ speaker }) => {
 						}`}>
 						{isMenuVisible && (
 							<>
-								{Object.values(speaker.demos)
-									.slice(1, 4) // Extract values from index 1 to 3
+								{speaker.demos
+									.slice(1, 4) // Extract demos from index 1 to 3
 									.map((demo, index) => (
 										<ReactAudioPlayer
 											key={index}
-											src={demo}
+											src={demo.url} // Access the URL from the demo object
 											controls
 											className="w-full mb-2 lg:mb-4"
 										/>

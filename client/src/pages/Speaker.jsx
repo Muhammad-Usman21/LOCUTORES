@@ -311,12 +311,14 @@ const Speaker = () => {
 							<div className="w-full my-2 flex flex-col items-center">
 								<h3 className="text-lg lg:text-2xl mb-3 pl-4">Example Audio</h3>
 								<div className="flex flex-col justify-center gap-3">
-									{Object.keys(speaker.demos).length > 0 ? (
-										Object.entries(speaker.demos).map(([key, url], index) => (
-											<div key={index} className="flex flex-col w-full items-center gap-1">
-												<Label value={`${key}`} />
+									{speaker.demos && speaker.demos.length > 0 ? (
+										speaker.demos.map((demo, index) => (
+											<div
+												key={index}
+												className="flex flex-col w-full items-center gap-1">
+												<Label value={demo.keywords} />
 												<ReactAudioPlayer
-													src={url}
+													src={demo.url}
 													controls
 													className="w-[350px] mb-2"
 												/>

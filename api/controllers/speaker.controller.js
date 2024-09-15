@@ -25,7 +25,11 @@ export const getSpeakers = async (req, res) => {
 			query._id = speakerId;
 		}
 		if (searchTerm) {
-			query.keywords = { $regex: searchTerm, $options: "i" };
+			query.demos = {
+				$elemMatch: {
+					keywords: { $regex: searchTerm, $options: "i" },
+				},
+			};
 		}
 
 		console.log(searchTerm);
@@ -44,14 +48,8 @@ export const getSpeakers = async (req, res) => {
 		if (searchTerm) {
 			// Filter demos based on search term
 			const filteredSpeakers = speakers.map((speaker) => {
-				const filteredDemos = Object.keys(speaker.demos || {}).reduce(
-					(result, key) => {
-						if (key.toLowerCase().includes(searchTerm.toLowerCase())) {
-							result[key] = speaker.demos[key];
-						}
-						return result;
-					},
-					{}
+				const filteredDemos = (speaker.demos || []).filter((demo) =>
+					demo.keywords.toLowerCase().includes(searchTerm.toLowerCase())
 				);
 				return {
 					...speaker.toObject(),
@@ -117,15 +115,9 @@ export const createSpeaker = async (req, res, next) => {
 		if (!stripeAccountId) {
 			return next(errorHandler(400, "Stripe account is required."));
 		}
-		if (
-			typeof demos !== "object" ||
-			demos === null ||
-			Object.keys(demos).length === 0
-		) {
+		if (!Array.isArray(demos) || demos.length === 0) {
 			return next(errorHandler(400, "At least one demo is required."));
 		}
-
-		const keywords = Object.keys(demos);
 
 		// Check if userId is unique
 		const existingSpeaker = await Speaker.findOne({ userId: req.user.id });
@@ -143,7 +135,6 @@ export const createSpeaker = async (req, res, next) => {
 			gender,
 			country,
 			demos,
-			keywords,
 			prices,
 			about,
 			stripeAccountId,
@@ -228,11 +219,7 @@ export const updateSpeaker = async (req, res, next) => {
 		if (!stripeAccountId) {
 			return next(errorHandler(400, "Stripe account is required."));
 		}
-		if (
-			typeof demos !== "object" ||
-			demos === null ||
-			Object.keys(demos).length === 0
-		) {
+		if (!Array.isArray(demos) || demos.length === 0) {
 			return next(errorHandler(400, "At least one demo is required."));
 		}
 
@@ -250,7 +237,6 @@ export const updateSpeaker = async (req, res, next) => {
 					stripeAccountId,
 					socialMedia,
 				},
-				$set: { keywords: Object.keys(demos) }, // Update keywords array with new keys
 			},
 			{ new: true }
 		);
