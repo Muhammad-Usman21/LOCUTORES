@@ -1,4 +1,4 @@
-import { Button, Select } from "flowbite-react";
+import { Button, Select, TextInput } from "flowbite-react";
 import { countries } from "countries-list";
 import CardComponent from "../components/CardComponent";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ const Home = () => {
 	const [showMore, setShowMore] = useState(true);
 	const [storage, setStorage] = useState({ recommended: [] });
 	const [speakerDetails, setSpeakerDetails] = useState({});
+	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
 		const fetchStorage = async () => {
@@ -41,7 +42,7 @@ const Home = () => {
 		// console.log(voiceType, country);
 		try {
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sort}&limit=9`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sort}&limit=9&searchTerm=${searchTerm}`
 			);
 			const data = await response.json();
 			// console.log(data);
@@ -62,7 +63,7 @@ const Home = () => {
 		try {
 			const startIndex = speaker.length;
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}&sort=${sort}&limit=9`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&startIndex=${startIndex}&sort=${sort}&limit=9&searchTerm=${searchTerm}`
 			);
 			const data = await response.json();
 			// console.log(data);
@@ -154,45 +155,55 @@ const Home = () => {
 					<span className="text-lg md:text-2xl text-center px-5">
 						What kind of voice are you looking for?
 					</span>
-					<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-						<Select
-							className="w-48"
-							value={voiceType}
-							onChange={(e) => setVoiceType(e.target.value)}>
-							<option value="" disabled>
-								Type of Voice
-							</option>
-							<option value="all">All Voices</option>
-							<option value="womenVoice">{"Women's Voice"}</option>
-							<option value="menVoice">{"Men's Voice"}</option>
-						</Select>
-						<Select
-							className="w-48"
-							value={country}
-							onChange={(e) => setCountry(e.target.value)}>
-							<option value="" disabled>
-								Select a Country
-							</option>
-							<option value="all">All Countries</option>
-							{countryOptions.map((country, index) => (
-								<option key={index} value={country}>
-									{country}
+					<div className="flex flex-col gap-2 md:gap-4">
+						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
+							<Select
+								className="w-60"
+								value={voiceType}
+								onChange={(e) => setVoiceType(e.target.value)}>
+								<option value="" disabled>
+									Type of Voice
 								</option>
-							))}
-						</Select>
-						<Select
-							className="w-48 md:w-28"
-							value={sort}
-							onChange={(e) => setSort(e.target.value)}>
-							<option value="desc">Latest</option>
-							<option value="asc">Oldest</option>
-						</Select>
-						<Button
-							className="w-48 sm:w-28 focus:ring-1"
-							gradientDuoTone={"purpleToPink"}
-							onClick={handleSearch}>
-							Search
-						</Button>
+								<option value="all">All Voices</option>
+								<option value="womenVoice">{"Women's Voice"}</option>
+								<option value="menVoice">{"Men's Voice"}</option>
+							</Select>
+							<Select
+								className="w-60"
+								value={country}
+								onChange={(e) => setCountry(e.target.value)}>
+								<option value="" disabled>
+									Select a Country
+								</option>
+								<option value="all">All Countries</option>
+								{countryOptions.map((country, index) => (
+									<option key={index} value={country}>
+										{country}
+									</option>
+								))}
+							</Select>
+							<Select
+								className="w-60 md:w-36"
+								value={sort}
+								onChange={(e) => setSort(e.target.value)}>
+								<option value="desc">Latest</option>
+								<option value="asc">Oldest</option>
+							</Select>
+						</div>
+						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
+							<TextInput
+								className="flex-grow"
+								type="text"
+								placeholder="Search by Demos Keywords "
+								onChange={(e) => setSearchTerm(e.target.value)}
+							/>
+							<Button
+								className="w-60 md:w-36 focus:ring-1"
+								gradientDuoTone={"purpleToPink"}
+								onClick={handleSearch}>
+								Search
+							</Button>
+						</div>
 					</div>
 				</div>
 
@@ -216,7 +227,7 @@ const Home = () => {
 							)}
 						</>
 					)}
-					{speaker.length === 0 && <p>There are no speakers yet</p>}
+					{speaker.length === 0 && <p>There are no speakers to this search</p>}
 				</div>
 
 				<div

@@ -4,7 +4,8 @@ import { errorHandler } from "../utils/error.js";
 
 export const getSpeakers = async (req, res) => {
 	try {
-		var { voiceType, country, startIndex, limit, sort, speakerId } = req.query;
+		var { voiceType, country, startIndex, limit, sort, speakerId, searchTerm } =
+			req.query;
 		if (voiceType === "all") {
 			voiceType = null;
 		}
@@ -20,10 +21,14 @@ export const getSpeakers = async (req, res) => {
 		if (country) {
 			query.country = country;
 		}
-
 		if (speakerId) {
 			query._id = speakerId;
 		}
+		if (searchTerm) {
+			query.keywords = { $regex: searchTerm, $options: "i" };
+		}
+
+		console.log(searchTerm);
 
 		const speakers = await Speaker.find(query)
 			.sort({ createdAt: sort || "desc" })
@@ -34,7 +39,29 @@ export const getSpeakers = async (req, res) => {
 				select: "name email isPremium", // Select only the name field from the User document
 			});
 
-		res.json(speakers);
+		console.log(speakers);
+
+		if (searchTerm) {
+			// Filter demos based on search term
+			const filteredSpeakers = speakers.map((speaker) => {
+				const filteredDemos = Object.keys(speaker.demos || {}).reduce(
+					(result, key) => {
+						if (key.toLowerCase().includes(searchTerm.toLowerCase())) {
+							result[key] = speaker.demos[key];
+						}
+						return result;
+					},
+					{}
+				);
+				return {
+					...speaker.toObject(),
+					demos: filteredDemos, // Replace demos with filtered demos
+				};
+			});
+			res.json(filteredSpeakers);
+		} else {
+			res.json(speakers);
+		}
 	} catch (error) {
 		console.error("Failed to fetch speakers", error);
 		res.status(500).json({ error: "Failed to fetch speakers" });
@@ -90,9 +117,15 @@ export const createSpeaker = async (req, res, next) => {
 		if (!stripeAccountId) {
 			return next(errorHandler(400, "Stripe account is required."));
 		}
-		if (!Array.isArray(demos) || demos.length === 0) {
+		if (
+			typeof demos !== "object" ||
+			demos === null ||
+			Object.keys(demos).length === 0
+		) {
 			return next(errorHandler(400, "At least one demo is required."));
 		}
+
+		const keywords = Object.keys(demos);
 
 		// Check if userId is unique
 		const existingSpeaker = await Speaker.findOne({ userId: req.user.id });
@@ -110,6 +143,7 @@ export const createSpeaker = async (req, res, next) => {
 			gender,
 			country,
 			demos,
+			keywords,
 			prices,
 			about,
 			stripeAccountId,
@@ -194,7 +228,11 @@ export const updateSpeaker = async (req, res, next) => {
 		if (!stripeAccountId) {
 			return next(errorHandler(400, "Stripe account is required."));
 		}
-		if (!Array.isArray(demos) || demos.length === 0) {
+		if (
+			typeof demos !== "object" ||
+			demos === null ||
+			Object.keys(demos).length === 0
+		) {
 			return next(errorHandler(400, "At least one demo is required."));
 		}
 
@@ -212,6 +250,7 @@ export const updateSpeaker = async (req, res, next) => {
 					stripeAccountId,
 					socialMedia,
 				},
+				$set: { keywords: Object.keys(demos) }, // Update keywords array with new keys
 			},
 			{ new: true }
 		);

@@ -21,7 +21,10 @@ import { app } from "../firebase";
 import { useSelector } from "react-redux";
 
 const DashAdmin = () => {
-	const [formData, setFormData] = useState({ recommended: [], pdfs: [] });
+	const [formData, setFormData] = useState({
+		recommended: [],
+		pdfs: [],
+	});
 	const [speakers, setSpeakers] = useState([]);
 	const [showMore, setShowMore] = useState(true);
 	const [addRemoveError, setAddRemoveError] = useState(null);
@@ -32,6 +35,9 @@ const DashAdmin = () => {
 	const [pdfUploading, setPdfUploading] = useState(false);
 	const [prevUrlData, setPrevUrlData] = useState([]);
 	const { currentUser } = useSelector((state) => state.user);
+	const [users, setUsers] = useState([]);
+	const [showMoreUsers, setShowMoreUsers] = useState(true);
+	const [freePremiumError, setFreePremiumError] = useState(null);
 
 	console.log(formData);
 
@@ -232,6 +238,83 @@ const DashAdmin = () => {
 			pdfs: formData.pdfs.filter((x, i) => i !== index),
 		});
 		setPrevUrlData([...prevUrlData, url]);
+	};
+
+	useEffect(() => {
+		fetchUsers();
+	}, []);
+
+	const fetchUsers = async () => {
+		// console.log(voiceType, country);
+		try {
+			const response = await fetch(
+				`/api/user/getusers?&sort=${"desc"}&limit=10`
+			);
+			const data = await response.json();
+			// console.log(data);
+			setUsers(data.users);
+			if (data.users.length < 10) {
+				setShowMoreUsers(false);
+			}
+		} catch (error) {
+			console.error("Failed to fetch speaker", error);
+		}
+	};
+
+	const handleShowMoreUsers = async () => {
+		try {
+			const startIndex = speakers.length;
+			const response = await fetch(
+				`/api/user/getusers?startIndex=${startIndex}&sort=${"desc"}&limit=10`
+			);
+			const data = await response.json();
+			// console.log(data);
+			if (data.users.length < 10) {
+				setShowMoreUsers(false);
+			}
+			setUsers([...users, ...data.users]);
+		} catch (error) {
+			console.error("Failed to fetch speaker", error);
+		}
+	};
+
+	const handlePremiumUser = async (userId) => {
+		try {
+			const res = await fetch(`/api/user/makePremium/${userId}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			if (res.ok) {
+				setUsers((prevUsers) =>
+					prevUsers.map((user) =>
+						user._id === userId ? { ...user, isPremium: true } : user
+					)
+				);
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
+	const handleFreeUser = async (userId) => {
+		try {
+			const res = await fetch(`/api/user/makeFree/${userId}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			if (res.ok) {
+				setUsers((prevUsers) =>
+					prevUsers.map((user) =>
+						user._id === userId ? { ...user, isPremium: false } : user
+					)
+				);
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
 	};
 
 	return (
@@ -474,6 +557,119 @@ const DashAdmin = () => {
 							</span>
 						</div>
 					</Alert>
+				)}
+			</div>
+			<div
+				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg flex flex-col gap-5
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+				<Label
+					value="Select Users to make them Premium or Free"
+					className="text-center"
+				/>
+				{users.length > 0 && (
+					<>
+						<div
+							className="overflow-x-scroll p-4 xl:overflow-visible md:max-w-md lg:max-w-5xl w-full mx-auto
+					scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300
+					 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 dark:shadow-whiteLg
+					 bg-transparent border-2 border-white/40 dark:border-white/20 rounded-lg shadow-xl">
+							<Table
+								hoverable
+								className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
+							rounded-lg shadow-lg dark:shadow-whiteLg">
+								<Table.Head className=" xl:sticky xl:top-[60px] z-10">
+									<Table.HeadCell>User Image</Table.HeadCell>
+									<Table.HeadCell>User Name</Table.HeadCell>
+									<Table.HeadCell>User Email</Table.HeadCell>
+									<Table.HeadCell>Free/Premium</Table.HeadCell>
+								</Table.Head>
+								<Table.Body>
+									{users.map((user) => (
+										<Table.Row
+											key={user._id}
+											className="border border-gray-400">
+											<Table.Cell>
+												<img
+													src={user.profilePicture}
+													alt="image"
+													className="w-10 h-10 object-cover bg-gray-500 rounded-full"
+												/>
+											</Table.Cell>
+											<Table.Cell>
+												{/* <Link to={`/speaker/${speaker._id}`}> */}
+												<div className="flex gap-1 items-center">
+													<span className={`text-gray-900 dark:text-gray-300`}>
+														{user.name}
+													</span>
+													{user.isPremium && (
+														<img
+															className="w-7 h-7 ml-1"
+															src="../../icons8-blue-tick.svg"
+															alt="Premium"
+														/>
+													)}
+												</div>
+												{/* </Link> */}
+											</Table.Cell>
+											<Table.Cell>
+												{/* <Link to={`/speaker/${speaker._id}`}> */}
+												<span className={`text-gray-900 dark:text-gray-300`}>
+													{user.email}
+												</span>
+												{/* </Link> */}
+											</Table.Cell>
+											<Table.Cell>
+												{!user.isPremium ? (
+													<Button
+														onClick={() => handlePremiumUser(user._id)}
+														size="sm"
+														type="button"
+														outline
+														gradientDuoTone="purpleToPink"
+														className="focus:ring-1 w-36">
+														Make Premium
+													</Button>
+												) : (
+													<Button
+														onClick={() => handleFreeUser(user._id)}
+														size="sm"
+														outline
+														type="button"
+														gradientDuoTone="purpleToBlue"
+														className="focus:ring-1 w-36">
+														Make Free
+													</Button>
+												)}
+											</Table.Cell>
+										</Table.Row>
+									))}
+								</Table.Body>
+							</Table>
+							{showMoreUsers && (
+								<div className="flex w-full">
+									<button
+										type="button"
+										onClick={handleShowMoreUsers}
+										className="text-teal-400 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 mx-auto text-sm py-4">
+										Show more
+									</button>
+								</div>
+							)}
+						</div>
+						{freePremiumError && (
+							<Alert className="flex-auto" color="failure" withBorderAccent>
+								<div className="flex justify-between">
+									<span>{freePremiumError}</span>
+									<span className="w-5 h-5">
+										<MdCancelPresentation
+											className="cursor-pointer w-6 h-6"
+											onClick={() => setFreePremiumError(null)}
+										/>
+									</span>
+								</div>
+							</Alert>
+						)}
+					</>
 				)}
 			</div>
 		</div>

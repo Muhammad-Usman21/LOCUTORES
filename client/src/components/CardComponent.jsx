@@ -80,7 +80,7 @@ const CardComponent = ({ speaker }) => {
 					</div>
 					<div className="p-3 flex flex-col gap-2 w-full">
 						<ReactAudioPlayer
-							src={speaker.demos[0]}
+							src={Object.values(speaker.demos)[0]} // Get the first value from the demos object
 							controls
 							className="w-full"
 						/>
@@ -126,14 +126,16 @@ const CardComponent = ({ speaker }) => {
 						}`}>
 						{isMenuVisible && (
 							<>
-								{speaker.demos.slice(1, 4).map((demo, index) => (
-									<ReactAudioPlayer
-										key={index}
-										src={demo}
-										controls
-										className="w-full mb-2 lg:mb-4"
-									/>
-								))}
+								{Object.values(speaker.demos)
+									.slice(1, 4) // Extract values from index 1 to 3
+									.map((demo, index) => (
+										<ReactAudioPlayer
+											key={index}
+											src={demo}
+											controls
+											className="w-full mb-2 lg:mb-4"
+										/>
+									))}
 							</>
 						)}
 					</div>

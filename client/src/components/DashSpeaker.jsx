@@ -36,7 +36,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const [imageUploading, setImageUploading] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({
-		demos: [],
+		demos: {},
 		videos: [],
 		prices: {},
 		stripeAccountId,
@@ -50,6 +50,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const natigate = useNavigate();
 	const [ytLink, setYTLink] = useState("");
 	const [videosErrorMsg, setVideosErrorMsg] = useState(null);
+	const [keywords, setKeywords] = useState("");
 
 	const [prevUrlData, setPrevUrlData] = useState([]);
 
@@ -126,9 +127,14 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				setAudioUploading(false);
 				return;
 			}
+			if (!audioFile || audioFile.length > 1) {
+				setAudioUploadErrorMsg("Select only 1 audio file.");
+				setAudioUploading(false);
+				return;
+			}
 			if (
 				!currentUser.isPremium &&
-				audioFile.length + formData.demos.length > 4
+				audioFile.length + Object.keys(formData.demos).length > 4
 			) {
 				setAudioUploadErrorMsg(
 					"You are currently using free plan, so you can upload upto 4 Audio files.<br />Try PREMIUM Account for upload upto 15 Audio files."
@@ -138,7 +144,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			}
 			if (
 				currentUser.isPremium &&
-				audioFile.length + formData.demos.length > 15
+				audioFile.length + Object.keys(formData.demos).length > 15
 			) {
 				setAudioUploadErrorMsg("You can upload only 15 Audio files");
 				setAudioUploading(false);
@@ -163,10 +169,14 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				.then((urls) => {
 					setFormData({
 						...formData,
-						demos: formData.demos.concat(urls),
+						demos: {
+							...formData.demos,
+							[keywords]: urls[0],
+						},
 					});
 					setAudioUploadErrorMsg(null);
 					setAudioUploading(false);
+					setKeywords("");
 				})
 				.catch((err) => {
 					setAudioUploadErrorMsg("Audio file size must be less than 20 MBs");
@@ -208,12 +218,15 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		});
 	};
 
-	const handleRemoveAudio = (index, url) => {
+	const handleRemoveAudio = (index, url, key) => {
+		const updatedDemos = { ...formData.demos }; // Copy demos object
+		delete updatedDemos[key]; // Remove the key from the object
+
 		setFormData({
 			...formData,
-			demos: formData.demos.filter((x, i) => i !== index),
+			demos: updatedDemos, // Set the updated demos object
 		});
-		setPrevUrlData([...prevUrlData, url]);
+		setPrevUrlData([...prevUrlData, url]); // Store removed URL
 	};
 	const handleRemoveVideo = (index) => {
 		setFormData({
@@ -233,7 +246,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			!formData.gender ||
 			!formData.country ||
 			!formData.image ||
-			formData.demos.length === 0 ||
+			Object.keys(formData.demos).length === 0 ||
 			!formData.prices.small ||
 			!formData.prices.medium ||
 			!formData.prices.large ||
@@ -534,25 +547,41 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label value="Upload demos (required minimum 1) " />
-						<div className="flex flex-col mb-4 sm:flex-row gap-4 items-center justify-between">
-							<FileInput
-								type="file"
-								accept="audio/*" // Accepts only audio files
-								onChange={(e) => setAudioFile(e.target.files)} // Handles file selection
-								className="w-full sm:w-auto"
-								multiple
-								disabled={loading || imageUploading || audioUploading}
-							/>
-							<Button
-								type="button"
-								gradientDuoTone="purpleToBlue"
-								size="sm"
-								outline
-								className="focus:ring-1 w-full sm:w-auto"
-								onClick={handleUploadAudio}
-								disabled={loading || imageUploading || audioUploading}>
-								{audioUploading ? "Uploading... Please Wait!" : "Upload Demos"}
-							</Button>
+						<div className="flex flex-col mb-4 w-full gap-4 items-center justify-between">
+							<div className="w-full">
+								<TextInput
+									type="text"
+									placeholder="Write different keywords for demo with spaces"
+									id="keywords"
+									onChange={(e) => setKeywords(e.target.value)}
+									disabled={loading || imageUploading || audioUploading}
+									value={keywords}
+								/>
+							</div>
+							<div className="flex flex-col w-full mb-4 sm:flex-row gap-4 items-center justify-between">
+								<FileInput
+									type="file"
+									accept="audio/*" // Accepts only audio files
+									onChange={(e) => setAudioFile(e.target.files)} // Handles file selection
+									className="w-full sm:w-auto"
+									multiple
+									disabled={loading || imageUploading || audioUploading}
+								/>
+								<Button
+									type="button"
+									gradientDuoTone="purpleToBlue"
+									size="sm"
+									outline
+									className="focus:ring-1 w-full sm:w-auto"
+									onClick={handleUploadAudio}
+									disabled={
+										loading || imageUploading || audioUploading || !keywords
+									}>
+									{audioUploading
+										? "Uploading... Please Wait!"
+										: "Upload Demos"}
+								</Button>
+							</div>
 						</div>
 						{audioUploadErrorMsg && (
 							<Alert className="flex-auto" color="failure" withBorderAccent>
@@ -569,19 +598,26 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								</div>
 							</Alert>
 						)}
-						{formData.demos?.length > 0 &&
-							formData.demos.map((url, index) => (
+						{formData.demos &&
+							Object.keys(formData.demos).length > 0 &&
+							Object.entries(formData.demos).map(([key, url], index) => (
 								<div
-									key={url}
-									className="flex flex-col md:flex-row justify-between px-3 py-1 border items-center gap-1">
-									<ReactAudioPlayer src={url} controls className="w-full" />
-									<button
-										disabled={loading || imageUploading || audioUploading}
-										type="button"
-										onClick={() => handleRemoveAudio(index, url)}
-										className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
-										Delete
-									</button>
+									key={index}
+									className="flex flex-col px-3 py-1 border gap-1">
+									<div className="w-full">
+										<Label value={`Keywords : ${key}`} />
+									</div>
+									<div className="flex flex-col md:flex-row justify-between px-3 py-1 items-center gap-1">
+										{console.log("URL:", url)}
+										<ReactAudioPlayer src={url} controls className="w-full" />
+										<button
+											disabled={loading || imageUploading || audioUploading}
+											type="button"
+											onClick={() => handleRemoveAudio(index, url, key)}
+											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
+											Delete
+										</button>
+									</div>
 								</div>
 							))}
 					</div>

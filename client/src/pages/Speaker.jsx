@@ -12,7 +12,16 @@ import {
 import { useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { MdCancelPresentation, MdEmail } from "react-icons/md";
-import { FaRegUser, FaFemale, FaMale, FaInstagram, FaFacebook, FaTwitch, FaWhatsapp, FaTwitter } from "react-icons/fa";
+import {
+	FaRegUser,
+	FaFemale,
+	FaMale,
+	FaInstagram,
+	FaFacebook,
+	FaTwitch,
+	FaWhatsapp,
+	FaTwitter,
+} from "react-icons/fa";
 
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
@@ -187,8 +196,7 @@ const Speaker = () => {
 									<a
 										href={speaker.socialMedia.instagram}
 										target="_blank"
-										rel="noreferrer"
-									>
+										rel="noreferrer">
 										<FaInstagram className="inline-block mr-2 text-3xl hover:text-pink-600" />
 									</a>
 								)}
@@ -196,8 +204,7 @@ const Speaker = () => {
 									<a
 										href={speaker.socialMedia.facebook}
 										target="_blank"
-										rel="noreferrer"
-									>
+										rel="noreferrer">
 										<FaFacebook className="inline-block mr-2 text-3xl hover:text-blue-500" />
 									</a>
 								)}
@@ -205,8 +212,7 @@ const Speaker = () => {
 									<a
 										href={speaker.socialMedia.twitter}
 										target="_blank"
-										rel="noreferrer"
-									>
+										rel="noreferrer">
 										<FaTwitter className="inline-block mr-2 text-3xl hover:text-blue-500" />
 									</a>
 								)}
@@ -214,8 +220,7 @@ const Speaker = () => {
 									<a
 										href={`https://wa.me/${speaker.socialMedia.whatsapp}`}
 										target="_blank"
-										rel="noreferrer"
-									>
+										rel="noreferrer">
 										<FaWhatsapp className="inline-block mr-2 text-3xl hover:text-green-500" />
 									</a>
 								)}
@@ -305,15 +310,17 @@ const Speaker = () => {
 							)}
 							<div className="w-full my-2 flex flex-col items-center">
 								<h3 className="text-lg lg:text-2xl mb-3 pl-4">Example Audio</h3>
-								<div className="flex flex-col justify-center gap-2">
-									{speaker.demos.length > 0 ? (
-										speaker.demos.map((demo, index) => (
-											<ReactAudioPlayer
-												key={index}
-												src={demo}
-												controls
-												className="w-[350px] mb-2"
-											/>
+								<div className="flex flex-col justify-center gap-3">
+									{Object.keys(speaker.demos).length > 0 ? (
+										Object.entries(speaker.demos).map(([key, url], index) => (
+											<div key={index} className="flex flex-col w-full items-center gap-1">
+												<Label value={`${key}`} />
+												<ReactAudioPlayer
+													src={url}
+													controls
+													className="w-[350px] mb-2"
+												/>
+											</div>
 										))
 									) : (
 										<p>No demos available</p>
