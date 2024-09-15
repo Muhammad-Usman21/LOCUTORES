@@ -142,18 +142,18 @@ const Home = () => {
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl md:text-4xl text-center">
-						PROFESSIONALS VOICEOVERS
+					LOCUCIONES PROFESIONALES
 					</span>
 					<span className="text-lg md:text-2xl text-center">
-						Professional Voice-Over, Commercial Voice-Over, Institutional
-						Voice-Over
+					Locución Profesional, Locución Comercial, Institucional
+					Voz en off
 					</span>
 				</div>
 				<div
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-lg md:text-2xl text-center px-5">
-						What kind of voice are you looking for?
+					¿Qué tipo de voz estás buscando?
 					</span>
 					<div className="flex flex-col gap-2 md:gap-4">
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
@@ -162,20 +162,20 @@ const Home = () => {
 								value={voiceType}
 								onChange={(e) => setVoiceType(e.target.value)}>
 								<option value="" disabled>
-									Type of Voice
+								Tipo de voz
 								</option>
-								<option value="all">All Voices</option>
-								<option value="womenVoice">{"Women's Voice"}</option>
-								<option value="menVoice">{"Men's Voice"}</option>
+								<option value="all">Todas las voces</option>
+								<option value="womenVoice">{"Voz de Mujer"}</option>
+								<option value="menVoice">{"Voz de los hombres"}</option>
 							</Select>
 							<Select
 								className="w-60"
 								value={country}
 								onChange={(e) => setCountry(e.target.value)}>
 								<option value="" disabled>
-									Select a Country
+								Seleccione un país
 								</option>
-								<option value="all">All Countries</option>
+								<option value="all">Todos los países</option>
 								{countryOptions.map((country, index) => (
 									<option key={index} value={country}>
 										{country}
@@ -186,15 +186,15 @@ const Home = () => {
 								className="w-60 md:w-36"
 								value={sort}
 								onChange={(e) => setSort(e.target.value)}>
-								<option value="desc">Latest</option>
-								<option value="asc">Oldest</option>
+								<option value="desc">El último</option>
+								<option value="asc">más antiguo</option>
 							</Select>
 						</div>
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 							<TextInput
 								className="flex-grow"
 								type="text"
-								placeholder="Search by Demos Keywords "
+								placeholder="Buscar por palabras clave de demostración "
 								onChange={(e) => setSearchTerm(e.target.value)}
 							/>
 							<Button
@@ -210,7 +210,7 @@ const Home = () => {
 				<div
 					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-					<h1 className="font-semibold text-center text-3xl">Search Results</h1>
+					<h1 className="font-semibold text-center text-3xl">Resultados de la búsqueda</h1>
 					{speaker.length > 0 && (
 						<>
 							<div className="flex flex-wrap gap-5 items-center justify-center w-full">
@@ -222,19 +222,19 @@ const Home = () => {
 								<button
 									onClick={handleShowMore}
 									className="text-center self-center">
-									Show More
+									Mostrar más
 								</button>
 							)}
 						</>
 					)}
-					{speaker.length === 0 && <p>There are no speakers to this search</p>}
+					{speaker.length === 0 && <p>No hay oradores para esta búsqueda.</p>}
 				</div>
 
 				<div
 					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 lg:mb-20
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<h1 className="font-semibold text-center text-2xl">
-						Recommended Speakers
+					Oradores recomendados
 					</h1>
 					{storage.found &&
 						storage.recommended &&
@@ -254,7 +254,7 @@ const Home = () => {
 							</>
 						)}
 					{(!storage.found || storage.recommended?.length === 0) && (
-						<p>There are no recommended speakers yet</p>
+						<p>Aún no hay oradores recomendados</p>
 					)}
 				</div>
 			</div>

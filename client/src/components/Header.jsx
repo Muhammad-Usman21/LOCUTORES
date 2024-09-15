@@ -46,7 +46,7 @@ const Header = () => {
 			});
 			console.log(hasUpdates);
 			if (hasUpdates) {
-				toast.info("You have new order updates");
+				toast.info("Tienes nuevas actualizaciones de pedidos");
 			}
 		};
 
@@ -113,10 +113,10 @@ const Header = () => {
 							</span>
 						</Dropdown.Header>
 						<Link to={"/dashboard?tab=user"}>
-							<Dropdown.Item>Dashboard</Dropdown.Item>
+							<Dropdown.Item>Panel</Dropdown.Item>
 						</Link>
 						<DropdownDivider />
-						<Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
+						<Dropdown.Item onClick={handleSignOut}>desconectar</Dropdown.Item>
 					</Dropdown>
 				) : (
 					<Link to="/sign-in">
@@ -125,7 +125,7 @@ const Header = () => {
 							outline
 							size="sm"
 							className="focus:ring-1">
-							Sign In
+							Iniciar sesión
 						</Button>
 					</Link>
 				)}
@@ -135,12 +135,12 @@ const Header = () => {
 				<Navbar.Link className="h-0 p-0 m-0"></Navbar.Link>
 				<Link to="/">
 					<Navbar.Link active={path === "/"} as={"div"}>
-						Home
+					Hogar
 					</Navbar.Link>
 				</Link>
 				<Link to="/orders">
 					<Navbar.Link active={path === "/orders"} as={"div"}>
-						Orders{" "}
+					Órdenes{" "}
 					</Navbar.Link>
 				</Link>
 				<Link
@@ -155,12 +155,12 @@ const Header = () => {
 							path === "/dashboard?tab=edit-speaker"
 						}
 						as={"div"}>
-						Are you a speaker?
+						¿Eres orador?
 					</Navbar.Link>
 				</Link>
 				<Link to="/annoucements">
 					<Navbar.Link active={path === "/annoucements"} as={"div"}>
-						Annoucements
+					Anuncios
 					</Navbar.Link>
 				</Link>
 				{/* <Link to="/instructions">

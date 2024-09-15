@@ -39,7 +39,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 
 	const handleUploadAudio = async () => {
 		setErrorMsg(null);
-		if (!file) return setErrorMsg("Select a file");
+		if (!file) return setErrorMsg("Seleccione un archivo");
 		setAudioUploading(true);
 
 		// Initialize Firebase storage
@@ -120,7 +120,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			{currentUser._id === order.speakerId.userId._id && (
 				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-xl lg:text-2xl text-center mb-3">
-						Customer&apos;s Information
+					Información del cliente
 					</span>
 					<div className="flex items-center gap-3">
 						<img
@@ -147,7 +147,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			<div className="flex-auto py-3 lg:p-5">
 				<div className="border rounded-xl p-2 dark:border-gray-700">
 					<div>
-						<span className="font-semibold mr-12">Created Date:</span>
+						<span className="font-semibold mr-12">Fecha de creación:</span>
 						<span>
 							{new Date(order.createdAt).toLocaleDateString("en-US", {
 								year: "numeric",
@@ -157,28 +157,28 @@ const OrderCard = ({ order, orderUpdated }) => {
 						</span>
 					</div>
 					<div>
-						<span className="font-semibold mr-11">Order Service:</span>
-						<span>{order.service === "voiceOver" && "Voice Over"}</span>
-						<span>{order.service === "womenVoice" && "Video Debbing"}</span>
+						<span className="font-semibold mr-11">Servicio de pedidos:</span>
+						<span>{order.service === "voiceOver" && "Voz en off"}</span>
+						<span>{order.service === "womenVoice" && "Debbing de vídeo"}</span>
 						<span>
-							{order.service === "holdswitch" && "Message on HOLD/SWITCH"}
+							{order.service === "holdswitch" && "Mensaje en ESPERA/CAMBIAR"}
 						</span>
 						<span>
-							{order.service === "auditoryLogos" && "Auditory Logos (Branding)"}
+							{order.service === "auditoryLogos" && "Logotipos auditivos (Branding)"}
 						</span>
 					</div>
 					<div>
-						<span className="font-semibold mr-8">Audio Duration:</span>
-						<span>{order.audioDuration === "small" && "10 ~ 20 seconds"}</span>
+						<span className="font-semibold mr-8">Duración del audio:</span>
+						<span>{order.audioDuration === "small" && "10 ~ 20 segundos"}</span>
 						<span>{order.audioDuration === "medium" && "30 ~ 40 seconds"}</span>
-						<span>{order.audioDuration === "large" && "1 minute"}</span>
+						<span>{order.audioDuration === "large" && "1 minuto"}</span>
 					</div>
 					<div>
-						<span className="font-semibold mr-4">Payment Amount:</span>
+						<span className="font-semibold mr-4">Monto del pago:</span>
 						<span className="font-semibold">$ {order.amount}</span>
 					</div>
 					<div>
-						<span className="font-semibold mr-[53px]">Order Status:</span>
+						<span className="font-semibold mr-[53px]">Estado del pedido:</span>
 						<span
 							className={
 								order.status === "Rejected"
@@ -193,13 +193,13 @@ const OrderCard = ({ order, orderUpdated }) => {
 						</span>
 					</div>
 					<div className="text-justify">
-						<span className="font-bold mr-5">Quote:</span>
+						<span className="font-bold mr-5">Cita:</span>
 						<span className="text-justify">{order.quote}</span>
 					</div>
 					<div className="text-justify">
-						<span className="font-bold mr-6">Specs:</span>
+						<span className="font-bold mr-6">Especificaciones:</span>
 						<span className="text-justify">
-							{order.specs ? `${order.specs}` : "None"}
+							{order.specs ? `${order.specs}` : "Ninguno"}
 						</span>
 					</div>
 				</div>
@@ -211,16 +211,14 @@ const OrderCard = ({ order, orderUpdated }) => {
 						{(order.status === "Delivered" || order.status === "Rejected") &&
 							order.speakerId.userId._id === currentUser._id && (
 								<p className="text-center py-2">
-									Customer recieved this audio <br />
-									But you can update this if there is any issue with this file
+									El cliente recibió este audio. <br />
+									Pero puedes actualizar esto si hay algún problema con este archivo.
 								</p>
 							)}
 						{order.status === "Delivered" &&
 							order.userId._id === currentUser._id && (
 								<p className="text-center py-2">
-									Order {order.status} and Speaker send this audio <br />
-									If there are any issues in the file then you can contact with
-									your Speaker.
+									Ordene {order.status} y el orador envíe este audio. <br /> Si hay algún problema en el archivo, puede comunicarse con su orador.
 								</p>
 							)}
 						<ReactAudioPlayer
@@ -232,7 +230,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 						{order.status === "Delivered" &&
 							order.speakerId.userId._id === currentUser._id && (
 								<p className="text-center py-2">
-									Order {order.status}. Waiting for Customer to ACCEPT
+									Orden {order.status}. Esperando que el cliente ACEPTE
 								</p>
 							)}
 						{(order.status === "Delivered" || order.status === "Rejected") &&
@@ -240,7 +238,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 								<div className="flex flex-col gap-2">
 									{order.speakerMessage && (
 										<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
-											<p className="text-xxs">Message from Speaker</p>
+											<p className="text-xxs">Mensaje del orador</p>
 											<p>{order.speakerMessage}</p>
 										</div>
 									)}
@@ -248,7 +246,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 									{status === "Delivered" && (
 										<>
 											<p className="text-center my-1">
-												You can download above audio after ACCEPT
+											Puede descargar el audio anterior después de ACEPTAR
 											</p>
 											<div className="flex w-full gap-4">
 												<Button
@@ -260,7 +258,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 													onClick={() => {
 														handleFileUpload(order._id, "Completed");
 													}}>
-													Accept
+													Aceptar
 												</Button>
 												<Button
 													type="button"
@@ -269,7 +267,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 													outline
 													className="focus:ring-1 flex-1"
 													onClick={() => setStatus("Reject")}>
-													Reject
+													Rechazar
 												</Button>
 											</div>
 										</>
@@ -278,14 +276,14 @@ const OrderCard = ({ order, orderUpdated }) => {
 									{status === "Reject" && (
 										<div className="w-full mt-1">
 											<span className="text-sm ml-1">
-												Write an message for Speaker
+											Escribir un mensaje para el orador
 											</span>
 
 											<Textarea
 												className="mb-2 mt-1 w-full"
 												rows="2"
 												value={rejectMessage}
-												placeholder="Write reason for rejection...."
+												placeholder="Escriba el motivo del rechazo...."
 												onChange={(e) => setRejectMessage(e.target.value)}
 												disabled={audioUploading}
 											/>
@@ -301,7 +299,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 														handleFileUpload(order._id, "Rejected");
 														setStatus("Rejected");
 													}}>
-													SEND
+													ENVIAR
 												</Button>
 												<Button
 													type="button"
@@ -310,15 +308,14 @@ const OrderCard = ({ order, orderUpdated }) => {
 													outline
 													className="focus:ring-1 w-full"
 													onClick={() => setStatus(order.status)}>
-													CANCEL
+													CANCELAR
 												</Button>
 											</div>
 										</div>
 									)}
 									{order.status === "Rejected" && (
 										<p className="text-center py-2">
-											Order {order.status}. Waiting for Speaker to send another
-											Audio.
+											Orden {order.status}. Esperando que el altavoz envíe otro audio.
 										</p>
 									)}
 								</div>
@@ -327,7 +324,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 							order.speakerId.userId._id === currentUser._id &&
 							order.rejectMessage && (
 								<div className="my-2 p-2 border rounded-xl dark:border-gray-700">
-									<p className="text-xxs">Message from Customer</p>
+									<p className="text-xxs">Mensaje del cliente</p>
 									<p>{order.rejectMessage}</p>
 								</div>
 							)}
@@ -354,7 +351,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 									className="focus:ring-1"
 									onClick={handleUploadAudio}
 									disabled={audioUploading}>
-									{audioUploading ? "Uploading... Please Wait!" : "Upload"}
+									{audioUploading ? "Subiendo... Espere por favor!" : "Subir"}
 								</Button>
 							</div>
 							{audioUrl &&
@@ -372,18 +369,18 @@ const OrderCard = ({ order, orderUpdated }) => {
 												type="button"
 												onClick={() => setAudioUrl(null)}
 												className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
-												Delete
+												Borrar
 											</button>
 										</div>
 										<div>
 											<span className="text-sm">
-												Write an message for Customer (optional)
+											Escribe un mensaje para el cliente (opcional)
 											</span>
 											<Textarea
 												className="mb-2 mt-1"
 												rows="2"
 												value={speakerMessage}
-												placeholder="Write something to customers...."
+												placeholder="Escribe algo a los clientes...."
 												onChange={(e) => setSpeakerMessage(e.target.value)}
 												disabled={audioUploading}
 											/>
@@ -400,14 +397,14 @@ const OrderCard = ({ order, orderUpdated }) => {
 									handleFileUpload(order._id, "Delivered");
 								}}
 								disabled={audioUploading || !audioUrl}>
-								{order.status === "Delivered" ? "Update" : "Confirm"}
+								{order.status === "Delivered" ? "Actualizar" : "Confirmar"}
 							</Button>
 						</div>
 					)}
 				{order.status === "Completed" && (
 					<div className="w-full flex items-center justify-center bg-green-600 my-2 rounded-full p-1">
 						<span className="text-3xl text-center text-green-200 self-center">
-							ORDER COMPLETED
+						PEDIDO COMPLETADO
 						</span>
 					</div>
 				)}
@@ -430,7 +427,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl text-center mb-3">
 						<Link to={`/speaker/${order.speakerId._id}`}>
-							Speaker&apos;s Information
+						Información del orador
 						</Link>
 					</span>
 					<div className="flex items-center gap-3">

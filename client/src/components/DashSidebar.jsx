@@ -47,7 +47,7 @@ const DashSidebar = () => {
 				<Sidebar.ItemGroup className="flex flex-col">
 					<Link to="/dashboard?tab=user">
 						<Sidebar.Item active={tab === "user"} icon={HiUser} as="div">
-							User
+						Usuario
 						</Sidebar.Item>
 					</Link>
 					<Link to="/dashboard?tab=posts">
@@ -55,13 +55,13 @@ const DashSidebar = () => {
 							active={tab === "posts"}
 							icon={HiDocumentText}
 							as="div">
-							Posts
+							Publicaciones
 						</Sidebar.Item>
 					</Link>
 					{currentUser.isAdmin && (
 						<Link to="/dashboard?tab=admin">
 							<Sidebar.Item active={tab === "admin"} icon={HiUser} as="div">
-								Admin
+							Administrador
 							</Sidebar.Item>
 						</Link>
 					)}
@@ -71,7 +71,7 @@ const DashSidebar = () => {
 								active={tab === "edit-speaker"}
 								icon={RiUserVoiceFill}
 								as="div">
-								Speaker
+								Orador
 							</Sidebar.Item>
 						</Link>
 					) : (
@@ -80,7 +80,7 @@ const DashSidebar = () => {
 								active={tab === "speaker"}
 								icon={RiUserVoiceFill}
 								as="div">
-								Speaker
+								Orador
 							</Sidebar.Item>
 						</Link>
 					)}
@@ -89,14 +89,14 @@ const DashSidebar = () => {
 							active={tab === "premium"}
 							icon={HiCurrencyDollar}
 							as="div">
-							Buy Premium
+							Comprar Premium
 						</Sidebar.Item>
 					</Link>
 					<Sidebar.Item
 						icon={HiArrowSmRight}
 						className="cursor-pointer"
 						onClick={handleSignOut}>
-						Sign Out
+						Desconectar
 					</Sidebar.Item>
 				</Sidebar.ItemGroup>
 			</Sidebar.Items>

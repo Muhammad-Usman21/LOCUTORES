@@ -21,7 +21,7 @@ const CreatePost = () => {
 
 		if (!formData.title || !formData.content) {
 			setLoading(false);
-			setPublishErrorMsg("Title and Content are required fields!");
+			setPublishErrorMsg("Título y Contenido son campos obligatorios!");
 		}
 
 		try {
@@ -56,7 +56,7 @@ const CreatePost = () => {
 				className="flex flex-col gap-4 px-7 max-w-3xl mx-7 sm:p-10 sm:mx-12 md:mx-auto dark:shadow-whiteLg
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-4 font-semibold">
-					Create a Post
+				Crear una publicación
 				</h1>
 				<form
 					className={`flex flex-col gap-4 ${theme}`}
@@ -76,7 +76,7 @@ const CreatePost = () => {
 
 					<ReactQuill
 						theme="snow"
-						placeholder="Write something...."
+						placeholder="Escribe algo...."
 						className="h-72 mb-16 sm:mb-12"
 						required
 						onChange={(value) => setFormData({ ...formData, content: value })}
@@ -90,7 +90,7 @@ const CreatePost = () => {
 						{loading ? (
 							<>
 								<Spinner size="sm" />
-								<span className="pl-3">Loading...</span>
+								<span className="pl-3">Cargando...</span>
 							</>
 						) : (
 							"Publish"

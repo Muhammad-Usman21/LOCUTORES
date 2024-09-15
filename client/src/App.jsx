@@ -50,7 +50,7 @@ const App = () => {
 						path="*"
 						element={
 							<h1 className="text-center text-3xl my-20 w-full">
-								Page Not Found
+								Página No Encontrada
 							</h1>
 						}
 					/>

@@ -36,23 +36,23 @@ const SignUp = () => {
 			!formData.password ||
 			!formData.confirmPassword
 		) {
-			return setErrorMessage("All fields are required!");
+			return setErrorMessage("Todos los campos son obligatorios!");
 		}
 		if (formData.password !== formData.confirmPassword) {
-			return setErrorMessage("Your password isn't same. Try again!");
+			return setErrorMessage("Tu contraseña no es la misma. ¡Intentar otra vez!");
 		}
 		if (formData.password.length < 8) {
-			return setErrorMessage("Password must be atleast 8 characters!");
+			return setErrorMessage("¡La contraseña debe tener al menos 8 caracteres!");
 		}
 
 		if (formData.name === "") {
-			return setErrorMessage("Name required!");
+			return setErrorMessage("Nombre requerido!");
 		}
 		if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-			return setErrorMessage("Enter a valid email (name@company.com)");
+			return setErrorMessage("Introduzca un correo electrónico válido (nombre@empresa.com)");
 		}
 		if (formData.email !== formData.email.toLowerCase()) {
-			return setErrorMessage("Email must be lowercase!");
+			return setErrorMessage("¡El correo electrónico debe estar en minúsculas!");
 		}
 
 		try {
@@ -102,17 +102,17 @@ const SignUp = () => {
 						className={`flex flex-col gap-3 ${theme}`}
 						onSubmit={handleSubmit}>
 						<div className="flex flex-col gap-1">
-							<Label value="Your name" />
+							<Label value="Your nameSu nombre" />
 							<TextInput
 								type="text"
-								placeholder="Name"
+								placeholder="Nombre"
 								id="name"
 								onChange={handleChange}
 								required
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<Label value="Your email" />
+							<Label value="Tu correo electrónico" />
 							<TextInput
 								type="email"
 								placeholder="name@company.com"
@@ -122,11 +122,11 @@ const SignUp = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<Label value="Your password" />
+							<Label value="Tu contraseña" />
 							<div className="flex items-center gap-1">
 								<TextInput
 									type={showPassword ? "text" : "password"}
-									placeholder="Password"
+									placeholder="Contraseña"
 									id="password"
 									onChange={handleChange}
 									className="flex-auto"
@@ -143,10 +143,10 @@ const SignUp = () => {
 							</div>
 						</div>
 						<div className="flex flex-col gap-1">
-							<Label value="Confirm password" />
+							<Label value="Confirmar Contraseña" />
 							<TextInput
 								type="password"
-								placeholder="Confirm Password"
+								placeholder="Confirmar Contraseña"
 								id="confirmPassword"
 								onChange={handleChange}
 								required
@@ -160,18 +160,18 @@ const SignUp = () => {
 							{loading ? (
 								<>
 									<Spinner size="sm" />
-									<span className="pl-3">Loading...</span>
+									<span className="pl-3">Cargando...</span>
 								</>
 							) : (
-								"Sign up"
+								"Inscribirse"
 							)}
 						</Button>
 						<OAuth />
 					</form>
 					<div className="flex gap-2 text-sm mt-4">
-						<span>Have an account?</span>
+						<span>¿Tienes una cuenta?</span>
 						<Link to="/sign-in" className="text-blue-500">
-							Sign In
+						Iniciar sesión
 						</Link>
 					</div>
 					{errorMessage && (

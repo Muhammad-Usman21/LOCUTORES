@@ -70,7 +70,7 @@ const Orders = () => {
 	return (
 		<div className="min-h-screen w-full">
 			<div className="min-w-6xl max-w-6xl mx-auto items-center justify-center flex flex-col gap-4 lg:gap-10 py-5 lg:py-14">
-				<h1 className="font-semibold text-xl lg:text-3xl">Your Orders</h1>
+				<h1 className="font-semibold text-xl lg:text-3xl">Tus pedidos</h1>
 				{!loading && orders.length > 0 && (
 					<div className="w-full items-center justify-center flex flex-col gap-12">
 						{orders.map((order) => (
@@ -84,18 +84,18 @@ const Orders = () => {
 							<button
 								onClick={handleShowMore}
 								className="text-center self-center">
-								Show More
+								Mostrar más
 							</button>
 						)}
 					</div>
 				)}
 				{!loading && orders.length === 0 && (
-					<p className="">No have no order yet</p>
+					<p className="">No tengo ningún pedido todavía</p>
 				)}
 				{loading && (
 					<div className="self-center">
 						<Spinner size="lg" />
-						<span className="pl-3">Loading...</span>
+						<span className="pl-3">Cargando...</span>
 					</div>
 				)}
 			</div>

@@ -23,7 +23,7 @@ const Payment = () => {
             
     }
     return <div>
-        <button onClick={makePayment}>Checkout</button>
+        <button onClick={makePayment}>Verificar</button>
     </div>;
 };
 

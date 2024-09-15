@@ -64,19 +64,19 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		try {
 			if (!file) {
 				setImageUploading(false);
-				setImageUploadErrorMsg("Please select an image!");
+				setImageUploadErrorMsg("¡Seleccione una imagen!");
 				return;
 			}
 			if (!file.type.includes("image/")) {
 				setImageUploading(false);
 				setImageUploadErrorMsg(
-					"File type isn't image.\nPlease select an image file!"
+					"El tipo de archivo no es imagen.\n¡Seleccione un archivo de imagen!"
 				);
 				return;
 			}
 			if (file.size >= 5 * 1024 * 1024) {
 				setImageUploading(false);
-				setImageUploadErrorMsg("Image size must be less than 5 MBs!");
+				setImageUploadErrorMsg("¡El tamaño de la imagen debe ser inferior a 5 MB!");
 				return;
 			}
 
@@ -99,7 +99,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				(error) => {
 					setImageUploading(false);
 					setImageUploadProgress(null);
-					setImageUploadErrorMsg("Image Upload Failed. Try Again!");
+					setImageUploadErrorMsg("Error al cargar la imagen. Intentar otra vez!");
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -113,7 +113,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				}
 			);
 		} catch (error) {
-			setImageUploadErrorMsg("Image upload failed. Try Again!");
+			setImageUploadErrorMsg("Error al cargar la imagen. ¡Intentar otra vez!");
 			setImageUploading(false);
 		}
 	};
@@ -123,12 +123,12 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		setAudioUploading(true);
 		try {
 			if (!audioFile || audioFile.length === 0) {
-				setAudioUploadErrorMsg("Select an audio file.");
+				setAudioUploadErrorMsg("Seleccione un archivo de audio.");
 				setAudioUploading(false);
 				return;
 			}
 			if (!audioFile || audioFile.length > 1) {
-				setAudioUploadErrorMsg("Select only 1 audio file.");
+				setAudioUploadErrorMsg("Seleccione solo 1 archivo de audio.");
 				setAudioUploading(false);
 				return;
 			}
@@ -137,7 +137,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				audioFile.length + formData.demos.length > 4
 			) {
 				setAudioUploadErrorMsg(
-					"You are currently using free plan, so you can upload upto 4 Audio files.<br />Try PREMIUM Account for upload upto 15 Audio files."
+					"Actualmente estás usando un plan gratuito, por lo que puedes cargar hasta 4 archivos de audio.<br />Prueba la cuenta PREMIUM para cargar hasta 15 archivos de audio."
 				);
 				setAudioUploading(false);
 				return;
@@ -146,14 +146,14 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				currentUser.isPremium &&
 				audioFile.length + formData.demos.length > 15
 			) {
-				setAudioUploadErrorMsg("You can upload only 15 Audio files");
+				setAudioUploadErrorMsg("Puedes subir solo 15 archivos de audio.");
 				setAudioUploading(false);
 				return;
 			}
 
 			for (let i = 0; i < audioFile.length; i++) {
 				if (audioFile[i].size >= 20 * 1024 * 1024) {
-					setAudioUploadErrorMsg("Audio file size must be less than 20 MBs");
+					setAudioUploadErrorMsg("El tamaño del archivo de audio debe ser inferior a 20 MB.");
 					setAudioUploading(false);
 					return;
 				}
@@ -182,7 +182,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					setKeywords("");
 				})
 				.catch((err) => {
-					setAudioUploadErrorMsg("Audio file size must be less than 20 MBs");
+					setAudioUploadErrorMsg("El tamaño del archivo de audio debe ser inferior a 20 MB.");
 					setAudioUploading(false);
 				});
 		} catch (error) {
@@ -256,7 +256,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		) {
 			setLoading(false);
 			setSpeakerErrorMsg(
-				"Only Youtube Video Link & About & social media are optional.<br />All other fields are required."
+				"Solo el enlace de video de Youtube, Acerca de y las redes sociales son opcionales.<br />Todos los demás campos son obligatorios."
 			);
 			return;
 		}
@@ -306,13 +306,13 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			if (!currentUser.isPremium && formData.videos.length === 1) {
 				setYTLink("");
 				setVideosErrorMsg(
-					"You are currently using free plan, so you can upload only one youtube link.<br />Try PREMIUM Account for upload upto 10 youtube links."
+					"Actualmente estás usando un plan gratuito, por lo que solo puedes cargar un enlace de YouTube.<br />Prueba la cuenta PREMIUM para cargar hasta 10 enlaces de YouTube.."
 				);
 				return;
 			}
 			if (currentUser.isPremium && formData.videos.length === 10) {
 				setYTLink("");
-				setVideosErrorMsg("You can upload upto 10 Youtube links.");
+				setVideosErrorMsg("Puedes subir hasta 10 enlaces de Youtube..");
 				return;
 			}
 
@@ -332,7 +332,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				className="max-w-3xl my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
-					Create a Speaker Account
+				Crear una cuenta de orador
 				</h1>
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
@@ -344,14 +344,14 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						className="focus:ring-1 my-2"
 						disabled={loading || imageUploading || audioUploading}
 						onClick={handleStripeLogin}>
-						Login with Stripe{" "}
+						Iniciar sesión con Stripe{" "}
 						{formData.stripeAccountId == "" || formData.stripeAccountId == null
 							? ""
 							: "✅"}
 					</Button>
 					<div className="flex flex-col gap-4 sm:flex-row justify-around items-center">
 						<div className="flex flex-col gap-1">
-							<Label value="Select your gender" />
+							<Label value="Selecciona tu género" />
 							<Select
 								disabled={loading || imageUploading || audioUploading}
 								className="w-56"
@@ -359,14 +359,14 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								onChange={(e) =>
 									setFormData({ ...formData, gender: e.target.value })
 								}>
-								<option value="">Choose gender</option>
-								<option value="male">Male</option>
-								<option value="female">Female</option>
-								<option value="other">Other</option>
+								<option value="">Elige género</option>
+								<option value="male">Masculino</option>
+								<option value="female">Femenino</option>
+								<option value="other">Otro</option>
 							</Select>
 						</div>
 						<div className="flex flex-col gap-1">
-							<Label value="Select your country" />
+							<Label value="Selecciona tu país" />
 							<Select
 								disabled={loading || imageUploading || audioUploading}
 								className="w-56"
@@ -374,7 +374,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								onChange={(e) =>
 									setFormData({ ...formData, country: e.target.value })
 								}>
-								<option value="">Select a Country</option>
+								<option value="">Seleccione un país</option>
 								{countryOptions.map((country, index) => (
 									<option key={index} value={country}>
 										{country}
@@ -385,12 +385,12 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
-						<Label value="Your youtube video link (optional)" />
+						<Label value="El enlace de tu vídeo de YouTube (opcional)" />
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
 							<TextInput
 								className="flex-grow w-full"
 								type="text"
-								placeholder="Youtube Link"
+								placeholder="Enlace de Youtube"
 								onChange={(e) => setYTLink(e.target.value)}
 								disabled={loading || imageUploading || audioUploading}
 								value={ytLink}
@@ -409,7 +409,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 									audioUploading ||
 									!ytLink
 								}>
-								Add
+								Agregar
 							</Button>
 						</div>
 						{ytLink && (
@@ -481,7 +481,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 											type="button"
 											onClick={() => handleRemoveVideo(index)}
 											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
-											Delete
+											Borrar
 										</button>
 									</div>
 								</div>
@@ -517,10 +517,10 @@ const DashSpeaker = ({ stripeAccountId }) => {
 											className="h-5"
 											value={imageUploadProgress}
 										/>
-										<span className="ml-1">Uploading... Please Wait!</span>
+										<span className="ml-1">Subiendo... Espere por favor!</span>
 									</div>
 								) : (
-									"Upload Image"
+									"Subir imagen"
 								)}
 							</Button>
 						</div>
@@ -548,12 +548,12 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
-						<Label value="Upload demos (required minimum 1) " />
+						<Label value="Subir demos (se requiere mínimo 1) " />
 						<div className="flex flex-col mb-4 w-full gap-4 items-center justify-between">
 							<div className="w-full">
 								<TextInput
 									type="text"
-									placeholder="Write different keywords for demo with spaces"
+									placeholder="Escribe diferentes palabras clave para la demostración con espacios."
 									id="keywords"
 									onChange={(e) => setKeywords(e.target.value)}
 									disabled={loading || imageUploading || audioUploading}
@@ -580,8 +580,8 @@ const DashSpeaker = ({ stripeAccountId }) => {
 										loading || imageUploading || audioUploading || !keywords
 									}>
 									{audioUploading
-										? "Uploading... Please Wait!"
-										: "Upload Demos"}
+										? "Subiendo... Espere por favor!"
+										: "Subir demostraciones"}
 								</Button>
 							</div>
 						</div>
@@ -607,7 +607,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 									key={index}
 									className="flex flex-col px-3 py-1 border gap-1">
 									<div className="w-full">
-										<Label value={`Keywords : ${demo.keywords}`} />
+										<Label value={`Palabras clave : ${demo.keywords}`} />
 									</div>
 									<div className="flex flex-col md:flex-row justify-between px-3 py-1 items-center gap-1">
 										{console.log("URL:", demo.url)}
@@ -621,7 +621,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 											type="button"
 											onClick={() => handleRemoveAudio(index, demo.url)}
 											className="px-3 text-red-700 rounded-lg uppercase hover:opacity-75">
-											Delete
+											Borrar
 										</button>
 									</div>
 								</div>
@@ -630,13 +630,13 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
-							{"Your Prices ("}
+							{"Tus Precios ("}
 							<span className="font-bold">$</span>
 							{")"}
 						</span>
 						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
 							<div className="flex gap-2 items-center">
-								<Label value="Voice for 10 - 20 seconds" />
+								<Label value="Voz durante 10 a 20 segundos" />
 								<TextInput
 									className="w-40"
 									type="number"
@@ -656,7 +656,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								/>
 							</div>
 							<div className="flex gap-2 items-center">
-								<Label value="Voice for 30 - 40 seconds" />
+								<Label value="Voz durante 30 - 40 segundos" />
 								<TextInput
 									className="w-40"
 									type="number"
@@ -676,7 +676,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								/>
 							</div>
 							<div className="flex gap-2 items-center lg:pl-11">
-								<Label value="Voice for 1 minute" />
+								<Label value="Voz durante 1 minuto" />
 								<TextInput
 									className="w-40"
 									type="number"
@@ -700,13 +700,13 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2 items-center">
-							About
-							<span className="text-sm ml-2">(optional)</span>
+						Acerca de
+							<span className="text-sm ml-2">(opcional)</span>
 						</span>
 						<Textarea
 							className="mb-2 mt-1"
 							rows="4"
-							placeholder="Write something about you...."
+							placeholder="Escribe algo sobre ti...."
 							onChange={(e) =>
 								setFormData({ ...formData, about: e.target.value })
 							}
@@ -716,7 +716,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
-							Social Media (optional)
+						Redes Sociales (opcional)
 						</span>
 						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
 							<div className="flex sm:flex-row flex-col gap-2 items-center">
@@ -727,7 +727,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								<TextInput
 									className="w-72"
 									type="text"
-									placeholder="Instagram link"
+									placeholder="enlace de instagram"
 									value={formData.socialMedia?.instagram || ""}
 									onChange={(e) =>
 										setFormData({
@@ -749,7 +749,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								<TextInput
 									className="w-72"
 									type="text"
-									placeholder="facebook link"
+									placeholder="enlace de facebook"
 									value={formData.socialMedia?.facebook || ""}
 									onChange={(e) =>
 										setFormData({
@@ -771,7 +771,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								<TextInput
 									className="w-72"
 									type="text"
-									placeholder="twitter link"
+									placeholder="enlace de twitter"
 									value={formData.socialMedia?.twitter || ""}
 									onChange={(e) =>
 										setFormData({
@@ -793,7 +793,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 								<TextInput
 									className="w-72"
 									type="text"
-									placeholder="whatsapp number"
+									placeholder="número de whatsapp"
 									value={formData.socialMedia?.whatsapp || ""}
 									onChange={(e) =>
 										setFormData({
@@ -819,10 +819,10 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						{loading ? (
 							<>
 								<Spinner size="sm" />
-								<span className="pl-3">Loading.... Please Wait!</span>
+								<span className="pl-3">Cargando.... Espere por favor!</span>
 							</>
 						) : (
-							"Become Speaker"
+							"Conviértete en orador"
 						)}
 					</Button>
 				</form>

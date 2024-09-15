@@ -100,9 +100,9 @@ const DashPosts = () => {
 							className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 							<Table.Head className=" xl:sticky xl:top-[60px]">
-								<Table.HeadCell>Date created</Table.HeadCell>
-								<Table.HeadCell>Post Title</Table.HeadCell>
-								<Table.HeadCell>Delete</Table.HeadCell>
+								<Table.HeadCell>Fecha de creación</Table.HeadCell>
+								<Table.HeadCell>Título de la publicación</Table.HeadCell>
+								<Table.HeadCell>Borrar</Table.HeadCell>
 							</Table.Head>
 							<Table.Body>
 								{userPosts.map((post) => (
@@ -122,7 +122,7 @@ const DashPosts = () => {
 													setPostIdToDelete(post._id);
 												}}
 												className="font-medium text-red-500 hover:cursor-pointer">
-												Delete
+												Borrar
 											</button>
 										</Table.Cell>
 									</Table.Row>
@@ -134,7 +134,7 @@ const DashPosts = () => {
 								<button
 									onClick={handleShowMore}
 									className="text-teal-400 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 mx-auto text-sm py-4">
-									Show more
+									Mostrar más
 								</button>
 							</div>
 						)}
@@ -144,7 +144,7 @@ const DashPosts = () => {
 				<div
 					className="max-w-xl w-full mx-auto bg-transparent border-2 mt-10 dark:shadow-whiteLg
 				border-white/40 dark:border-white/20 rounded-lg shadow-lg backdrop-blur-[9px]">
-					<p className="p-10 text-center">You have no posts yet</p>
+					<p className="p-10 text-center">Aún no tienes publicaciones</p>
 				</div>
 			)}
 			<div className="max-w-xl self-center w-full my-4">
@@ -153,7 +153,7 @@ const DashPosts = () => {
 						type="button"
 						gradientDuoTone="purpleToPink"
 						className="uppercase focus:ring-1 mt-4 w-full">
-						Create a new post
+						Crear una nueva publicación
 					</Button>
 				</Link>
 			</div>
@@ -174,22 +174,22 @@ const DashPosts = () => {
 						<div className="flex items-center mb-8 gap-8 self-center">
 							<HiOutlineExclamationCircle className="h-14 w-14 text-gray-500 dark:text-gray-200" />
 							<span className="text-2xl text-gray-600 dark:text-gray-200">
-								Delete Post
+							Eliminar publicación
 							</span>
 						</div>
 						<h3 className="my-5 text-lg text-gray-600 dark:text-gray-300">
-							Are you sure you want to delete this Post?
+						¿Estás seguro de que deseas eliminar esta publicación?
 						</h3>
 						<div className="flex justify-around">
 							<Button type="submit" color="failure" className="focus:ring-1">
-								{"Yes, i'm sure"}
+								{"Si estoy seguro"}
 							</Button>
 							<Button
 								type="button"
 								color="gray"
 								onClick={() => setShowModal(false)}
 								className="focus:ring-1 dark:text-gray-300">
-								No, cancel
+								No, cancelar
 							</Button>
 						</div>
 					</form>

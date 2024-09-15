@@ -39,7 +39,7 @@ const SignIn = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!formData.email || !formData.password) {
-			return setErrorMessage("All fields are required!");
+			return setErrorMessage("Todos los campos son obligatorios!");
 		}
 		try {
 			setLoading(true);
@@ -79,14 +79,14 @@ const SignIn = () => {
 		setMessage(null);
 
 		if (!formData.email) {
-			return setError("Email required!");
+			return setError("Correo electrónico requerido!");
 		}
 
 		try {
 			await sendPasswordResetEmail(auth, formData.email);
-			setMessage("Password reset email sent! Check your inbox.");
+			setMessage("¡Se envió un correo electrónico para restablecer la contraseña! Revisa tu bandeja de entrada.");
 		} catch (error) {
-			console.error("Error sending password reset email:", error);
+			console.error("Error al enviar el correo electrónico para restablecer la contraseña:", error);
 			setError(error.message);
 		}
 	};
@@ -101,20 +101,20 @@ const SignIn = () => {
 						className={`flex flex-col gap-3 ${theme}`}
 						onSubmit={handleSubmit}>
 						<div className="flex flex-col gap-1">
-							<Label value="Sign in with email" />
+							<Label value="Iniciar sesión con correo electrónico" />
 							<TextInput
 								type="text"
-								placeholder="Email"
+								placeholder="Correo electrónico"
 								id="email"
 								onChange={handleChange}
 								required
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<Label value="Your password" />
+							<Label value="Tu contraseña" />
 							<TextInput
 								type="password"
-								placeholder="Password"
+								placeholder="Contraseña"
 								id="password"
 								onChange={handleChange}
 								required
@@ -128,24 +128,24 @@ const SignIn = () => {
 							{loading ? (
 								<>
 									<Spinner size="sm" />
-									<span className="pl-3">Loading...</span>
+									<span className="pl-3">Cargando...</span>
 								</>
 							) : (
-								"Sign in"
+								"Iniciar sesión"
 							)}
 						</Button>
 						<OAuth />
 					</form>
 					<div className="flex flex-col md:flex-row justify-between text-sm mt-4">
 						<div className="flex gap-2 text-sm">
-							<span>Dont have an account?</span>
+							<span>¿No tienes una cuenta?</span>
 							<Link to="/sign-up" className="text-blue-500">
-								Sign Up
+							Inscribirse
 							</Link>
 						</div>
 						<div className="text-red-500">
 							<span className="cursor-pointer" onClick={handleForgotPassword}>
-								Forget Password?
+							¿Olvidaste tu contraseña?
 							</span>
 						</div>
 					</div>

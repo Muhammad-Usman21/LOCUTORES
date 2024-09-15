@@ -109,7 +109,7 @@ const CardComponent = ({ speaker }) => {
 								pill
 								gradientDuoTone={"purpleToPink"}
 								outline>
-								CHOOSE
+								ELEGIR
 							</Button>
 						</Link>
 						<div className="w-[100px] flex flex-col gap-1 content-center justify-center items-center mr-2">

@@ -7,7 +7,7 @@ const PrivateRoute = () => {
 	const { currentUser } = useSelector((state) => state.user);
 
 	if (!currentUser) {
-		toast.error("Please sign in to continue.");
+		toast.error("Por favor inicia sesión para continuar.");
 		return <Navigate to="sign-in" />;
 	}
 

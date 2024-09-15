@@ -38,13 +38,13 @@ const ResetPassword = () => {
 				setIsCodeValid(true);
 			} catch (error) {
 				console.error("Invalid or expired password reset code:", error.message);
-				setError("Invalid or expired password reset link.");
+				setError("Enlace de restablecimiento de contraseña no válido o caducado.");
 			}
 		};
 		if (oobCode) {
 			validateCode();
 		} else {
-			setError("No reset code found in the URL.");
+			setError("No se encontró ningún código de restablecimiento en la URL.");
 		}
 	}, [oobCode]);
 
@@ -54,24 +54,24 @@ const ResetPassword = () => {
 		setMessage(null);
 
 		if (newPassword !== confirmPassword) {
-			setError("Passwords do not match.");
+			setError("Las contraseñas no coinciden.");
 			return;
 		}
 
 		if (newPassword.length < 8) {
-			setError("Password must be at least 8 characters long.");
+			setError("La contraseña debe tener al menos 8 caracteres.");
 			return;
 		}
 
 		try {
 			await confirmPasswordReset(auth, oobCode, newPassword);
 			setMessage(
-				"Password has been reset successfully! You can now log in with your new password."
+				"¡La contraseña se ha restablecido correctamente! Ya puedes iniciar sesión con tu nueva contraseña."
 			);
 			navigate("/"); // Redirect to login page or other appropriate page
 		} catch (error) {
 			console.error("Error resetting password:", error.message);
-			setError("Failed to reset password. Please try again.");
+			setError("No se pudo restablecer la contraseña. Por favor inténtalo de nuevo.");
 		}
 	};
 
@@ -81,21 +81,21 @@ const ResetPassword = () => {
 				className="flex p-5 md:p-10 max-w-2xl mx-5 sm:mx-10 md:mx-20 lg:mx-auto flex-col md:flex-row md:items-center gap-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 				<div className="flex-1 md:px-5">
-					<h2 className="text-2xl text-center mb-10">Change Password</h2>
+					<h2 className="text-2xl text-center mb-10">Cambiar la contraseña</h2>
 					{isCodeValid && (
 						<form
 							className={`flex flex-col gap-3 ${theme}`}
 							onSubmit={handleResetPassword}>
 							<div className="flex flex-col gap-1">
-								<Label value="Changing password for:" />
+								<Label value="Cambiar contraseña para:" />
 								<TextInput type="email" placeholder={email} disabled />
 							</div>
 							<div className="flex flex-col gap-1">
-								<Label value="New password" />
+								<Label value="Nueva contraseña" />
 								<div className="flex items-center gap-1">
 									<TextInput
 										type={showPassword ? "text" : "password"}
-										placeholder="New Password"
+										placeholder="Nueva contraseña"
 										id="password"
 										onChange={(e) => {
 											setNewPassword(e.target.value);
@@ -114,10 +114,10 @@ const ResetPassword = () => {
 								</div>
 							</div>
 							<div className="flex flex-col gap-1">
-								<Label value="Confirm password" />
+								<Label value="Confirmar Contraseña" />
 								<TextInput
 									type="password"
-									placeholder="Confirm Password"
+									placeholder="Confirmar Contraseña"
 									id="confirmPassword"
 									onChange={(e) => {
 										setConfirmPassword(e.target.value);
@@ -130,7 +130,7 @@ const ResetPassword = () => {
 								type="submit"
 								className="uppercase focus:ring-1 mt-1"
 								disabled={error}>
-								Change Password
+								Cambiar la contraseña
 							</Button>
 						</form>
 					)}

@@ -37,67 +37,65 @@ const Premium = ({ updateUser }) => {
 			<div
 				className="max-w-3xl my-3 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg items-center justify-center flex flex-col
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
-				<h1 className="text-2xl font-semibold">Buy Premium</h1>
-				<h2>For Speakers</h2>
+				<h1 className="text-2xl font-semibold">Comprar Premium</h1>
+				<h2>Para Speakers</h2>
 				<div className="flex flex-col text-justify mt-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
-					<h2 className="text-xl font-semibold">Free Plan</h2>
-					<p>Our Free Plan provides everything you need to get started:</p>
+					<h2 className="text-xl font-semibold">Plan Gratuito</h2>
+					<p>Nuestro Plan Gratuito proporciona todo lo que necesitas para comenzar:</p>
 					<p className="mt-2">
-						<span className="font-semibold">YouTube Links Upload:</span>
+						<span className="font-semibold">Subida de Enlaces de YouTube:</span>
 						<span>
 							{" "}
-							You can upload{" "}
-							<span className="font-semibold">1 YouTube link</span> to show your
-							best content
+							Puedes subir{" "}
+							<span className="font-semibold">1 enlace de YouTube</span> para mostrar tu
+							mejor contenido.
 						</span>
 					</p>
 					<p>
-						<span className="font-semibold">Audio File Uploads:</span>
+						<span className="font-semibold">Subida de Archivos de Audio:</span>
 						<span>
 							{" "}
-							You can upload up to{" "}
-							<span className="font-semibold">4 audio files</span> to give a
-							taste of your work.
+							Puedes subir hasta{" "}
+							<span className="font-semibold">4 archivos de audio</span> para mostrar tu
+							trabajo.
 						</span>
 					</p>
 					<p className="mt-2">
-						This plan is perfect for those who are just beginning their journey
-						and want to test without any cost.
+						Este plan es perfecto para aquellos que están comenzando su viaje
+						y quieren probar sin ningún costo.
 					</p>
 				</div>
 				<div className="flex flex-col text-justify mt-6 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
-					<h2 className="text-xl font-semibold">Upgrade to Premium</h2>
+					<h2 className="text-xl font-semibold">Actualizar a Premium</h2>
 					<p>
-						For those who need more space and flexibility, our Premium Plan
-						offers enhanced features:
+						Para aquellos que necesitan más espacio y flexibilidad, nuestro Plan Premium
+						ofrece características mejoradas:
 					</p>
 					<p className="mt-2">
-						<span className="font-semibold">More YouTube Links:</span>
+						<span className="font-semibold">Más Enlaces de YouTube:</span>
 						<span>
 							{" "}
-							You can upload up to{" "}
-							<span className="font-semibold">10 YouTube links</span> to display
-							a broader range of your content.
+							Puedes subir hasta{" "}
+							<span className="font-semibold">10 enlaces de YouTube</span> para mostrar
+							una gama más amplia de tu contenido.
 						</span>
 					</p>
 					<p>
-						<span className="font-semibold">Extended Audio Uploads: </span>
+						<span className="font-semibold">Subidas de Audio Extendidas: </span>
 						<span>
 							{" "}
-							Upload up to <span className="font-semibold">15 audio files</span>
-							, allowing you to present a more comprehensive portfolio.
+							Sube hasta <span className="font-semibold">15 archivos de audio</span>
+							, lo que te permite presentar un portafolio más completo.
 						</span>
 					</p>
 					<p className="mt-2">
-						The Premium Plan is available for just{" "}
-						<span className="font-bold">${import.meta.env.VITE_PREMIUM_AMOUNT}</span>. This upgrade is designed to
-						give you the freedom to expand your profile and show your more
-						talents.
+						El Plan Premium está disponible por solo{" "}
+						<span className="font-bold">${import.meta.env.VITE_PREMIUM_AMOUNT}</span>. Esta actualización está diseñada para
+						darte la libertad de expandir tu perfil y mostrar más de tus talentos.
 					</p>
 					<p className="mt-2">
-						Ready to unlock these additional features?{" "}
-						<span className="font-semibold">Upgrade to Premium</span> today and
-						take your account to the next level!
+						¿Listo para desbloquear estas características adicionales?{" "}
+						<span className="font-semibold">¡Actualiza a Premium</span> hoy y lleva tu cuenta al siguiente nivel!
 					</p>
 					<Button
 						onClick={handlePremium}
@@ -106,7 +104,7 @@ const Premium = ({ updateUser }) => {
 						outline
 						disabled={currentUser.isPremium}
 						className="uppercase focus:ring-1 mt-6 w-full">
-						Premium in ${import.meta.env.VITE_PREMIUM_AMOUNT}
+						Premium en ${import.meta.env.VITE_PREMIUM_AMOUNT}
 					</Button>
 				</div>
 			</div>

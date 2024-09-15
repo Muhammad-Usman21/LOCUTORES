@@ -75,7 +75,7 @@ const DashAdmin = () => {
 				} else {
 					setFormData(data);
 					prevUrlData.map((item, index) => deleteFileByUrl(item));
-					return setUpdatedMsg("Updated successfully");
+					return setUpdatedMsg("Actualizado exitosamente");
 				}
 			}
 			if (formData.found) {
@@ -92,7 +92,7 @@ const DashAdmin = () => {
 				} else {
 					setFormData(data);
 					prevUrlData.map((item, index) => deleteFileByUrl(item));
-					return setUpdatedMsg("Updated successfully");
+					return setUpdatedMsg("Actualizado exitosamente");
 				}
 			}
 		} catch (error) {
@@ -140,7 +140,7 @@ const DashAdmin = () => {
 
 	const handleAddSpeaker = (speakerId) => {
 		if (formData.recommended?.length === 6) {
-			return setAddRemoveError("You can add upto 6 speakers to recommended.");
+			return setAddRemoveError("Puedes agregar hasta 6 parlantes a los recomendados.");
 		}
 		setFormData({
 			...formData,
@@ -159,19 +159,19 @@ const DashAdmin = () => {
 		setPdfUploading(true);
 		try {
 			if (!pdfFile || pdfFile.length === 0) {
-				setPdfUploadErrorMsg("Select an PDF file.");
+				setPdfUploadErrorMsg("Seleccione un archivo PDF.");
 				setPdfUploading(false);
 				return;
 			}
 			if (pdfFile.length + formData.pdfs?.length > 6) {
-				setPdfUploadErrorMsg("You can upload upto 6 PDF files");
+				setPdfUploadErrorMsg("Puede cargar hasta 6 archivos PDF");
 				setPdfUploading(false);
 				return;
 			}
 
 			for (let i = 0; i < pdfFile.length; i++) {
 				if (pdfFile[i].size >= 20 * 1024 * 1024) {
-					setPdfUploadErrorMsg("PDF file size must be less than 20 MBs");
+					setPdfUploadErrorMsg("El tamaño del archivo PDF debe ser inferior a 20 MB.");
 					setPdfUploading(false);
 					return;
 				}
@@ -325,7 +325,7 @@ const DashAdmin = () => {
 				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h2 className="self-center text-2xl text-center font-semibold">
-					For Admin Only
+				Sólo para administrador
 				</h2>
 				<form className="my-10 flex flex-col gap-10" onSubmit={handleSubmit}>
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
@@ -383,10 +383,10 @@ const DashAdmin = () => {
 										className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 										<Table.Head className=" xl:sticky xl:top-[60px] z-10">
-											<Table.HeadCell>Speaker Image</Table.HeadCell>
-											<Table.HeadCell>Speaker Name</Table.HeadCell>
-											<Table.HeadCell>Speaker Email</Table.HeadCell>
-											<Table.HeadCell>Add/Remove</Table.HeadCell>
+											<Table.HeadCell>Imagen del orador</Table.HeadCell>
+											<Table.HeadCell>Nombre del orador</Table.HeadCell>
+											<Table.HeadCell>Correo electrónico del orador</Table.HeadCell>
+											<Table.HeadCell>Agregar/Quitar</Table.HeadCell>
 										</Table.Head>
 										<Table.Body>
 											{speakers.map((speaker) => (
@@ -434,7 +434,7 @@ const DashAdmin = () => {
 																outline
 																gradientDuoTone="purpleToPink"
 																className="focus:ring-1 w-20">
-																Remove
+																Eliminar
 															</Button>
 														) : (
 															<Button
@@ -444,7 +444,7 @@ const DashAdmin = () => {
 																type="button"
 																gradientDuoTone="purpleToBlue"
 																className="focus:ring-1 w-20">
-																Add
+																Agregar
 															</Button>
 														)}
 													</Table.Cell>
@@ -458,7 +458,7 @@ const DashAdmin = () => {
 												type="button"
 												onClick={handleShowMore}
 												className="text-teal-400 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 mx-auto text-sm py-4">
-												Show more
+												Mostrar más
 											</button>
 										</div>
 									)}
@@ -542,7 +542,7 @@ const DashAdmin = () => {
 						gradientDuoTone="purpleToPink"
 						outline
 						className="focus:ring-1 uppercase">
-						Confirm
+						Confirmar
 					</Button>
 				</form>
 				{updatedMsg && (
@@ -578,10 +578,10 @@ const DashAdmin = () => {
 								className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 								<Table.Head className=" xl:sticky xl:top-[60px] z-10">
-									<Table.HeadCell>User Image</Table.HeadCell>
-									<Table.HeadCell>User Name</Table.HeadCell>
-									<Table.HeadCell>User Email</Table.HeadCell>
-									<Table.HeadCell>Free/Premium</Table.HeadCell>
+									<Table.HeadCell>Imagen de usuario</Table.HeadCell>
+									<Table.HeadCell>Nombre de usuario</Table.HeadCell>
+									<Table.HeadCell>Correo electrónico del usuario</Table.HeadCell>
+									<Table.HeadCell>Gratis/Premium</Table.HeadCell>
 								</Table.Head>
 								<Table.Body>
 									{users.map((user) => (
@@ -627,7 +627,7 @@ const DashAdmin = () => {
 														outline
 														gradientDuoTone="purpleToPink"
 														className="focus:ring-1 w-36">
-														Make Premium
+														Hacer prima
 													</Button>
 												) : (
 													<Button
@@ -637,7 +637,7 @@ const DashAdmin = () => {
 														type="button"
 														gradientDuoTone="purpleToBlue"
 														className="focus:ring-1 w-36">
-														Make Free
+														Hacer gratis
 													</Button>
 												)}
 											</Table.Cell>
@@ -651,7 +651,7 @@ const DashAdmin = () => {
 										type="button"
 										onClick={handleShowMoreUsers}
 										className="text-teal-400 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 mx-auto text-sm py-4">
-										Show more
+										Mostrar más
 									</button>
 								</div>
 							)}

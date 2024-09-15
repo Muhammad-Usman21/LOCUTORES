@@ -89,7 +89,7 @@ const DashUser = () => {
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
 					imageFileErrorMsg:
-						"File type isn't image.\nPlease select an image file.",
+						"El tipo de archivo no es una imagen.\nSeleccione un archivo de imagen..",
 				}));
 				return;
 			}
@@ -98,7 +98,7 @@ const DashUser = () => {
 				setImageFileUploading(false);
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
-					imageFileErrorMsg: "Image size must be less than 5 MBs!",
+					imageFileErrorMsg: "El tamaño de la imagen debe ser inferior a 5 MB.!",
 				}));
 				return;
 			}
@@ -130,7 +130,7 @@ const DashUser = () => {
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
 					imageFileErrorMsg:
-						"Could not upload image.\nFile must be less than 2 MBs!",
+						"No se pudo cargar la imagen.\nEl archivo debe tener menos de 2 MB!",
 				}));
 				setImageFile(null);
 				setImageFileUrl(null);
@@ -147,7 +147,7 @@ const DashUser = () => {
 					setImageFileUploading(false);
 					setMyMessages((prevMessages) => ({
 						...prevMessages,
-						imageFileSuccessMsg: "Image uploaded successfully",
+						imageFileSuccessMsg: "Imagen cargada exitosamente",
 					}));
 				});
 			}
@@ -199,7 +199,7 @@ const DashUser = () => {
 			setUpdateUserLoading(false);
 			setMyMessages((prevMessages) => ({
 				...prevMessages,
-				updateUserErrorMsg: "Please wait for image to upload!",
+				updateUserErrorMsg: "Espere a que se cargue la imagen.!",
 			}));
 			return;
 		}
@@ -226,7 +226,7 @@ const DashUser = () => {
 				setUpdateUserLoading(false);
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
-					updateUserErrorMsg: "Name Required!",
+					updateUserErrorMsg: "Nombre requerido!",
 				}));
 				return;
 			}
@@ -260,7 +260,7 @@ const DashUser = () => {
 			setUpdateUserLoading(false);
 			setMyMessages((prevMessages) => ({
 				...prevMessages,
-				updateUserErrorMsg: "No changes made!",
+				updateUserErrorMsg: "No se realizaron cambios!",
 			}));
 			return;
 		}
@@ -287,7 +287,7 @@ const DashUser = () => {
 				setUpdateUserLoading(false);
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
-					updateUserSuccessMsg: "User's profile updated successfully",
+					updateUserSuccessMsg: "Perfil del usuario actualizado exitosamente",
 				}));
 				// Object.keys(formData).forEach((key) => delete formData[key]);
 				setFormData({});
@@ -323,7 +323,7 @@ const DashUser = () => {
 				setInputPasswordValue(null);
 				setMyMessages((prevMessages) => ({
 					...prevMessages,
-					deleteUserErrorMsg: "Password required!",
+					deleteUserErrorMsg: "Se requiere contraseña!",
 				}));
 				return;
 			}
@@ -419,7 +419,7 @@ const DashUser = () => {
 			await sendPasswordResetEmail(auth, currentUser.email);
 			setMyMessages((prevMessages) => ({
 				...prevMessages,
-				changePasswordMsg: "Email sent for change password! Check your inbox.",
+				changePasswordMsg: "Correo electrónico enviado para cambiar contraseña! Revisa tu bandeja de entrada.",
 			}));
 			setChangePasswordLoading(false);
 		} catch (error) {
@@ -493,7 +493,7 @@ const DashUser = () => {
 					<TextInput
 						type="text"
 						id="name"
-						placeholder="Name"
+						placeholder="Nombre"
 						onChange={handleChange}
 						defaultValue={currentUser.name}
 						disabled={forgetPassword}
@@ -501,7 +501,7 @@ const DashUser = () => {
 					<TextInput
 						type="email"
 						id="email"
-						placeholder="Email"
+						placeholder="Correo electrónico"
 						onChange={handleChange}
 						defaultValue={currentUser.email}
 						disabled
@@ -552,10 +552,10 @@ const DashUser = () => {
 						{updateUserLoading ? (
 							<>
 								<Spinner size="sm" />
-								<span className="pl-3">Loading...</span>
+								<span className="pl-3">Cargando...</span>
 							</>
 						) : (
-							"Update"
+							"Actualizar"
 						)}
 					</Button>
 				</form>
@@ -566,7 +566,7 @@ const DashUser = () => {
 					className="uppercase focus:ring-1 mt-4 w-full"
 					onClick={handleChangePassword}
 					disabled={changePasswordLoading}>
-					Change Password
+					Cambiar la contraseña
 				</Button>
 
 				{!currentUser.isSpeaker && (
@@ -575,7 +575,7 @@ const DashUser = () => {
 							type="button"
 							gradientDuoTone="purpleToPink"
 							className="uppercase focus:ring-1 mt-3 w-full">
-							Become a Speaker
+							Conviértete en orador
 						</Button>
 					</Link>
 				)}
@@ -642,7 +642,7 @@ const DashUser = () => {
 							<div className="flex items-center mb-8 gap-8 self-center">
 								<HiOutlineExclamationCircle className="h-14 w-14 text-gray-500 dark:text-gray-200" />
 								<span className="text-2xl text-gray-600 dark:text-gray-200">
-									Delete Account
+								Eliminar cuenta
 								</span>
 							</div>
 							{!currentUser.googleAuth && (
@@ -659,12 +659,12 @@ const DashUser = () => {
 									<span
 										onClick={handleForgetPassword}
 										className="cursor-pointer ml-4 text-red-500">
-										Forget Password?
+										¿Olvidaste tu contraseña?
 									</span>
 								</div>
 							)}
 							<h3 className="my-5 text-lg text-gray-600 dark:text-gray-300">
-								Are you sure you want to delete your account?
+							¿Estás seguro de que quieres eliminar tu cuenta?
 							</h3>
 							<div className="flex justify-around">
 								<Button
@@ -679,7 +679,7 @@ const DashUser = () => {
 									color="gray"
 									onClick={() => setShowModal(false)}
 									className="focus:ring-1 dark:text-gray-300">
-									No, cancel
+									No, cancelar
 								</Button>
 							</div>
 						</form>
