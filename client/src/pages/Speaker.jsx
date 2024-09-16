@@ -1,4 +1,4 @@
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import { countries } from "countries-list";
 import {
 	Alert,
@@ -25,11 +25,12 @@ import {
 
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Flag from "react-world-flags";
 
 const Speaker = () => {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const [speaker, setSpeaker] = useState(null);
 
 	const { currentUser } = useSelector((state) => state.user);
@@ -105,7 +106,7 @@ const Speaker = () => {
 		try {
 			setLoading(true);
 			setErrorMessage(null);
-			const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+			// const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 			const response = await fetch("/api/order/create-new-order", {
 				method: "POST",
 				headers: {
@@ -118,10 +119,11 @@ const Speaker = () => {
 					amount: speaker.prices[formData.duration],
 				}),
 			});
-			const session = await response.json();
-			const result = await stripe.redirectToCheckout({
-				sessionId: session.id,
-			});
+			// const session = await response.json();
+			// const result = await stripe.redirectToCheckout({
+			// 	sessionId: session.id,
+			// });
+			navigate("/orders");
 
 			if (result.error) {
 				console.error(result.error.message);

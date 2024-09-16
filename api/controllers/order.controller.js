@@ -82,46 +82,46 @@ export const createNewOrder = async (req, res, next) => {
 		audioDuration: data.data.duration,
 		specs: data.data.specs,
 		amount: data.amount,
-		status: "Pending Payment",
+		status: "Pending Delivery",
 		quote: data.data.quote,
 	});
 	await order.save();
 
-	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+	// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-	const session = await stripe.checkout.sessions.create({
-		payment_method_types: ["card"],
-		line_items: [
-			{
-				price_data: {
-					currency: "usd",
-					product_data: {
-						name: `${data.data.service} (${data.speaker.gender} voiceover)`,
-						description: `${duration[data.data.duration]} duration by ${
-							data.speaker.userId.name
-						} from ${data.speaker.country}`,
-						images: [data.speaker.image],
-					},
-					unit_amount: data.amount * 100,
-				},
-				quantity: 1,
-			},
-		],
-		payment_intent_data: {
-			capture_method: "manual",
-			transfer_data: {
-				destination: data.speaker.stripeAccountId,
-			},
-		},
-		mode: "payment",
-		success_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Pending Delivery`,
-		cancel_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Cancelled`,
-	});
+	// const session = await stripe.checkout.sessions.create({
+	// 	payment_method_types: ["card"],
+	// 	line_items: [
+	// 		{
+	// 			price_data: {
+	// 				currency: "usd",
+	// 				product_data: {
+	// 					name: `${data.data.service} (${data.speaker.gender} voiceover)`,
+	// 					description: `${duration[data.data.duration]} duration by ${
+	// 						data.speaker.userId.name
+	// 					} from ${data.speaker.country}`,
+	// 					images: [data.speaker.image],
+	// 				},
+	// 				unit_amount: data.amount * 100,
+	// 			},
+	// 			quantity: 1,
+	// 		},
+	// 	],
+	// 	payment_intent_data: {
+	// 		capture_method: "manual",
+	// 		transfer_data: {
+	// 			destination: data.speaker.stripeAccountId,
+	// 		},
+	// 	},
+	// 	mode: "payment",
+	// 	success_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Pending Delivery`,
+	// 	cancel_url: `${process.env.CLIENT_URL}/api/order/status?orderId=${order._id}&status=Cancelled`,
+	// });
 
-	order.paymentIntentId = session.id;
-	await order.save();
+	// order.paymentIntentId = session.id;
+	// await order.save();
 
-	res.status(200).json(session);
+	res.status(200).json(order);
 };
 
 export const updateOrderStatus = async (req, res) => {
@@ -162,20 +162,20 @@ export const updateOrderStatus = async (req, res) => {
 	}
 };
 
-export const updateOrderPaymentStatus = async (req, res) => {
-	const { orderId, status } = req.query;
+// export const updateOrderPaymentStatus = async (req, res) => {
+// 	const { orderId, status } = req.query;
 
-	try {
-		const order = await Order.findById(orderId);
-		if (!order) {
-			return res.status(404).send({ error: "Order not found" });
-		}
+// 	try {
+// 		const order = await Order.findById(orderId);
+// 		if (!order) {
+// 			return res.status(404).send({ error: "Order not found" });
+// 		}
 
-		order.status = status;
-		await order.save();
+// 		order.status = status;
+// 		await order.save();
 
-		res.redirect("/orders");
-	} catch (error) {
-		res.status(500).send({ error: error.message });
-	}
-};
+// 		res.redirect("/orders");
+// 	} catch (error) {
+// 		res.status(500).send({ error: error.message });
+// 	}
+// };
