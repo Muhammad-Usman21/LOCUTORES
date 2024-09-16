@@ -277,8 +277,8 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			formData.demos.length === 0 ||
 			!formData.prices.small ||
 			!formData.prices.medium ||
-			!formData.prices.large ||
-			!formData.stripeAccountId
+			!formData.prices.large
+			// !formData.stripeAccountId
 		) {
 			setLoading(false);
 			setSpeakerErrorMsg(
@@ -315,15 +315,15 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 		}
 	};
 
-	const handleStripeLogin = async () => {
-		try {
-			const response = await fetch(`/api/auth/signin-stripe?tab=edit-speaker`);
-			const result = await response.json();
-			window.location.href = result.url;
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	// const handleStripeLogin = async () => {
+	// 	try {
+	// 		const response = await fetch(`/api/auth/signin-stripe?tab=edit-speaker`);
+	// 		const result = await response.json();
+	// 		window.location.href = result.url;
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
 
 	const handleAddVideos = () => {
 		setVideosErrorMsg(null);
@@ -362,7 +362,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
 					onSubmit={handleSubmit}>
-					<div className="w-full flex gap-1 flex-col items-center py-2">
+					{/* <div className="w-full flex gap-1 flex-col items-center py-2">
 						<p className="text-center">
 						No cambie su cuenta de Stripe durante ningún pedido incompleto.
 						</p>
@@ -379,7 +379,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 								? ""
 								: "✅"}
 						</Button>
-					</div>
+					</div> */}
 					<div className="flex flex-col gap-4 sm:flex-row justify-around items-center">
 						<div className="flex flex-col gap-1">
 							<Label value="Selecciona tu género" />

@@ -251,8 +251,8 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			formData.demos.length === 0 ||
 			!formData.prices.small ||
 			!formData.prices.medium ||
-			!formData.prices.large ||
-			!formData.stripeAccountId
+			!formData.prices.large
+			// !formData.stripeAccountId
 		) {
 			setLoading(false);
 			setSpeakerErrorMsg(
@@ -290,15 +290,15 @@ const DashSpeaker = ({ stripeAccountId }) => {
 		}
 	};
 
-	const handleStripeLogin = async () => {
-		try {
-			const response = await fetch(`/api/auth/signin-stripe?tab=speaker`);
-			const result = await response.json();
-			window.location.href = result.url;
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	// const handleStripeLogin = async () => {
+	// 	try {
+	// 		const response = await fetch(`/api/auth/signin-stripe?tab=speaker`);
+	// 		const result = await response.json();
+	// 		window.location.href = result.url;
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
 
 	const handleAddVideos = () => {
 		setVideosErrorMsg(null);
@@ -337,7 +337,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
 					onSubmit={handleSubmit}>
-					<Button
+					{/*<Button
 						type="button"
 						gradientDuoTone=""
 						outline
@@ -348,7 +348,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						{formData.stripeAccountId == "" || formData.stripeAccountId == null
 							? ""
 							: "✅"}
-					</Button>
+					</Button>*/}
 					<div className="flex flex-col gap-4 sm:flex-row justify-around items-center">
 						<div className="flex flex-col gap-1">
 							<Label value="Selecciona tu género" />
