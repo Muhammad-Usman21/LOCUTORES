@@ -236,24 +236,24 @@ const Speaker = () => {
 							</div>
 							<div className=" flex justify-center align-middle flex-col items-center w-full my-2">
 								<h3 className="text-xl lg:text-2xl mb-4 font-semibold">
-								Precios
+									Precios
 								</h3>
 								<div className="overflow-x-auto w-3/4">
 									<table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md text-center">
 										<thead>
 											<tr>
 												<th className="px-6 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 border-r">
-												Duración
+													Duración
 												</th>
 												<th className="px-6 py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-												Precio
+													Precio
 												</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-r">
-												10 ~ 20 segundos
+													10 ~ 20 segundos
 												</td>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
 													$ {speaker.prices.small}
@@ -261,7 +261,7 @@ const Speaker = () => {
 											</tr>
 											<tr className="bg-gray-50 dark:bg-gray-700">
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-r">
-												30 ~ 40 segundos
+													30 ~ 40 segundos
 												</td>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
 													$ {speaker.prices.medium}
@@ -269,7 +269,7 @@ const Speaker = () => {
 											</tr>
 											<tr>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-r">
-												1 minuto
+													1 minuto
 												</td>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
 													$ {speaker.prices.large}
@@ -282,14 +282,14 @@ const Speaker = () => {
 
 							{speaker.videos.length > 0 && (
 								<div className="w-full my-2 flex flex-col items-center">
-									<h3 className="text-lg lg:text-2xl pl-4">Vídeos de Youtube</h3>
+									<h3 className="text-lg lg:text-2xl pl-4">
+										Vídeos de Youtube
+									</h3>
 									<div className="flex w-full flex-wrap justify-center gap-2">
-										{speaker.videos.map((video, index) => (
-											<div
-												key={index}
-												className="self-center my-5 video-wrapper-form h-[180px] sm:h-[270px] md:h-[320px] lg:h-[220px] xl:h-[300px] w-full">
+										{!speaker.userId.isPremium && (
+											<div className="self-center my-5 video-wrapper-form h-[180px] sm:h-[270px] md:h-[320px] lg:h-[220px] xl:h-[300px] w-full">
 												<ReactPlayer
-													url={video}
+													url={speaker.videos[0]}
 													controls
 													loop
 													config={{
@@ -306,26 +306,67 @@ const Speaker = () => {
 													className="react-player-form w-full"
 												/>
 											</div>
-										))}
+										)}
+										{speaker.userId.isPremium &&
+											speaker.videos.map((video, index) => (
+												<div
+													key={index}
+													className="self-center my-5 video-wrapper-form h-[180px] sm:h-[270px] md:h-[320px] lg:h-[220px] xl:h-[300px] w-full">
+													<ReactPlayer
+														url={video}
+														controls
+														loop
+														config={{
+															youtube: {
+																playerVars: {
+																	modestbranding: 1,
+																	rel: 0,
+																	showinfo: 0,
+																	disablekb: 1,
+																},
+															},
+														}}
+														width={"100%"}
+														className="react-player-form w-full"
+													/>
+												</div>
+											))}
 									</div>
 								</div>
 							)}
 							<div className="w-full my-2 flex flex-col items-center">
-								<h3 className="text-lg lg:text-2xl mb-3 pl-4">Audio de ejemplo</h3>
+								<h3 className="text-lg lg:text-2xl mb-3 pl-4">
+									Audio de ejemplo
+								</h3>
 								<div className="flex flex-col justify-center gap-3">
 									{speaker.demos && speaker.demos.length > 0 ? (
-										speaker.demos.map((demo, index) => (
-											<div
-												key={index}
-												className="flex flex-col w-full items-center gap-1">
-												<Label value={demo.keywords} />
-												<ReactAudioPlayer
-													src={demo.url}
-													controls
-													className="w-[350px] mb-2"
-												/>
-											</div>
-										))
+										!speaker.userId.isPremium ? (
+											speaker.demos.slice(0, 4).map((demo, index) => (
+												<div
+													key={index}
+													className="flex flex-col w-full items-center gap-1">
+													<Label value={demo.keywords} />
+													<ReactAudioPlayer
+														src={demo.url}
+														controls
+														className="w-[350px] mb-2"
+													/>
+												</div>
+											))
+										) : (
+											speaker.demos.map((demo, index) => (
+												<div
+													key={index}
+													className="flex flex-col w-full items-center gap-1">
+													<Label value={demo.keywords} />
+													<ReactAudioPlayer
+														src={demo.url}
+														controls
+														className="w-[350px] mb-2"
+													/>
+												</div>
+											))
+										)
 									) : (
 										<p>No hay demostraciones disponibles</p>
 									)}
@@ -339,7 +380,7 @@ const Speaker = () => {
 							<Link to="/sign-in">
 								<div className=" p-3 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 									<span className="text-lg hover:cursor-pointer">
-									Primero inicie sesión para realizar un pedido
+										Primero inicie sesión para realizar un pedido
 									</span>
 								</div>
 							</Link>
@@ -350,7 +391,7 @@ const Speaker = () => {
 										${!currentUser && "filter blur-sm transition ease-linear duration-300"}`}>
 							<div className="flex-1">
 								<h1 className="flex self-center justify-center text-3xl font-semibold mb-6">
-								Realizar un pedido
+									Realizar un pedido
 								</h1>
 								<form
 									className={`flex flex-col gap-4 ${theme}`}
@@ -420,7 +461,7 @@ const Speaker = () => {
 												required
 												onChange={handleChange}>
 												<option value="" disabled>
-												Seleccione un país
+													Seleccione un país
 												</option>
 												{countryOptions.map((country, index) => (
 													<option key={index} value={country}>
@@ -441,15 +482,15 @@ const Speaker = () => {
 												value={formData.service}
 												onChange={handleChange}>
 												<option value="" disabled>
-												Seleccione un servicio
+													Seleccione un servicio
 												</option>
 												<option value="voiceOver">Voz en off</option>
 												<option value="womenVoice">Debbing de vídeo</option>
 												<option value="holdswitch">
-												Mensaje en ESPERA/CAMBIAR
+													Mensaje en ESPERA/CAMBIAR
 												</option>
 												<option value="auditoryLogos">
-												Logotipos auditivos (Branding)
+													Logotipos auditivos (Branding)
 												</option>
 											</Select>
 										</div>
@@ -462,10 +503,14 @@ const Speaker = () => {
 												value={formData.duration}
 												onChange={handleChange}>
 												<option value="" disabled>
-												Seleccione una duración
+													Seleccione una duración
 												</option>
-												<option value="small">Voz durante 10~20 segundos </option>
-												<option value="medium">Voz durante 30~40 segundos</option>
+												<option value="small">
+													Voz durante 10~20 segundos{" "}
+												</option>
+												<option value="medium">
+													Voz durante 30~40 segundos
+												</option>
 												<option value="large">Voz por 1 min</option>
 											</Select>
 										</div>
@@ -533,7 +578,7 @@ const Speaker = () => {
 								{speaker && (
 									<div className="flex flex-col gap-2 mt-2 w-full">
 										<p>
-										Contacto{" "}
+											Contacto{" "}
 											<span className="font-semibold">
 												{speaker.userId.name}
 											</span>{" "}

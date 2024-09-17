@@ -142,18 +142,17 @@ const Home = () => {
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl md:text-4xl text-center">
-					LOCUCIONES PROFESIONALES
+						LOCUCIONES PROFESIONALES
 					</span>
 					<span className="text-lg md:text-2xl text-center">
-					Locución Profesional, Locución Comercial, Institucional
-					Voz en off
+						Locución Profesional, Locución Comercial, Institucional Voz en off
 					</span>
 				</div>
 				<div
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-lg md:text-2xl text-center px-5">
-					¿Qué tipo de voz estás buscando?
+						¿Qué tipo de voz estás buscando?
 					</span>
 					<div className="flex flex-col gap-2 md:gap-4">
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
@@ -162,7 +161,7 @@ const Home = () => {
 								value={voiceType}
 								onChange={(e) => setVoiceType(e.target.value)}>
 								<option value="" disabled>
-								Tipo de voz
+									Tipo de voz
 								</option>
 								<option value="all">Todas las voces</option>
 								<option value="womenVoice">{"Voz de Mujer"}</option>
@@ -173,7 +172,7 @@ const Home = () => {
 								value={country}
 								onChange={(e) => setCountry(e.target.value)}>
 								<option value="" disabled>
-								Seleccione un país
+									Seleccione un país
 								</option>
 								<option value="all">Todos los países</option>
 								{countryOptions.map((country, index) => (
@@ -201,7 +200,7 @@ const Home = () => {
 								className="w-60 md:w-36 focus:ring-1"
 								gradientDuoTone={"purpleToPink"}
 								onClick={handleSearch}>
-								Search
+								Buscar
 							</Button>
 						</div>
 					</div>
@@ -210,7 +209,9 @@ const Home = () => {
 				<div
 					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
-					<h1 className="font-semibold text-center text-3xl">Resultados de la búsqueda</h1>
+					<h1 className="font-semibold text-center text-3xl">
+						Resultados de la búsqueda
+					</h1>
 					{speaker.length > 0 && (
 						<>
 							<div className="flex flex-wrap gap-5 items-center justify-center w-full">
@@ -234,7 +235,7 @@ const Home = () => {
 					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 lg:mb-20
 				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<h1 className="font-semibold text-center text-2xl">
-					Oradores recomendados
+						Oradores recomendados
 					</h1>
 					{storage.found &&
 						storage.recommended &&

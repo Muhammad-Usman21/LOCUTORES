@@ -76,7 +76,9 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			}
 			if (file.size >= 5 * 1024 * 1024) {
 				setImageUploading(false);
-				setImageUploadErrorMsg("¡El tamaño de la imagen debe ser inferior a 5 MB!");
+				setImageUploadErrorMsg(
+					"¡El tamaño de la imagen debe ser inferior a 5 MB!"
+				);
 				return;
 			}
 
@@ -99,7 +101,9 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				(error) => {
 					setImageUploading(false);
 					setImageUploadProgress(null);
-					setImageUploadErrorMsg("Error al cargar la imagen. Intentar otra vez!");
+					setImageUploadErrorMsg(
+						"Error al cargar la imagen. Intentar otra vez!"
+					);
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -153,7 +157,9 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 			for (let i = 0; i < audioFile.length; i++) {
 				if (audioFile[i].size >= 20 * 1024 * 1024) {
-					setAudioUploadErrorMsg("El tamaño del archivo de audio debe ser inferior a 20 MB.");
+					setAudioUploadErrorMsg(
+						"El tamaño del archivo de audio debe ser inferior a 20 MB."
+					);
 					setAudioUploading(false);
 					return;
 				}
@@ -182,7 +188,9 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					setKeywords("");
 				})
 				.catch((err) => {
-					setAudioUploadErrorMsg("El tamaño del archivo de audio debe ser inferior a 20 MB.");
+					setAudioUploadErrorMsg(
+						"El tamaño del archivo de audio debe ser inferior a 20 MB."
+					);
 					setAudioUploading(false);
 				});
 		} catch (error) {
@@ -303,14 +311,14 @@ const DashSpeaker = ({ stripeAccountId }) => {
 	const handleAddVideos = () => {
 		setVideosErrorMsg(null);
 		if (ytLink && ytLink !== "") {
-			if (!currentUser.isPremium && formData.videos.length === 1) {
+			if (!currentUser.isPremium && formData.videos.length >= 1) {
 				setYTLink("");
 				setVideosErrorMsg(
 					"Actualmente estás usando un plan gratuito, por lo que solo puedes cargar un enlace de YouTube.<br />Prueba la cuenta PREMIUM para cargar hasta 10 enlaces de YouTube.."
 				);
 				return;
 			}
-			if (currentUser.isPremium && formData.videos.length === 10) {
+			if (currentUser.isPremium && formData.videos.length >= 10) {
 				setYTLink("");
 				setVideosErrorMsg("Puedes subir hasta 10 enlaces de Youtube..");
 				return;
@@ -332,7 +340,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 				className="max-w-3xl my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
-				Crear una cuenta de orador
+					Crear una cuenta de orador
 				</h1>
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
@@ -700,7 +708,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2 items-center">
-						Acerca de
+							Acerca de
 							<span className="text-sm ml-2">(opcional)</span>
 						</span>
 						<Textarea
@@ -716,7 +724,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
-						Redes Sociales (opcional)
+							Redes Sociales (opcional)
 						</span>
 						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
 							<div className="flex sm:flex-row flex-col gap-2 items-center">

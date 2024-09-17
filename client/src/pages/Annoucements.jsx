@@ -97,7 +97,7 @@ const Annoucements = () => {
 							{currentUser._id !== post.userId._id && (
 								<div className="flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 									<span className="text-xl lg:text-2xl text-center mb-3">
-									Información del usuario
+										Información del usuario
 									</span>
 									<div className="flex gap-3 sm:justify-around sm:flex-row flex-col">
 										<div className="flex items-center gap-3">
@@ -181,15 +181,15 @@ const Annoucements = () => {
 						<div className="flex items-center mb-8 gap-8 self-center">
 							<HiOutlineExclamationCircle className="h-14 w-14 text-gray-500 dark:text-gray-200" />
 							<span className="text-2xl text-gray-600 dark:text-gray-200">
-							Eliminar publicación
+								Eliminar publicación
 							</span>
 						</div>
 						<h3 className="my-5 text-lg text-gray-600 dark:text-gray-300">
-						¿Estás seguro de que deseas eliminar esta publicación?
+							¿Estás seguro de que deseas eliminar esta publicación?
 						</h3>
 						<div className="flex justify-around">
 							<Button type="submit" color="failure" className="focus:ring-1">
-								{"Yes, i'm sure"}
+								{"Si estoy seguro"}
 							</Button>
 							<Button
 								type="button"
