@@ -112,9 +112,9 @@ export const createSpeaker = async (req, res, next) => {
 		) {
 			return next(errorHandler(400, "All prices are required."));
 		}
-		if (!stripeAccountId) {
-			return next(errorHandler(400, "Stripe account is required."));
-		}
+		// if (!stripeAccountId) {
+		// 	return next(errorHandler(400, "Stripe account is required."));
+		// }
 		if (!Array.isArray(demos) || demos.length === 0) {
 			return next(errorHandler(400, "At least one demo is required."));
 		}
@@ -137,7 +137,7 @@ export const createSpeaker = async (req, res, next) => {
 			demos,
 			prices,
 			about,
-			stripeAccountId,
+			// stripeAccountId,
 			socialMedia,
 		});
 
@@ -194,7 +194,7 @@ export const updateSpeaker = async (req, res, next) => {
 			demos,
 			prices,
 			about,
-			stripeAccountId,
+			// stripeAccountId,
 			socialMedia,
 		} = req.body;
 
@@ -216,9 +216,9 @@ export const updateSpeaker = async (req, res, next) => {
 		) {
 			return next(errorHandler(400, "All prices are required."));
 		}
-		if (!stripeAccountId) {
-			return next(errorHandler(400, "Stripe account is required."));
-		}
+		// if (!stripeAccountId) {
+		// 	return next(errorHandler(400, "Stripe account is required."));
+		// }
 		if (!Array.isArray(demos) || demos.length === 0) {
 			return next(errorHandler(400, "At least one demo is required."));
 		}
@@ -234,7 +234,7 @@ export const updateSpeaker = async (req, res, next) => {
 					demos,
 					prices,
 					about,
-					stripeAccountId,
+					// stripeAccountId,
 					socialMedia,
 				},
 			},
