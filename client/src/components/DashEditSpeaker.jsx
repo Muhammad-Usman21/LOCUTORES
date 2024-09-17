@@ -336,14 +336,14 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 	const handleAddVideos = () => {
 		setVideosErrorMsg(null);
 		if (ytLink && ytLink !== "") {
-			if (!currentUser.isPremium && formData.videos.length === 1) {
+			if (!currentUser.isPremium && formData.videos.length >= 1) {
 				setYTLink("");
 				setVideosErrorMsg(
 					"Actualmente estás usando un plan gratuito, por lo que solo puedes cargar un enlace de YouTube.<br />Prueba la cuenta PREMIUM para cargar hasta 10 enlaces de YouTube.."
 				);
 				return;
 			}
-			if (currentUser.isPremium && formData.videos.length === 10) {
+			if (currentUser.isPremium && formData.videos.length >= 10) {
 				setYTLink("");
 				setVideosErrorMsg("Puedes subir hasta 10 enlaces de Youtube..");
 				return;
