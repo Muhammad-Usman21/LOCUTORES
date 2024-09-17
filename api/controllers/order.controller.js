@@ -144,17 +144,17 @@ export const updateOrderStatus = async (req, res) => {
 		order.speakerMessage = speakerMessage;
 		await order.save();
 
-		if (status === "Completed") {
-			const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+		// if (status === "Completed") {
+		// 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-			const sessionDetails = await stripe.checkout.sessions.retrieve(
-				order.paymentIntentId
-			);
+		// 	const sessionDetails = await stripe.checkout.sessions.retrieve(
+		// 		order.paymentIntentId
+		// 	);
 
-			const paymentIntent = await stripe.paymentIntents.capture(
-				sessionDetails.payment_intent
-			);
-		}
+		// 	const paymentIntent = await stripe.paymentIntents.capture(
+		// 		sessionDetails.payment_intent
+		// 	);
+		// }
 
 		res.status(200).send({ message: "Order status updated" });
 	} catch (error) {
