@@ -102,7 +102,9 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 			}
 			if (file.size >= 5 * 1024 * 1024) {
 				setImageUploading(false);
-				setImageUploadErrorMsg("El tamaño de la imagen debe ser inferior a 5 MB.!");
+				setImageUploadErrorMsg(
+					"El tamaño de la imagen debe ser inferior a 5 MB.!"
+				);
 				return;
 			}
 
@@ -125,7 +127,9 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 				(error) => {
 					setImageUploading(false);
 					setImageUploadProgress(null);
-					setImageUploadErrorMsg("Error al cargar la imagen. Intentar otra vez!");
+					setImageUploadErrorMsg(
+						"Error al cargar la imagen. Intentar otra vez!"
+					);
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -179,7 +183,9 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 
 			for (let i = 0; i < audioFile.length; i++) {
 				if (audioFile[i].size >= 20 * 1024 * 1024) {
-					setAudioUploadErrorMsg("El tamaño del archivo de audio debe ser inferior a 20 MB.");
+					setAudioUploadErrorMsg(
+						"El tamaño del archivo de audio debe ser inferior a 20 MB."
+					);
 					setAudioUploading(false);
 					return;
 				}
@@ -208,7 +214,9 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 					setKeywords("");
 				})
 				.catch((err) => {
-					setAudioUploadErrorMsg("El tamaño del archivo de audio debe ser inferior a 20 MB.");
+					setAudioUploadErrorMsg(
+						"El tamaño del archivo de audio debe ser inferior a 20 MB."
+					);
 					setAudioUploading(false);
 				});
 		} catch (error) {
@@ -357,7 +365,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 				className="max-w-3xl my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
-				Edite su cuenta de orador
+					Edite su cuenta de orador
 				</h1>
 				<form
 					className={`flex py-5 flex-col gap-6 ${theme}`}
@@ -522,7 +530,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
-						<Label value="Upload an image (max size 5 MBs) (required)" />
+						<Label value="Cargue una imagen (tamaño máximo 5 MB) (obligatorio)" />
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
 							<FileInput
 								type="file"
@@ -581,7 +589,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
-						<Label value="Upload demos (required minimum 1) " />
+						<Label value="Subir demos (se requiere mínimo 1) " />
 						<div className="flex flex-col mb-4 w-full gap-4 items-center justify-between">
 							<div className="w-full">
 								<TextInput
@@ -739,7 +747,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2 items-center">
-						Acerca de
+							Acerca de
 							<span className="text-sm ml-2">(opcional)</span>
 						</span>
 						<Textarea
@@ -755,7 +763,7 @@ const DashEditSpeaker = ({ stripeAccountId }) => {
 					</div>
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
-						Redes Sociales (opcional)
+							Redes Sociales (opcional)
 						</span>
 						<div className="flex flex-col mb-4 gap-4 items-center justify-between">
 							<div className="flex sm:flex-row flex-col gap-2 items-center">

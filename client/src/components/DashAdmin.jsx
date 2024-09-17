@@ -140,7 +140,9 @@ const DashAdmin = () => {
 
 	const handleAddSpeaker = (speakerId) => {
 		if (formData.recommended?.length === 6) {
-			return setAddRemoveError("Puedes agregar hasta 6 parlantes a los recomendados.");
+			return setAddRemoveError(
+				"Puedes agregar hasta 6 parlantes a los recomendados."
+			);
 		}
 		setFormData({
 			...formData,
@@ -171,7 +173,9 @@ const DashAdmin = () => {
 
 			for (let i = 0; i < pdfFile.length; i++) {
 				if (pdfFile[i].size >= 20 * 1024 * 1024) {
-					setPdfUploadErrorMsg("El tamaño del archivo PDF debe ser inferior a 20 MB.");
+					setPdfUploadErrorMsg(
+						"El tamaño del archivo PDF debe ser inferior a 20 MB."
+					);
 					setPdfUploading(false);
 					return;
 				}
@@ -325,12 +329,12 @@ const DashAdmin = () => {
 				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<h2 className="self-center text-2xl text-center font-semibold">
-				Sólo para administrador
+					Sólo para administrador
 				</h2>
 				<form className="my-10 flex flex-col gap-10" onSubmit={handleSubmit}>
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label
-							value="Youtube Link for home page video"
+							value="Enlace de Youtube para el vídeo de la página de inicio."
 							className="text-center"
 						/>
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
@@ -368,7 +372,7 @@ const DashAdmin = () => {
 					</div>
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label
-							value="Select upto 6 Speaker to recommend on home page"
+							value="Seleccione hasta 6 oradores para recomendar en la página de inicio"
 							className="text-center"
 						/>
 						{speakers.length > 0 && (
@@ -385,7 +389,9 @@ const DashAdmin = () => {
 										<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 											<Table.HeadCell>Imagen del orador</Table.HeadCell>
 											<Table.HeadCell>Nombre del orador</Table.HeadCell>
-											<Table.HeadCell>Correo electrónico del orador</Table.HeadCell>
+											<Table.HeadCell>
+												Correo electrónico del orador
+											</Table.HeadCell>
 											<Table.HeadCell>Agregar/Quitar</Table.HeadCell>
 										</Table.Head>
 										<Table.Body>
@@ -563,7 +569,7 @@ const DashAdmin = () => {
 				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg flex flex-col gap-5
 			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
 				<Label
-					value="Select Users to make them Premium or Free"
+					value="Seleccione Usuarios para hacerlos Premium o Gratis"
 					className="text-center"
 				/>
 				{users.length > 0 && (
@@ -580,7 +586,9 @@ const DashAdmin = () => {
 								<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 									<Table.HeadCell>Imagen de usuario</Table.HeadCell>
 									<Table.HeadCell>Nombre de usuario</Table.HeadCell>
-									<Table.HeadCell>Correo electrónico del usuario</Table.HeadCell>
+									<Table.HeadCell>
+										Correo electrónico del usuario
+									</Table.HeadCell>
 									<Table.HeadCell>Gratis/Premium</Table.HeadCell>
 								</Table.Head>
 								<Table.Body>
