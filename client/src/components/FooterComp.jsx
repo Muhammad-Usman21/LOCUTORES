@@ -37,7 +37,7 @@ const FooterComp = () => {
 					</div>
 					<div
 						className="flex flex-col gap-3 md:flex-row md:gap-8 sm:gap-10 mt-4 sm:mt-0 text-center dark:shadow-whiteLg
-						bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl px-7 py-4">
+						bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl px-7 py-4">
 						{/* <div>
 							<Footer.LinkGroup col className="space-y-2">
 								<div className="flex flex-col gap-3 md:gap-8 md:flex-row">

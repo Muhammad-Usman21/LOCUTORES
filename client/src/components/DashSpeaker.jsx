@@ -338,7 +338,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg2-dark.jpg')]">
 			<div
 				className="max-w-3xl my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
-			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-7 font-semibold">
 					Crear una cuenta de orador
 				</h1>
@@ -392,7 +392,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						</div>
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
 						<Label value="El enlace de tu vídeo de YouTube (opcional)" />
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
 							<TextInput
@@ -496,7 +496,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 							))}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
 						<Label value="Upload an image (max size 5 MBs) (required)" />
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
 							<FileInput
@@ -555,7 +555,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						)}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label value="Subir demos (se requiere mínimo 1) " />
 						<div className="flex flex-col mb-4 w-full gap-4 items-center justify-between">
 							<div className="w-full">
@@ -636,7 +636,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 							))}
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
 							{"Tus Precios ("}
 							<span className="font-bold">$</span>
@@ -706,7 +706,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						</div>
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2 items-center">
 							Acerca de
 							<span className="text-sm ml-2">(opcional)</span>
@@ -722,7 +722,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 						/>
 					</div>
 
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<span className="text-lg text-center my-2">
 							Redes Sociales (opcional)
 						</span>

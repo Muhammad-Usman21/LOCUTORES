@@ -97,7 +97,7 @@ const DashPosts = () => {
 					 bg-transparent border-2 border-white/40 dark:border-white/20 rounded-lg shadow-xl">
 						<Table
 							hoverable
-							className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
+							className="backdrop-blur-[20px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 							<Table.Head className=" xl:sticky xl:top-[60px]">
 								<Table.HeadCell>Fecha de creación</Table.HeadCell>
@@ -143,7 +143,7 @@ const DashPosts = () => {
 			) : (
 				<div
 					className="max-w-xl w-full mx-auto bg-transparent border-2 mt-10 dark:shadow-whiteLg
-				border-white/40 dark:border-white/20 rounded-lg shadow-lg backdrop-blur-[9px]">
+				border-white/40 dark:border-white/20 rounded-lg shadow-lg backdrop-blur-[20px]">
 					<p className="p-10 text-center">Aún no tienes publicaciones</p>
 				</div>
 			)}

@@ -54,7 +54,7 @@ const CreatePost = () => {
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg-dark.jpg')]">
 			<div
 				className="flex flex-col gap-4 px-7 max-w-3xl mx-7 sm:p-10 sm:mx-12 md:mx-auto dark:shadow-whiteLg
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h1 className="text-center text-3xl mb-4 font-semibold">
 				Crear una publicación
 				</h1>

@@ -36,10 +36,10 @@ const Premium = ({ updateUser }) => {
 		<div className="w-full bg-cover bg-center">
 			<div
 				className="max-w-3xl my-3 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg items-center justify-center flex flex-col
-			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h1 className="text-2xl font-semibold">Comprar Premium</h1>
 				<h2>Para Speakers</h2>
-				<div className="flex flex-col text-justify mt-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
+				<div className="flex flex-col text-justify mt-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
 					<h2 className="text-xl font-semibold">Plan Gratuito</h2>
 					<p>Nuestro Plan Gratuito proporciona todo lo que necesitas para comenzar:</p>
 					<p className="mt-2">
@@ -65,7 +65,7 @@ const Premium = ({ updateUser }) => {
 						y quieren probar sin ningún costo.
 					</p>
 				</div>
-				<div className="flex flex-col text-justify mt-6 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
+				<div className="flex flex-col text-justify mt-6 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
 					<h2 className="text-xl font-semibold">Actualizar a Premium</h2>
 					<p>
 						Para aquellos que necesitan más espacio y flexibilidad, nuestro Plan Premium

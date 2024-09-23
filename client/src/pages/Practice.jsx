@@ -3,11 +3,11 @@ const Practice = () => {
 		<div className="w-full bg-cover bg-center">
 			<div
 				className="max-w-4xl my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg items-center justify-center flex flex-col
-			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h1 className="text-2xl font-semibold text-center">
 					GUIONES PARA PRACTICAR
 				</h1>
-				<div className="flex flex-col text-justify mt-4 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
+				<div className="flex flex-col text-justify mt-4 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl p-4 dark:shadow-whiteLg">
 					<p className="mt-2">
 						Quieres poner a prueba tu voz y convertirte en un verdadero
 						profesional de la locución? ¡Tenemos el desafío perfecto para ti! A

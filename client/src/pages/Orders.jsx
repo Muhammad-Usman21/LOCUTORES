@@ -76,7 +76,7 @@ const Orders = () => {
 						{orders.map((order) => (
 							<div
 								key={order._id}
-								className="order-card flex flex-col lg:flex-row w-full p-4 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+								className="order-card flex flex-col lg:flex-row w-full p-4 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 								<OrderCard order={order} orderUpdated={orderUpdated} />
 							</div>
 						))}

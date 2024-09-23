@@ -140,7 +140,7 @@ const Home = () => {
 			<div className="max-w-7xl mx-3 sm:mx-5 lg:mx-auto items-center justify-center flex flex-col gap-12 lg:gap-24 my-10 lg:my-24">
 				<div
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl md:text-4xl text-center">
 						LOCUCIONES PROFESIONALES
 					</span>
@@ -150,7 +150,7 @@ const Home = () => {
 				</div>
 				<div
 					className="flex flex-col items-center justify-center gap-4 md:gap-8 p-5 md:p-10
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-lg md:text-2xl text-center px-5">
 						¿Qué tipo de voz estás buscando?
 					</span>
@@ -208,7 +208,7 @@ const Home = () => {
 
 				<div
 					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<h1 className="font-semibold text-center text-3xl">
 						Resultados de la búsqueda
 					</h1>
@@ -233,7 +233,7 @@ const Home = () => {
 
 				<div
 					className="flex flex-col w-full items-center justify-center gap-6 lg:gap-10 p-3 lg:p-10 mb-10 lg:mb-20
-				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+				bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<h1 className="font-semibold text-center text-2xl">
 						Oradores recomendados
 					</h1>

@@ -93,9 +93,9 @@ const Annoucements = () => {
 					{posts.map((post) => (
 						<div
 							key={post._id}
-							className="max-w-6xl flex flex-col w-full p-3 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+							className="max-w-6xl flex flex-col w-full p-3 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 							{currentUser._id !== post.userId._id && (
-								<div className="flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+								<div className="flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 									<span className="text-xl lg:text-2xl text-center mb-3">
 										Información del usuario
 									</span>
@@ -160,7 +160,7 @@ const Annoucements = () => {
 			) : (
 				<div
 					className="max-w-xl w-full mx-auto bg-transparent border-2 mt-10 dark:shadow-whiteLg
-				border-white/40 dark:border-white/20 rounded-lg shadow-lg backdrop-blur-[9px]">
+				border-white/40 dark:border-white/20 rounded-lg shadow-lg backdrop-blur-[20px]">
 					<p className="p-10 text-center">No hay publicaciones todavía</p>
 				</div>
 			)}

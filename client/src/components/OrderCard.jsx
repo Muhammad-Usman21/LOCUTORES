@@ -118,7 +118,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 	return (
 		<>
 			{currentUser._id === order.speakerId.userId._id && (
-				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-xl lg:text-2xl text-center mb-3">
 					Información del cliente
 					</span>
@@ -424,7 +424,7 @@ const OrderCard = ({ order, orderUpdated }) => {
 			)}
 
 			{currentUser._id === order.userId._id && (
-				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+				<div className="lg:min-w-80 lg:max-w-80 flex flex-col gap-1 p-5 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 					<span className="text-2xl text-center mb-3">
 						<Link to={`/speaker/${order.speakerId._id}`}>
 						Información del orador

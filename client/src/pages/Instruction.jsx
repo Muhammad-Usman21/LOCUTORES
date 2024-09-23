@@ -19,7 +19,7 @@ const Instruction = () => {
 
 	return (
 		<div className="w-full min-h-screen py-5 lg:py-10">
-			<div className="mx-4 lg:mx-20 p-3 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			<div className="mx-4 lg:mx-20 p-3 lg:p-10 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h1 className="text-center text-2xl mb-5 md:mb-10 font-semibold">
 				Instrucciones
 				</h1>

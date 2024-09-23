@@ -438,7 +438,7 @@ const DashUser = () => {
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg2-dark.jpg')]">
 			<div
 				className="max-w-xl my-10 mx-7 p-7 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
-			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h1 className="mt-2 mb-4 text-center font-semibold text-3xl">User</h1>
 				<form
 					className={`flex flex-col gap-2 ${theme}`}

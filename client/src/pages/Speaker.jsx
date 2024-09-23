@@ -378,7 +378,7 @@ const Speaker = () => {
 					<div className="flex lg:w-1/2 h-min lg:m-4 p-2 lg:p-10 max-w-2xl flex-col md:items-center gap-10 self-center lg:self-start">
 						{!currentUser && (
 							<Link to="/sign-in">
-								<div className=" p-3 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg">
+								<div className=" p-3 bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg">
 									<span className="text-lg hover:cursor-pointer">
 										Primero inicie sesión para realizar un pedido
 									</span>
@@ -387,7 +387,7 @@ const Speaker = () => {
 						)}
 						<div
 							className={`flex flex-col md:flex-row md:items-center gap-10 p-4 lg:p-10 py-14 w-full
-									bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg
+									bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg
 										${!currentUser && "filter blur-sm transition ease-linear duration-300"}`}>
 							<div className="flex-1">
 								<h1 className="flex self-center justify-center text-3xl font-semibold mb-6">
@@ -574,7 +574,7 @@ const Speaker = () => {
 						{currentUser && (
 							<div
 								className={`flex flex-col w-full md:flex-row md:items-center gap-10 lg:p-10 py-5 px-3 
-								bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-2xl dark:shadow-whiteLg`}>
+								bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-2xl dark:shadow-whiteLg`}>
 								{speaker && (
 									<div className="flex flex-col gap-2 mt-2 w-full">
 										<p>

@@ -327,12 +327,12 @@ const DashAdmin = () => {
 			bg-[url('../../bg-light.jpg')] dark:bg-[url('../../bg2-dark.jpg')]">
 			<div
 				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg
-			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<h2 className="self-center text-2xl text-center font-semibold">
 					Sólo para administrador
 				</h2>
 				<form className="my-10 flex flex-col gap-10" onSubmit={handleSubmit}>
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label
 							value="Enlace de Youtube para el vídeo de la página de inicio."
 							className="text-center"
@@ -370,7 +370,7 @@ const DashAdmin = () => {
 							</div>
 						)}
 					</div>
-					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[9px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
+					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2  dark:shadow-whiteLg">
 						<Label
 							value="Seleccione hasta 6 oradores para recomendar en la página de inicio"
 							className="text-center"
@@ -384,7 +384,7 @@ const DashAdmin = () => {
 					 bg-transparent border-2 border-white/40 dark:border-white/20 rounded-lg shadow-xl">
 									<Table
 										hoverable
-										className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
+										className="backdrop-blur-[20px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 										<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 											<Table.HeadCell>Imagen del orador</Table.HeadCell>
@@ -567,7 +567,7 @@ const DashAdmin = () => {
 			</div>
 			<div
 				className="max-w-6xl my-5 sm:my-10 mx-3 p-3 sm:mx-12 lg:mx-auto sm:p-10 self-center dark:shadow-whiteLg flex flex-col gap-5
-			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[9px] rounded-lg shadow-xl">
+			bg-transparent border-2 border-white/40 dark:border-white/20 backdrop-blur-[20px] rounded-lg shadow-xl">
 				<Label
 					value="Seleccione Usuarios para hacerlos Premium o Gratis"
 					className="text-center"
@@ -581,7 +581,7 @@ const DashAdmin = () => {
 					 bg-transparent border-2 border-white/40 dark:border-white/20 rounded-lg shadow-xl">
 							<Table
 								hoverable
-								className="backdrop-blur-[9px] bg-transparent border-2 border-white/20 
+								className="backdrop-blur-[20px] bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 								<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 									<Table.HeadCell>Imagen de usuario</Table.HeadCell>
