@@ -5,8 +5,8 @@ const ThemeProvider = ({ children }) => {
 	return (
 		<div className={theme}>
 			<div
-				className="min-h-screen bg-[url('../../public/light.jpg')] dark:bg-[url('../../public/dark.jpg')] bg-fixed bg-center bg-no-repeat bg-cover text-gray-700
-                dark:text-[#f7f8f8]">
+				className="min-h-screen bg-fixed bg-center bg-no-repeat bg-cover text-gray-700
+                dark:text-[#f7f8f8]  dark:bg-[#08090a] bg-white">
 				{children}
 			</div>
 		</div>
