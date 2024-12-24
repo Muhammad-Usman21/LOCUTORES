@@ -1,5 +1,7 @@
 # Voice Over Web Application
 
+---
+
 ## Description
 This is a **full-stack MERN web application** that connects **customers** with **speakers** to facilitate voice-over orders. Customers can place orders, specify their requirements, and receive completed audio files from speakers. **Users can create speaker accounts**, where they can showcase their demos, set pricing for different services, and receive orders. **Admins** can manage users, monitor orders, and handle subscriptions.
 
@@ -40,7 +42,7 @@ This is a **full-stack MERN web application** that connects **customers** with *
 
 Follow these steps to set up the project locally:
 
-- ## Clone the Repository
+- ### Clone the Repository
 
 First, clone the repository:
 
@@ -49,7 +51,7 @@ git clone https://github.com/Muhammad-Usman21/LOCUTORES.git
 cd LOCUTORES
 ```
 
-- ## Install Dependencies
+- ### Install Dependencies
 
 For backend dependencies:
 ```bash
@@ -61,7 +63,7 @@ cd client
 npm install
 ```
 
-- ## Set Up Environment Variables
+- ### Set Up Environment Variables
 
 In the **root** directory, create a `.env` file with the following environment variables:
 ```env
@@ -79,7 +81,7 @@ VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_STRIPE_PUBLIC_KEY="your_stripe_public_key"
 ```
 
-- ## Run the Servers
+- ### Run the Servers
 To run the **backend** server, in **root** directory use the following command:
 ```bash
 npm run dev
