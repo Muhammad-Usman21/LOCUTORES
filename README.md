@@ -40,7 +40,7 @@ This is a **full-stack MERN web application** that connects **customers** with *
 
 Follow these steps to set up the project locally:
 
-### 1. Clone the Repository
+### - Clone the Repository
 
 First, clone the repository:
 
@@ -49,7 +49,7 @@ git clone https://github.com/Muhammad-Usman21/LOCUTORES.git
 cd LOCUTORES
 ```
 
-### 2. Install Dependencies
+### - Install Dependencies
 
 For backend dependencies:
 ```bash
@@ -61,7 +61,7 @@ cd client
 npm install
 ```
 
-### 3. Set Up Environment Variables
+### - Set Up Environment Variables
 
 In the **root** directory, create a `.env` file with the following environment variables:
 ```env
@@ -80,7 +80,7 @@ VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_STRIPE_PUBLIC_KEY="your_stripe_public_key"
 ```
 
-### 4. Run the Servers
+### - Run the Servers
 To run the **backend** server, in **root** directory use the following command:
 ```bash
 npm run dev
