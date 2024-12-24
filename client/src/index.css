@@ -123,3 +123,23 @@ body {
 		display: none;
 	}
 }
+
+nav,
+nav > div,
+footer,
+textarea,
+select,
+[data-testid="flowbite-dropdown"],
+input {
+	background-color: #fffdfd !important; /* Light background color */
+}
+
+.dark nav,
+.dark nav > div,
+.dark footer,
+.dark textarea,
+.dark select,
+.dark [data-testid="flowbite-dropdown"],
+.dark input {
+	background-color: #010e16 !important; /* Dark background color */
+}
