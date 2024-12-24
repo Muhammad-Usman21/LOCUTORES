@@ -65,7 +65,7 @@ npm install
 
 - ### Set Up Environment Variables
 
-In the **root** directory, create a `.env` file with the following environment variables:
+In the ***root*** directory, create a `.env` file with the following environment variables:
 ```env
 MONGO="your_mongodb_connection_string"
 JWT_SECRET="your_jwt_secret_key"
@@ -76,19 +76,19 @@ PREMIUM_AMOUNT=20  # The price for the premium subscription
 
 ```
 
-Then in the **client** directory, create a `.env` file with the following environment variables:
+Then in the ***client*** directory, create a `.env` file with the following environment variables:
 ```env
 VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_STRIPE_PUBLIC_KEY="your_stripe_public_key"
 ```
 
 - ### Run the Servers
-To run the **backend** server, in **root** directory use the following command:
+To run the ***backend*** server, in ***root*** directory use the following command:
 ```bash
 npm run dev
 ```
 
-To run the **frontend** server, in **client** directory use the following command:
+To run the ***frontend*** server, in ***client*** directory use the following command:
 ```bash
 cd client
 npm run dev
