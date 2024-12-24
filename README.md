@@ -1,11 +1,13 @@
 # Voice Over Web Application
 
+Check out our live website: [https://locutores-project.onrender.com](https://locutores-project.onrender.com)
+
 -----
 
 ## Description
-This is a **full-stack MERN web application** that connects **customers** with **speakers** to facilitate voice-over orders. Customers can place orders, specify their requirements, and receive completed audio files from speakers. **Users can create speaker accounts**, where they can showcase their demos, set pricing for different services, and receive orders. **Admins** can manage users, monitor orders, and handle subscriptions.
+This is a ***full-stack MERN web application*** that connects ***customers*** with ***speakers*** to facilitate voice-over orders. Customers can place orders, specify their requirements, and receive completed audio files from speakers. ***Users can create speaker accounts***, where they can showcase their demos, set pricing for different services, and receive orders. ***Admins*** can manage users, monitor orders, and handle subscriptions.
 
----
+-----
 
 ## Features
 
@@ -25,7 +27,7 @@ This is a **full-stack MERN web application** that connects **customers** with *
 - **Premium User Control**: Assign or revoke premium status for speakers.
 - **Order Oversight**: Track the status of voice-over orders and ensure smooth platform operation.
 
----
+-----
 
 ## Technologies Used
 - **Frontend**: React.js
@@ -36,13 +38,13 @@ This is a **full-stack MERN web application** that connects **customers** with *
 - **State Management**: Redux Toolkit
 - **Styling**: Tailwind CSS, Flowbite
 
----
+-----
 
 ## Installation
 
 Follow these steps to set up the project locally:
 
-- ### Clone the Repository
+### - Clone the Repository
 
 First, clone the repository:
 
@@ -51,7 +53,7 @@ git clone https://github.com/Muhammad-Usman21/LOCUTORES.git
 cd LOCUTORES
 ```
 
-- ### Install Dependencies
+### - Install Dependencies
 
 For backend dependencies:
 ```bash
@@ -63,7 +65,7 @@ cd client
 npm install
 ```
 
-- ### Set Up Environment Variables
+### - Set Up Environment Variables
 
 In the ***root*** directory, create a `.env` file with the following environment variables:
 ```env
@@ -71,7 +73,7 @@ MONGO="your_mongodb_connection_string"
 JWT_SECRET="your_jwt_secret_key"
 STRIPE_SECRET_KEY="your_stripe_secret_key"
 STRIPE_CLIENT_ID="your_stripe_client_id"
-CLIENT_URL="http://localhost:3000"  # For local development
+CLIENT_URL="http://localhost:3000"
 PREMIUM_AMOUNT=20  # The price for the premium subscription
 
 ```
@@ -82,15 +84,19 @@ VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_STRIPE_PUBLIC_KEY="your_stripe_public_key"
 ```
 
-- ### Run the Servers
-To run the ***backend*** server, in ***root*** directory use the following command:
+### - Run the Servers
+To run the ***backend*** server, in ***root directory*** use the following command:
 ```bash
 npm run dev
 ```
 
-To run the ***frontend*** server, in ***client*** directory use the following command:
+To run the ***frontend*** server, in ***client directory*** use the following command:
 ```bash
-cd client
 npm run dev
 ```
 
+-----
+
+## Future Improvements
+- Add ***real-time chat*** between speakers and customers.
+- Introduce advanced filters for finding specific speakers.
