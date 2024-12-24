@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+firebase update.txt
+info for hosting.txt

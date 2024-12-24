@@ -14,6 +14,6 @@ router.get("/getspeakers", getSpeakers);
 router.post("/create-speaker/:userId", verifyToken, createSpeaker);
 router.put("/update-speaker/:userId/:speakerId", verifyToken, updateSpeaker);
 router.get("/getspeaker/:userId", getSpeaker);
-router.get("/getspeakerrr/:id", getSpeakerrr);
+router.get("/getspeakerrr/:slug", getSpeakerrr);
 
 export default router;

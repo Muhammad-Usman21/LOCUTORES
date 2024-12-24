@@ -8,6 +8,11 @@ const speakerSchema = new mongoose.Schema(
 			unique: true,
 			ref: "User",
 		},
+		slug: {
+			type: String,
+			required: true,
+			unique: true,
+		},
 		videos: {
 			type: Array,
 			default: [],

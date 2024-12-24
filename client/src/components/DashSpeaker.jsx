@@ -277,7 +277,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(formData),
+					body: JSON.stringify({ ...formData, mail: currentUser.email }),
 				}
 			);
 			const data = await res.json();
@@ -497,7 +497,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 					</div>
 
 					<div className="bg-transparent border-2 border-white/20 backdrop-blur-[20px] rounded-lg shadow-md p-3 flex flex-col gap-2 dark:shadow-whiteLg">
-						<Label value="Upload an image (max size 5 MBs) (required)" />
+						<Label value="Cargue una imagen (tamaño máximo 5 MB) (obligatorio)" />
 						<div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
 							<FileInput
 								type="file"
@@ -683,7 +683,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 									disabled={loading || imageUploading || audioUploading}
 								/>
 							</div>
-							<div className="flex gap-2 items-center lg:pl-11">
+							<div className="flex gap-2 items-center lg:ml-12">
 								<Label value="Voz durante 1 minuto" />
 								<TextInput
 									className="w-40"
@@ -799,7 +799,7 @@ const DashSpeaker = ({ stripeAccountId }) => {
 									<Label value="Whatsapp" />
 								</div>
 								<TextInput
-									className="w-72"
+									className="w-72 lg:mr-1"
 									type="text"
 									placeholder="número de whatsapp"
 									value={formData.socialMedia?.whatsapp || ""}

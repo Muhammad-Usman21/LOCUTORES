@@ -29,7 +29,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Flag from "react-world-flags";
 
 const Speaker = () => {
-	const { id } = useParams();
+	const { slug } = useParams();
 	const navigate = useNavigate();
 	const [speaker, setSpeaker] = useState(null);
 
@@ -65,7 +65,7 @@ const Speaker = () => {
 	useEffect(() => {
 		const fetchSpeaker = async () => {
 			try {
-				const response = await fetch(`/api/speaker/getspeakerrr/${id}`);
+				const response = await fetch(`/api/speaker/getspeakerrr/${slug}`);
 				const data = await response.json();
 				setSpeaker(data);
 			} catch (error) {
@@ -74,7 +74,7 @@ const Speaker = () => {
 		};
 
 		fetchSpeaker();
-	}, [id]);
+	}, [slug]);
 
 	const handleChange = (e) => {
 		setLoading(false);

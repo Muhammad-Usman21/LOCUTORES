@@ -1,4 +1,4 @@
-import { Button, Select, TextInput } from "flowbite-react";
+import { Button, Label, Select, TextInput } from "flowbite-react";
 import { countries } from "countries-list";
 import CardComponent from "../components/CardComponent";
 import { useEffect, useState } from "react";
@@ -38,11 +38,16 @@ const Home = () => {
 		fetchSpeaker();
 	}, []);
 
-	const fetchSpeaker = async (voiceType = "", country = "") => {
+	const fetchSpeaker = async (
+		voiceType = "",
+		country = "",
+		sorting = "desc"
+	) => {
+		setShowMore(true);
 		// console.log(voiceType, country);
 		try {
 			const response = await fetch(
-				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sort}&limit=9&searchTerm=${searchTerm}`
+				`/api/speaker/getspeakers?voiceType=${voiceType}&country=${country}&sort=${sorting}&limit=9&searchTerm=${searchTerm}`
 			);
 			const data = await response.json();
 			// console.log(data);
@@ -55,8 +60,8 @@ const Home = () => {
 		}
 	};
 
-	const handleSearch = () => {
-		fetchSpeaker(voiceType, country);
+	const handleSearch = (sorting = "desc") => {
+		fetchSpeaker(voiceType, country, sorting);
 	};
 
 	const handleShowMore = async () => {
@@ -121,7 +126,7 @@ const Home = () => {
 		<div className="min-h-screen w-full">
 			<div className="w-full h-[44vw] overflow-clip flex justify-center items-center">
 				<div className="w-[120vw] h-[67vw]">
-					<div className="w-full h-full  absolute z-20 bg-slate-300 opacity-0 "></div>
+					<div className="w-full h-[67vw] absolute z-20 bg-slate-300 opacity-0 "></div>
 					<YouTubePlayer
 						url={
 							storage.found
@@ -157,7 +162,7 @@ const Home = () => {
 					<div className="flex flex-col gap-2 md:gap-4">
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 							<Select
-								className="w-60"
+								className="w-64"
 								value={voiceType}
 								onChange={(e) => setVoiceType(e.target.value)}>
 								<option value="" disabled>
@@ -168,7 +173,7 @@ const Home = () => {
 								<option value="menVoice">{"Voz de los hombres"}</option>
 							</Select>
 							<Select
-								className="w-60"
+								className="w-64"
 								value={country}
 								onChange={(e) => setCountry(e.target.value)}>
 								<option value="" disabled>
@@ -181,13 +186,6 @@ const Home = () => {
 									</option>
 								))}
 							</Select>
-							<Select
-								className="w-60 md:w-36"
-								value={sort}
-								onChange={(e) => setSort(e.target.value)}>
-								<option value="desc">El último</option>
-								<option value="asc">más antiguo</option>
-							</Select>
 						</div>
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 							<TextInput
@@ -197,9 +195,12 @@ const Home = () => {
 								onChange={(e) => setSearchTerm(e.target.value)}
 							/>
 							<Button
-								className="w-60 md:w-36 focus:ring-1"
+								className="w-64 md:w-36 focus:ring-1"
 								gradientDuoTone={"purpleToPink"}
-								onClick={handleSearch}>
+								onClick={() => {
+									setSort("desc"); // Set sort to "desc"
+									handleSearch("desc"); // Trigger handleSearch with "desc"
+								}}>
 								Buscar
 							</Button>
 						</div>
@@ -214,6 +215,19 @@ const Home = () => {
 					</h1>
 					{speaker.length > 0 && (
 						<>
+							<div className="self-end flex flex-col gap-1 lg:pr-10">
+								<Label value="Filtrar" className="pl-1" />
+								<Select
+									className="w-36"
+									value={sort}
+									onChange={(e) => {
+										setSort(e.target.value); // Update sort value
+										handleSearch(e.target.value); // Trigger handleSearch with the new value
+									}}>
+									<option value="desc">El último</option>
+									<option value="asc">más antiguo</option>
+								</Select>
+							</div>
 							<div className="flex flex-wrap gap-5 items-center justify-center w-full">
 								{speaker.map((speaker) => (
 									<CardComponent key={speaker._id} speaker={speaker} />

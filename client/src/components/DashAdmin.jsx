@@ -123,6 +123,7 @@ const DashAdmin = () => {
 
 	const handleShowMore = async () => {
 		try {
+			setShowMore(true);
 			const startIndex = speakers.length;
 			const response = await fetch(
 				`/api/speaker/getspeakers?startIndex=${startIndex}&sort=${"desc"}&limit=10`
@@ -249,6 +250,7 @@ const DashAdmin = () => {
 	}, []);
 
 	const fetchUsers = async () => {
+		setShowMoreUsers(true);
 		// console.log(voiceType, country);
 		try {
 			const response = await fetch(
@@ -267,7 +269,7 @@ const DashAdmin = () => {
 
 	const handleShowMoreUsers = async () => {
 		try {
-			const startIndex = speakers.length;
+			const startIndex = users.length;
 			const response = await fetch(
 				`/api/user/getusers?startIndex=${startIndex}&sort=${"desc"}&limit=10`
 			);
@@ -384,7 +386,7 @@ const DashAdmin = () => {
 					 bg-transparent border-2 border-white/40 dark:border-white/20 rounded-lg shadow-xl">
 									<Table
 										hoverable
-										className="backdrop-blur-[20px] bg-transparent border-2 border-white/20 
+										className="backdrop-blur-[20px] bg-transparent dark:bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 										<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 											<Table.HeadCell>Imagen del orador</Table.HeadCell>
@@ -407,7 +409,7 @@ const DashAdmin = () => {
 														/>
 													</Table.Cell>
 													<Table.Cell>
-														<Link to={`/speaker/${speaker._id}`}>
+														<Link to={`/speaker/${speaker.slug}`}>
 															<div className="flex gap-1 items-center">
 																<span
 																	className={`text-gray-900 dark:text-gray-300`}>
@@ -424,7 +426,7 @@ const DashAdmin = () => {
 														</Link>
 													</Table.Cell>
 													<Table.Cell>
-														<Link to={`/speaker/${speaker._id}`}>
+														<Link to={`/speaker/${speaker.slug}`}>
 															<span
 																className={`text-gray-900 dark:text-gray-300`}>
 																{speaker.userId.email}
@@ -581,7 +583,7 @@ const DashAdmin = () => {
 					 bg-transparent border-2 border-white/40 dark:border-white/20 rounded-lg shadow-xl">
 							<Table
 								hoverable
-								className="backdrop-blur-[20px] bg-transparent border-2 border-white/20 
+								className="backdrop-blur-[20px] bg-transparent dark:bg-transparent border-2 border-white/20 
 							rounded-lg shadow-lg dark:shadow-whiteLg">
 								<Table.Head className=" xl:sticky xl:top-[60px] z-10">
 									<Table.HeadCell>Imagen de usuario</Table.HeadCell>

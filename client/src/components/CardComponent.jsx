@@ -30,7 +30,7 @@ const CardComponent = ({ speaker }) => {
 				<div
 					className="bg-gray-300 dark:bg-gray-700 shadow-xl hover:shadow-2xl dark:shadow-whiteLg transition-shadow 
             			overflow-hidden rounded-lg w-full md:w-[360px] flex flex-col justify-center relative">
-					<Link to={`/speaker/${speaker._id}`}>
+					<Link to={`/speaker/${speaker.slug}`}>
 						<div className="h-[180px] w-full bg-slate-400">
 							{/* {speaker.videos?.length !== 0 ? (
 							<ReactPlayer
@@ -67,7 +67,7 @@ const CardComponent = ({ speaker }) => {
 						</div>
 					</Link>
 					<div className="flex gap-2 mt-2 items-center justify-center">
-						<Link to={`/speaker/${speaker._id}`}>
+						<Link to={`/speaker/${speaker.slug}`}>
 							<span className="text-lg">{speaker.userId.name}</span>
 						</Link>
 						{speaker.userId.isPremium && (
@@ -102,7 +102,7 @@ const CardComponent = ({ speaker }) => {
 							)}
 						</div>
 						<Link
-							to={`/speaker/${speaker._id}`}
+							to={`/speaker/${speaker.slug}`}
 							className="w-[300px] self-center mx-5 my-2">
 							<Button
 								className="w-full"

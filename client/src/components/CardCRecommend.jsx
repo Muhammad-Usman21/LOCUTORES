@@ -7,7 +7,7 @@ const CardCRecommend = ({ speaker }) => {
 				<div
 					className="bg-gray-300 dark:bg-gray-700 shadow-xl hover:shadow-2xl dark:shadow-whiteLg transition-shadow 
             			overflow-hidden rounded-lg w-full md:w-[360px] flex flex-col justify-center">
-					<Link to={`/speaker/${speaker._id}`}>
+					<Link to={`/speaker/${speaker.slug}`}>
 						<div className="relative flex">
 							<div className="h-[350px] w-full bg-slate-400">
 								<img

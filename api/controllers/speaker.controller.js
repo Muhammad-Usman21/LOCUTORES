@@ -92,7 +92,13 @@ export const createSpeaker = async (req, res, next) => {
 			about,
 			stripeAccountId,
 			socialMedia,
+			mail,
 		} = req.body;
+
+		// Extract the username from the email (before the @ symbol)
+		const username = mail.split("@")[0];
+		// Remove periods and convert the username to lowercase
+		const slug = username.replace(/\./g, "").toLowerCase();
 
 		if (!image) {
 			return next(errorHandler(400, "Image is required."));
@@ -139,6 +145,7 @@ export const createSpeaker = async (req, res, next) => {
 			about,
 			// stripeAccountId,
 			socialMedia,
+			slug,
 		});
 
 		// Save the speaker to the database
@@ -262,9 +269,10 @@ export const getSpeaker = async (req, res, next) => {
 };
 
 export const getSpeakerrr = async (req, res) => {
-	const { id } = req.params;
+	const { slug } = req.params; // Extract the slug from the request parameters
 	try {
-		const speaker = await Speaker.findById(id).populate(
+		// Find the speaker by slug
+		const speaker = await Speaker.findOne({ slug }).populate(
 			"userId",
 			"name email isPremium"
 		);
