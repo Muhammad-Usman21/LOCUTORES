@@ -1,6 +1,6 @@
 # Voice Over Web Application
 
----
+-----
 
 ## Description
 This is a **full-stack MERN web application** that connects **customers** with **speakers** to facilitate voice-over orders. Customers can place orders, specify their requirements, and receive completed audio files from speakers. **Users can create speaker accounts**, where they can showcase their demos, set pricing for different services, and receive orders. **Admins** can manage users, monitor orders, and handle subscriptions.
@@ -73,6 +73,7 @@ STRIPE_SECRET_KEY="your_stripe_secret_key"
 STRIPE_CLIENT_ID="your_stripe_client_id"
 CLIENT_URL="http://localhost:3000"  # For local development
 PREMIUM_AMOUNT=20  # The price for the premium subscription
+
 ```
 
 Then in the **client** directory, create a `.env` file with the following environment variables:
