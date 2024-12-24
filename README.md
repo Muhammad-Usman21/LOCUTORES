@@ -40,7 +40,7 @@ This is a **full-stack MERN web application** that connects **customers** with *
 
 Follow these steps to set up the project locally:
 
-### - Clone the Repository
+- ## Clone the Repository
 
 First, clone the repository:
 
@@ -49,7 +49,7 @@ git clone https://github.com/Muhammad-Usman21/LOCUTORES.git
 cd LOCUTORES
 ```
 
-### - Install Dependencies
+- ## Install Dependencies
 
 For backend dependencies:
 ```bash
@@ -61,7 +61,7 @@ cd client
 npm install
 ```
 
-### - Set Up Environment Variables
+- ## Set Up Environment Variables
 
 In the **root** directory, create a `.env` file with the following environment variables:
 ```env
@@ -70,7 +70,6 @@ JWT_SECRET="your_jwt_secret_key"
 STRIPE_SECRET_KEY="your_stripe_secret_key"
 STRIPE_CLIENT_ID="your_stripe_client_id"
 CLIENT_URL="http://localhost:3000"  # For local development
-CLIENT_URL="https://your_live_site_url"  # For production
 PREMIUM_AMOUNT=20  # The price for the premium subscription
 ```
 
@@ -80,7 +79,7 @@ VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_STRIPE_PUBLIC_KEY="your_stripe_public_key"
 ```
 
-### - Run the Servers
+- ## Run the Servers
 To run the **backend** server, in **root** directory use the following command:
 ```bash
 npm run dev
